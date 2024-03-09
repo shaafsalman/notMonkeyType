@@ -5,8 +5,8 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import './Login.css'; 
 
 import logoImage from '../assests/Logo2Transparent.png'; 
-import loginGIF from '../assests/loginGIF3.gif'; 
-import staticLogin from '../assests/StaticLogin3.png';
+import loginGIF from '../assests/loginGIF.gif'; 
+import staticLogin from '../assests/StaticLogin.png';
 
 const Login = () => {
   const [isLoginView, setIsLoginView] = useState(true);
@@ -66,21 +66,22 @@ const Login = () => {
                 <input type="password" placeholder="Password" required />
               </div>
               {/* forgetPassword */}
-              
               <div className="pass-link"><a href="#">Forgot password?</a></div>
-              
               
               {/* button */}
               <div className="field btn">
                 <div className="btn-layer"></div>
                 <input type="submit" value="Login" />
               </div>
+               {/* sign up link */}
+              <div className="signup-link">Not a member? <a href="#" onClick={() => setIsLoginView(false)}>Signup now</a></div>
+              
               
               {/* googleButton */}
               <div className="field btn">
                 <div className="btn-layer"></div>
                 <button className="google-btn" onClick={() => window.location.href='https://accounts.google.com'}>
-                  <FontAwesomeIcon icon={faGoogle} className="google-icon" />
+                  <FontAwesomeIcon icon={faGoogle}className="input-icon" />
                   Continue  with Google
                 </button>
               </div>
@@ -91,28 +92,24 @@ const Login = () => {
           : 
           //sign up Form
           (
-            <form action="#" className="signup">{/* Group first and last name fields */}
-            <div className="name-fields">
+            <form action="#" className="signup">
               {/* First name */}
               <div className="field">
                 <FontAwesomeIcon icon={faUser} className="input-icon"/>
                 <input type="text" placeholder="First Name" required />
               </div>
-            
-              {/* Last name */}
+
+              {/* LAST  name */}
               <div className="field">
                 <FontAwesomeIcon icon={faUser}className="input-icon" />
                 <input type="text" placeholder="Last Name" required />
               </div>
-            </div>
 
               {/* EMAIL */}
               <div className="field">
                 <FontAwesomeIcon icon={faEnvelope}className="input-icon" />
                 <input type="text" placeholder="Email Address" required />
               </div>
-
-              <div className="name-fields">
 
                {/* PASS */}
               <div className="field">
@@ -125,7 +122,6 @@ const Login = () => {
                 <FontAwesomeIcon icon={faLock}className="input-icon" />
                 <input type="password" placeholder="Confirm password" required />
               </div>
-              </div>
 
                {/* Confirm Button*/}
               <div className="field btn">
@@ -133,13 +129,11 @@ const Login = () => {
                 <input type="submit" value="Signup" />
               </div>
 
-              {/* googleButton */}
-              <div className="field btn">
+               {/* GooGLE bUTTON */}
+              <div className="google-btn" onClick={() => window.location.href='https://accounts.google.com'}>
                 <div className="btn-layer"></div>
-                <button className="google-btn" onClick={() => window.location.href='https://accounts.google.com'}>
-                  <FontAwesomeIcon icon={faGoogle} className="google-icon" />
-                  Continue  with Google
-                </button>
+                <FontAwesomeIcon icon={faGoogle} className= "input-icon" />
+                      Continue with Google
               </div>
 
             </form>

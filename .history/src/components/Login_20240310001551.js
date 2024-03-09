@@ -5,8 +5,8 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import './Login.css'; 
 
 import logoImage from '../assests/Logo2Transparent.png'; 
-import loginGIF from '../assests/loginGIF3.gif'; 
-import staticLogin from '../assests/StaticLogin3.png';
+import loginGIF from '../assests/loginGIF.gif'; 
+import staticLogin from '../assests/StaticLogin.png';
 
 const Login = () => {
   const [isLoginView, setIsLoginView] = useState(true);
@@ -68,13 +68,13 @@ const Login = () => {
               {/* forgetPassword */}
               
               <div className="pass-link"><a href="#">Forgot password?</a></div>
-              
-              
               {/* button */}
               <div className="field btn">
                 <div className="btn-layer"></div>
                 <input type="submit" value="Login" />
               </div>
+               {/* sign up link */}
+              
               
               {/* googleButton */}
               <div className="field btn">

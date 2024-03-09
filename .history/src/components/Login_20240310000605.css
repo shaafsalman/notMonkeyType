@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+:root {
+  --primary-color: #913560;
+  --secondary-color: #bbb;
+  --accent-color: linear-gradient(90deg, rgba(177,141,211,1) 35%, rgba(67,67,144,1) 65%);
+  --button-hover: #8a56ac;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  place-items: center;
+  background-color: var(--primary-color);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+::selection {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.wrapper {
+  width: auto;
+  max-width: 550px;
+  background: #fff;
+  padding: 45px;
+  border-radius: 15px;
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.title-text, .form-container {
+  width: 100%;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.slide-controls, .form-inner {
+  width: 100%;
+}
+
+.field-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.field {
+  position: relative;
+  width: 48%; /* Adjusted for two fields in one line */
+}
+
+.field input {
+  width: 100%;
+  padding-left: 45px;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+  font-size: 17px;
+}
+
+.field .input-icon, .field .google-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+}
+
+.btn {
+  position: relative;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+  .field-group {
+    flex-direction: column;
+  }
+
+  .field {
+    width: 100%; /* Full width for smaller screens */
+    margin-bottom: 10px; /* Add space between vertically stacked fields */
+  }
+
+  .wrapper {
+    margin: 5% auto; /* Center wrapper on smaller screens */
+    padding: 20px;
+  }
+}
