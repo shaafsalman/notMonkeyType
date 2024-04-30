@@ -2,14 +2,18 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import '../style/Login.css';
+import logoImage from '../../assets/Logo2Transparent.png';
+import loginGIF from '../../assets/loginGIF3.gif';
+import staticLogin from '../../assets/StaticLogin3.png';
 
 
 const LoginForm = () => {
+
   return (
     <form action="#" className="login">
       <div className="field">
         <FontAwesomeIcon icon={faUser} className="input-icon" />
-        <input type="text" placeholder="Email Address" required />
+        <input type="text" placeholder="Email Address" className='' required />
       </div>
       <div className="field">
         <FontAwesomeIcon icon={faLock} className="input-icon" />

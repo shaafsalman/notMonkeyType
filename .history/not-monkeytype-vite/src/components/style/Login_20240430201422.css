@@ -23,10 +23,10 @@ html, body {
 
 body {
   background-color: var(--primary-color);
-  background-image: url('../../assets/StaticLogin.png');
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat;
+  background-image: url('../../assets/StaticLogin1.png'); /* Replace 'your-background-image.jpg' with the path to your image */
+  background-size: cover; /* Cover the entire viewport */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Prevent background image from repeating */
 }
 
 ::selection {

@@ -5,11 +5,21 @@ import '../style/Login.css';
 
 
 const LoginForm = () => {
+  const [isLoginView, setIsLoginView] = useState(true);
+
+  const handleLoginView = () => {
+    setIsLoginView(true);
+  };
+
+  const handleSignupView = () => {
+    setIsLoginView(false);
+  };
+  
   return (
     <form action="#" className="login">
       <div className="field">
         <FontAwesomeIcon icon={faUser} className="input-icon" />
-        <input type="text" placeholder="Email Address" required />
+        <input type="text" placeholder="Email Address" className='' required />
       </div>
       <div className="field">
         <FontAwesomeIcon icon={faLock} className="input-icon" />

@@ -9,7 +9,7 @@ const LoginForm = () => {
     <form action="#" className="login">
       <div className="field">
         <FontAwesomeIcon icon={faUser} className="input-icon" />
-        <input type="text" placeholder="Email Address" required />
+        <input type="text" placeholder="Email Address" className='' required />
       </div>
       <div className="field">
         <FontAwesomeIcon icon={faLock} className="input-icon" />
