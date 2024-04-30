@@ -3,29 +3,20 @@ import LoginForm from '../Page-Parts/LoginForm';
 import SignupForm from '../Page-Parts/SignupForm';
 
 import logoImage from '../../assets/Logo2Transparent.png';
-import loginGIF from '../../assets/loginGIF.gif';
-import staticLogin from '../../assets/StaticLogin.png';
 
 const Login = () => {
   const [isLoginView, setIsLoginView] = useState(true);
 
-  const playGif = () => {
-    if (window.innerWidth > 1024) {
-      document.body.style.backgroundImage = `url('${loginGIF}')`;
-      setTimeout(() => {
-        document.body.style.backgroundImage = `url('${staticLogin}')`;
-      }, 3000);
-    }
-  };
+
+   
+
 
   const handleLoginView = () => {
     setIsLoginView(true);
-    playGif();
   };
 
   const handleSignupView = () => {
     setIsLoginView(false);
-    playGif();
   };
 
   return (

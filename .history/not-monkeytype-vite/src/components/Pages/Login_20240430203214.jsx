@@ -4,7 +4,7 @@ import SignupForm from '../Page-Parts/SignupForm';
 
 import logoImage from '../../assets/Logo2Transparent.png';
 import loginGIF from '../../assets/loginGIF.gif';
-import staticLogin from '../../assets/StaticLogin.png';
+import staticLogin from '../../assets/StaticLogin3.png';
 
 const Login = () => {
   const [isLoginView, setIsLoginView] = useState(true);
