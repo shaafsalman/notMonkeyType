@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import Login from './components/Pages/Login';
 import Home from './components/Pages/Home';
-import NavigationBar from './components/Page-Parts/NavigationBar';
+import NavigationBar from '../Page-Parts/NavigationBar';
 
 
 function App() {
