@@ -1,0 +1,108 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--primary-color);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
+/* Navigation bar styles */
+.navbar {
+  position: sticky;
+  display: absolute;
+  top: 20;
+  background-color: #333;
+  color: white;
+  width: 80%;
+  margin: 0 auto; /* Center the navbar */
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+  border-bottom-width: 2px;
+  font-size: 17px;
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+.logo img {
+  height: 40px; /* Adjust logo size */
+}
+
+.options {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center; /* Center the navigation links */
+}
+
+.options li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.options li:last-child {
+  margin-right: 0;
+}
+
+.option {
+  color: white;
+  text-decoration: none;
+}
+
+.option:hover {
+  text-decoration: underline;
+}
+
+/* Content section styles */
+.content {
+  padding-top: 80px; /* Ensure content does not overlap with the navbar */
+}
+
+/* Game menu styles */
+.game-menu {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.game-menu h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* Leaderboards styles */
+.leaderboards {
+  padding: 20px;
+}
+
+.leaderboards h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* Settings styles */
+.settings {
+  padding: 20px;
+}
+
+.settings h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* About styles */
+.about {
+  padding: 20px;
+}
+
+.about h1 {
+  font-size: 24px;
+  color: #333;
+}

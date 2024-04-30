@@ -3,5 +3,8 @@
     "react": "^16.8",
     "react-dom": "^16.8",
     "react-router-dom": "^6.23.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
   }
 }

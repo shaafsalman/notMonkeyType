@@ -1,0 +1,100 @@
+/* Home.css */
+
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f0f2f5;
+}
+
+/* Navigation bar styles */
+.navbar {
+  position: sticky;
+  top: 0;
+  background-color: #333;
+  color: white;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.options {
+  list-style-type: none;
+  display: flex;
+  gap: 20px;
+}
+
+.option {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.option:hover {
+  text-decoration: underline;
+}
+
+/* Page content styles */
+.page-content {
+  padding: 20px;
+}
+
+/* GameMenu styles */
+.game-menu {
+  text-align: center;
+}
+
+.game-menu h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* Leaderboards styles */
+.leaderboards {
+  padding: 20px;
+}
+
+.leaderboards h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* Settings styles */
+.settings {
+  padding: 20px;
+}
+
+.settings h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* About styles */
+.about {
+  padding: 20px;
+}
+
+.about h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* NoPage styles */
+.nopage {
+  padding: 20px;
+}
+
+.nopage h1 {
+  font-size: 24px;
+  color: #333;
+}

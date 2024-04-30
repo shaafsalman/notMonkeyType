@@ -1,0 +1,105 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  place-items: center;
+}
+
+body {
+  background-color: var(--primary-color);
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+}
+
+.navbar {
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px 20px;
+}
+
+.logo img {
+  height: 50px;
+}
+
+.options {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.options li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.options li:last-child {
+  margin-right: 0;
+}
+
+.option {
+  color: white;
+  text-decoration: none;
+}
+
+.option:hover {
+  text-decoration: underline;
+}
+
+
+
+
+
+.game-menu {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.game-menu h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+
+
+.leaderboards {
+  padding: 20px;
+}
+
+.leaderboards h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+
+
+
+.settings {
+  padding: 20px;
+}
+
+.settings h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+
+
+.about {
+  padding: 20px;
+}
+
+.about h1 {
+  font-size: 24px;
+  color: #333;
+}
