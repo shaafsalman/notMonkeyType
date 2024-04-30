@@ -1,0 +1,54 @@
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import logoImage from '../../assets/Logo2Transparent.png';
+
+const NavigationBar = () => {
+  const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <nav className="bg-gradient-to-br from-purple-500 to-indigo-600 lg:rounded-lg lg:my-12 lg:mx-20  z-10">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative flex items-center justify-between h-16">
+          <div className="flex items-center flex-shrink-0">
+            <img className="h-20 lg:h-40 w-auto" src={logoImage} alt="Logo" />
+          </div>
+          <div className="flex lg:hidden">
+          
+          </div> 
+          <div className="hidden lg:block lg:ml-6">
+            <div className="flex space-x-4">
+            <Link to="/GameMenu" className={`text-white hover:'bg-indigo-800' hover:text-white rounded-md px-3 py-2 text-lg font-medium ${location.pathname === '/GameMenu' ? 'bg-indigo-800' : ' hover:bg-indigo-900 hover:text-white'}`}>GameMenu</Link>
+            <Link to="/Leaderboards" className={`text-white hover:bg-indigo-800 hover:text-white rounded-md px-3 py-2 text-lg font-medium ${location.pathname === '/Leaderboards' ? 'bg-indigo-800' : 'hover:bg-indigo-900 hover:text-white'}`}>Leaderboard</Link>
+            <Link to="/Friends" className={`text-white hover:bg-indigo-800 hover:text-white rounded-md px-3 py-2 text-lg font-medium ${location.pathname === '/Friends' ? 'bg-indigo-800' : 'hover:bg-indigo-900 hover:text-white'}`}>Friends</Link>
+            <Link to="/Scores" className={`text-white hover:bg-indigo-800 hover:text-white rounded-md px-3 py-2 text-lg font-medium ${location.pathname === '/Scores' ? 'bg-indigo-800' : 'hover:bg-indigo-900 hover:text-white'}`}>Scores</Link>
+            <Link to="/settings" className={`text-white hover:bg-indigo-800 hover:text-white rounded-md px-3 py-2 text-lg font-medium ${location.pathname === '/settings' ? 'bg-indigo-800' : 'hover:bg-indigo-900 hover:text-white'}`}>Settings</Link>
+            <Link to="/about" className={`text-white hover:bg-indigo-800 hover:text-white rounded-md px-3 py-2 text-lg font-medium ${location.pathname === '/about' ? 'bg-indigo-800' : 'hover:bg-indigo-900 hover:text-white'}`}>About</Link>
+            <Link to="/Profile" className={`text-white hover:bg-indigo-800 hover:text-white rounded-md px-3 py-2 text-lg font-medium ${location.pathname === '/Profile' ? 'bg-indigo-800' : 'hover:bg-indigo-900 hover:text-white'}`}>Profile</Link>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div className={`${isOpen ? 'block' : 'hidden'} lg:hidden`} id="mobile-menu">
+        <div className="px-2 pt-2 pb-3 space-y-1">
+          <Link to="/GameMenu" className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Game Menu</Link>
+          <Link to="/Leaderboard" className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Leaderboard</Link>
+          <Link to="/Friends" className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Friends</Link>
+          <Link to="/Scores" className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Scores</Link>
+          <Link to="/settings" className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Settings</Link>
+          <Link to="/about" className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</Link>
+          <Link to="/Profile" className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Profile</Link>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default NavigationBar;
