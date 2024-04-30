@@ -1,0 +1,105 @@
+/* Navbar container */
+:root {
+  --primary-color: #913560;
+  --secondary-color: #bbb;
+  --accent-color: linear-gradient(90deg, rgba(177,141,211,1) 35%, rgba(67,67,144,1) 65%);
+  --button-hover: #8a56ac;
+  --background-color: #f7f7f7; /* added a light gray background color */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--background-color); /* added a light gray background color */
+}
+
+.navbar {
+  margin-top: 60px;
+  margin-left: 180px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent; 
+  padding: 20px 40px; 
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+  max-height: 100px;
+  overflow: hidden; /* added to remove excess space */
+}
+
+/* Logo */
+.logo img {
+  height: 120px; /* reduced logo size for a more minimalist look */
+  width: auto;
+  margin: 10px; /* added margin for better spacing */
+}
+
+/* Navigation options */
+.options {
+  list-style-type: none;
+  margin-right: 20px; /* reduced margin for a more compact look */
+  display: flex;
+  align-items: center; /* added to center options vertically */
+}
+
+.options li {
+  margin-right: 20px; /* reduced margin for a more compact look */
+}
+
+.option {
+  color: #666; /* changed to a darker gray for better contrast */
+  text-decoration: none;
+  font-size: 18px; /* reduced font size for a more minimalist look */
+  font-weight: bold; /* kept bold font weight for emphasis */
+  transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
+}
+
+.option::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.option:hover::before {
+  background-color: #a70f74;
+}
+
+.option:hover {
+  transform: translateY(-3px);
+  color: #333; /* changed to a darker gray on hover */
+}
+
+button {
+  height: 40px; /* reduced button height for a more compact look */
+  width: 100%;
+  border-radius: 10px;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.5s ease;
+  background-color: var(--accent-color); /* changed to accent color for a more futuristic look */
+}
+
+button:hover {
+  background-color: var(--button-hover);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* added a subtle shadow on hover */
+}

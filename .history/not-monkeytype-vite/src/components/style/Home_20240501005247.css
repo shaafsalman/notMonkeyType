@@ -1,0 +1,65 @@
+:root {
+  --primary-color: #913560;
+  --secondary-color: #bbb;
+  --accent-color: linear-gradient(90deg, rgba(177,141,211,1) 35%, rgba(67,67,144,1) 65%);
+  --button-hover: #8a56ac;
+}
+
+.navbar
+{
+  background-color: transparent;
+  position: absolute;
+  max-width: 80%;
+  margin-top: 5vh;
+  margin-left: 30vh;
+  justify-content: center ;
+  align-items: center;
+  min-width: 1000px ;
+  min-height: 130px ;
+  max-height: 100px;
+  max-width: 600px;
+  background: #fff;
+  padding: 35px;
+  border-radius: 15px;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
+  
+}
+.logo img {
+  height: 140px;
+  width: auto;
+}
+
+.options {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.options li {
+  margin-right: 20px;
+}
+
+.option {
+  color: #555; /* Subdued color */
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.option:hover {
+  color: #333; /* Darker color on hover */
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  color: #555; /* Subdued color */
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+button:hover {
+  color: #333; /* Darker color on hover */
+}

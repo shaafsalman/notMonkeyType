@@ -1,0 +1,11 @@
+.bg-zinc-500
+{
+  background-color: transparent;
+  position: absolute;
+  max-width: 80%;
+  margin-top: 30px;
+  margin-left: calc(page-height-70 %);
+  minimum-height: 100px;
+  max-height:;
+  
+}

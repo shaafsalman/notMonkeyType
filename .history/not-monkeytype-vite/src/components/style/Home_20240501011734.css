@@ -1,0 +1,110 @@
+/* Navbar container */
+:root {
+  --primary-color: #913560;
+  --secondary-color: #bbb;
+  --accent-color: linear-gradient(90deg, rgba(177,141,211,1) 35%, rgba(67,67,144,1) 65%);
+  --button-hover: #8a56ac;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.navbar {
+  display: flex;
+  background-color: transparent;
+  max-width: 80%;
+  margin: 5vh auto;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px; /* Adjusted min-width for smaller screens */
+  min-height: 100px;
+  max-height: 140px;
+  border-radius: 15px;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2); /* Adjusted box-shadow */
+}
+
+.logo img {
+  height: 100px; /* Adjusted logo size */
+  width: auto;
+}
+
+.options {
+  width: 70%;
+  display: flex;
+  justify-content: space-around; /* Adjusted alignment for mobile screens */
+  align-items: center;
+  list-style-type: none;
+  padding: 10px; /* Adjusted padding */
+}
+
+.options li {
+  margin-right: 10px; /* Adjusted margin for mobile screens */
+}
+
+.option {
+  min-width: 20px;
+  display: flex;
+  padding: 10px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
+  background-color: slategray;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.option:hover {
+  transform: translateY(-5px);
+}
+
+.actionButton {
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+  background-image: var(--accent-color);
+  color: #fff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  margin-left: 20px;
+  transition: background-color 0.5s ease;
+}
+
+button:hover {
+  background-color: var(--button-hover);
+  transform: scale(1.05);
+}
+
+/* Media query for mobile screens */
+@media only screen and (max-width: 600px) {
+  .navbar {
+    max-width: 90%; /* Adjusted max-width for smaller screens */
+    min-height: 80px; /* Adjusted min-height for smaller screens */
+  }
+
+  .logo img {
+    height: 80px; /* Adjusted logo size for smaller screens */
+  }
+
+  .options {
+    width: 90%;
+    margin-left: 0;
+    padding: 5px; /* Adjusted padding for smaller screens */
+  }
+
+  .options li {
+    margin-right: 5px; /* Adjusted margin for smaller screens */
+  }
+}

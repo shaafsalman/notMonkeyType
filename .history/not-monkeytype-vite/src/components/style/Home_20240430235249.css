@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.Home
+{
+  display: absolute;
+  width:100%;
+  background-color:aqua;
+  height:100%;
+}
+
+
+
+.page-content {
+  padding: 20px;
+  margin-top: 60px; /* Adjust as needed based on your navigation bar height */
+}
+.logo img {
+  height: 40px; /* Adjust logo size */
+}
+
+.options {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center; /* Center the navigation links */
+}
+
+.options li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.options li:last-child {
+  margin-right: 0;
+}
+
+.option {
+  color: white;
+  text-decoration: none;
+}
+
+.option:hover {
+  text-decoration: underline;
+}
+
+/* Content section styles */
+.content {
+  padding-top: 80px; /* Ensure content does not overlap with the navbar */
+}
+
+/* Game menu styles */
+.game-menu {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.game-menu h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* Leaderboards styles */
+.leaderboards {
+  padding: 20px;
+}
+
+.leaderboards h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* Settings styles */
+.settings {
+  padding: 20px;
+}
+
+.settings h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* About styles */
+.about {
+  padding: 20px;
+}
+
+.about h1 {
+  font-size: 24px;
+  color: #333;
+}

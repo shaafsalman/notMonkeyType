@@ -1,0 +1,14 @@
+.bg-zinc-500
+{
+  background-color: transparent;
+  position: absolute;
+  max-width: 80%;
+  margin-top: 30px;
+  margin-left: calc(50% - 35%);
+  min-height: 100px;
+  max-height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}

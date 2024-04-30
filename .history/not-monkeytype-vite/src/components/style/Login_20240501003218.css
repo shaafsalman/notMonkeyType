@@ -1,0 +1,60 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-color); /* Use primary color variable */
+  padding: 20px 40px; /* Reduced padding for better visual balance */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.logo img {
+  width: 120px;
+  height: 140px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.options {
+  list-style-type: none;
+  margin-right: 50px;
+  display: flex;
+}
+
+.options li {
+  margin-right: 30px; /* Increased spacing between options */
+}
+
+.option {
+  color: #000;
+  text-decoration: none;
+  font-size: 18px; /* Increased font size */
+  font-weight: 600;
+  transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
+}
+
+.option:hover::before {
+  background-color: var(--accent-color); /* Highlight the bottom border on hover */
+}
+
+.option:hover {
+  color: var(--button-hover); /* Change text color on hover */
+  transform: translateY(-3px); /* Add subtle hover effect */
+}
+
+button {
+  background-color: var(--primary-color); /* Use primary color variable */
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 12px 24px; /* Increased padding for larger button */
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--button-hover); /* Use button hover color variable */
+  transform: scale(1.05); /* Add slight scale effect on hover */
+}

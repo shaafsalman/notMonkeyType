@@ -1,0 +1,56 @@
+/* Navbar container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #292929; /* Updated background color */
+  padding: 20px;
+  border-radius: 8px; /* Slightly reduced border radius */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Reduced shadow for a lighter feel */
+}
+
+/* Logo */
+.logo img {
+  height: 40px;
+  width: auto;
+}
+
+/* Navigation options */
+.options {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.options li {
+  margin-right: 25px; /* Reduced spacing between options */
+}
+
+.option {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px; /* Reduced font size for a cleaner look */
+  transition: color 0.3s ease, transform 0.3s ease; /* Added transform transition */
+}
+
+.option:hover {
+  color: #ffca28; /* Brighter color on hover */
+  transform: translateY(-3px); /* Added subtle vertical translation on hover */
+}
+
+/* Button */
+button {
+  background-color: #ffca28; /* Updated button background color */
+  border: none;
+  color: #292929; /* Dark text color for better contrast */
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px; /* Increased padding for better touch target */
+  border-radius: 5px; /* Slight border radius for a softer look */
+  transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+button:hover {
+  background-color: #f0b90b; /* Darker shade on hover for depth */
+}
