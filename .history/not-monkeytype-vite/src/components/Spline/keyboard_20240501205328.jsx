@@ -1,0 +1,1 @@
+https://prod.spline.design/kPm-3HGpLuz3B6kw/scene.splinecode

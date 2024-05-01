@@ -1,0 +1,27 @@
+import React from 'react';
+import styled from 'styled-components';
+import Spline from '@splinetool/react-spline';
+
+const Wrapper = styled.div`
+   display: flex;
+   width: fit;
+   height: 100%;
+   min-height: 720px;
+`;
+
+
+
+const Keyboard = () => {
+    return (
+        <Wrapper>
+            <Spline
+                className='spline' 
+                // scene="https://prod.spline.design/kPm-3HGpLuz3B6kw/scene.splinecode"
+                // scene="https://prod.spline.design/LDtGZDtvGmPhkhOr/scene.splinecode"
+                scene="https://prod.spline.design/gprAdHo5GH3avS0o/scene.splinecode"
+            />
+        </Wrapper>
+    );
+};
+
+export default Keyboard;
