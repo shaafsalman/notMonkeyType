@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2em 1em;
+  justify-content: center; /* Center content horizontally */
+}
+
+.column {
+  width: 100%;
+  padding: 1em 0; /* Adjusted padding */
+}
+
+h1 {
+  width: 100%;
+  text-align: center;
+  font-size: 3.5em;
+  color: #1f003b; /* Adjusted color */
+}
+
+.verticalCard {
+  box-shadow: 0 0 0.8em rgba(25, 0, 58, 0.1); /* Adjusted shadow */
+  border-radius: 0.6em;
+  color: black;
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: #ffffff;
+  max-width: 500px; /* Adjusted max-width */
+  margin: 1em; /* Adjusted margin */
+}

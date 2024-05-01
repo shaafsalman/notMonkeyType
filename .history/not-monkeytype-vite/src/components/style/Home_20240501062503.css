@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+
+#verticalCard {
+  background-color:white;
+  padding: 20px ;
+  min-width: 500px; 
+  
+  overflow: hidden;
+  background: #fff;
+  padding: 25px;
+}
+
+.tittle {
+  font-size: 32px;
+  font-weight: bolder;
+  
+}
+

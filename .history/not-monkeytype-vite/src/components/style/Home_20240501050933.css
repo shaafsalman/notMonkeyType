@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.member-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    transition: transform 0.3s ease;
+  }
+  
+  .member-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px 12px 0 0;
+  }
+  
+  .card-content {
+    padding: 1.5rem;
+  }
+  
+  .name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .detail {
+    font-size: 1rem;
+    color: #666666;
+    margin-bottom: 0.3rem;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  
+  .action-button {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.5rem;
+    margin: 0 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .action-button:hover {
+    transform: scale(1.1);
+  }
+  
+  .whatsapp {
+    background-color: #25d366;
+    color: #ffffff;
+  }
+  
+  .linkedin {
+    background-color: #0077b5;
+    color: #ffffff;
+  }
+  
