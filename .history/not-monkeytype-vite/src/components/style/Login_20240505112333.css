@@ -1,0 +1,407 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+:root {
+  --primary-color: #913560;
+  --secondary-color: #bbb;
+  --accent-color: linear-gradient(90deg, rgba(177,141,211,1) 35%, rgba(67,67,144,1) 65%);
+  --button-hover: #8a56ac;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  place-items: center;
+}
+
+body {
+  background-color: var(--primary-color);
+  background-image: url('../../assets/StaticLogin.png');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+  
+}
+
+.mainContainer
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+
+.verification-section {
+  margin-top: 60px;
+  margin-right: 00px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.verificationInput
+{
+  background-color:white;
+  color:#000;
+  height: 50px;
+  width: 80%;
+  outline: none;
+  padding-left: 45px;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+  border-bottom-width: 2px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+
+.verificationBtn
+{
+  background-color: --var(--primary-color);
+  color:#000;
+  height: 50px;
+  width: 20%;
+  outline: none;
+  padding-left: 45px;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+  border-bottom-width: 2px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+
+::selection {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.wrapper {
+
+  min-width: 550px ;
+  min-height: 900px ;
+  margin-right: 85%;
+  overflow: hidden;
+  max-height: 780px;
+  max-width: 550px;
+  background: #fff;
+  padding: 12px;
+  border-radius: 35px;
+  
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
+}
+
+
+.wrapper .title-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.wrapper .logo {
+  
+  width: 100px;
+  height: 120px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.wrapper .title 
+{
+  color: #000;
+  flex-grow: 1;
+  font-size: 25px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .slide-controls {
+  position: relative;
+  display: flex;
+  height: 50px;
+  width: 95%;
+  overflow: hidden;
+  margin: 30px 6 6px 6;
+  justify-content: space-between;
+  border: 2px solid lightgrey;
+  border-radius: 10px;
+}
+
+.slide-controls .slide {
+  
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 48px;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.6s ease;
+}
+
+.slide-controls label.signup {
+  color: #000;
+}
+
+.slide-controls .slider-tab {
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  left: 0;
+  z-index: 0;
+  border-radius: 10px;
+  background: var(--accent-color);
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+#signup:checked ~ .slider-tab {
+  left: 50%;
+}
+
+#signup:checked ~ label.signup {
+  color: #fff;
+  cursor: default;
+}
+
+#signup:checked ~ label.login {
+  color: #000;
+}
+
+#login:checked ~ label.signup {
+  color: #000;
+}
+
+#login:checked ~ label.login {
+  cursor: default;
+}
+
+.wrapper .form-container {
+  padding: 20px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.form-container .form-inner 
+{
+  display: flex;
+  width: 200%;
+}
+
+.form-container .form-inner form {
+  width: 50%;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.form-inner form .field {
+  display: flex;
+  height: 50px;
+  width: 100%;
+  margin-top: 20px;
+  position: relative;
+}
+
+.form-inner form .field input {
+  background-color:white;
+  color:#000;
+  height: 95%;
+  width: calc(100% - 5px);
+  outline: none;
+  padding-left: 45px;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+  border-bottom-width: 2px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+
+.form-inner form .field input:focus {
+  border-color: var(--primary-color);
+}
+
+.form-inner form .field input::placeholder {
+  color: var(--secondary-color);
+}
+
+form .field .fas {
+  
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: var(--secondary-color);
+}
+
+form .field input:focus::placeholder {
+  color: var(--primary-color);
+}
+
+.form-inner form .pass-link {
+  margin-top: 35px;
+}
+
+.form-inner form .signup-link {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.form-inner form .pass-link a,
+.form-inner form .signup-link a {
+  
+  padding: 20px;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.form-inner form .pass-link a:hover,
+.form-inner form .signup-link a:hover {
+  text-decoration: underline;
+}
+.name-fields {
+  display: flex;
+  width: 100%; 
+}
+
+
+form .btn {
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+form .btn:hover .btn-layer {
+  left: 0;
+  background-color: var(--button-hover);
+}
+
+form .btn .btn-layer {
+  height: 100%;
+  width: 300%;
+  position: absolute;
+  left: -100%;
+  background: var(--accent-color);
+  border-radius: 5px;
+  transition: all 0.4s ease;
+}
+
+form .btn input[type="submit"] {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+  background: none;
+  border: none;
+  color: #fff;
+  padding-left: 0;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+
+.form-inner form .field .input-icon {
+  color: var(--button-hover);
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px; 
+}
+.form-inner form .field .google-icon {
+  position: absolute;
+  left: 95px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px; 
+}
+
+
+.google-btn {
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: var(--accent-color);
+  color: #fff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.5s ease;
+  
+}
+
+.google-btn:hover {
+  background-color: var(--button-hover);
+}
+
+.google-btn .btn-layer {
+  height: 100%;
+  width: 300%;
+  position: absolute;
+  left: -100%;
+  border-radius: 5px;
+  transition: all 0.4s ease;
+}
+
+.google-btn i {
+  margin-right: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  
+  body {
+    background-image: none;
+    background-color: var(--secondary-color);
+  }
+
+  .wrapper {
+    width: 95%; 
+    padding: 20px;
+    margin: 0%;
+  }
+  .wrapper .logo {
+    width: 120px;
+    height: 140px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .form-inner form .field input,
+  .slide-controls .slide,
+  form .btn input[type="submit"],
+  .google-btn {
+    font-size: 14px; 
+  }
+
+  .wrapper .title-text .logo {
+    width: 120px; 
+  }
+
+
+form .btn, .google-btn {
+  height: 45px; 
+}
+
+
+}
