@@ -29,8 +29,8 @@ const InputButtonCard = ({ Title, InputTitle, ButtonTitle, onButtonClick, onCanc
         <button onClick={onClose} className="absolute top-0 right-0 mr-4 mt-2 text-white font-bold text-xl outline-none focus:outline-none">
           <FontAwesomeIcon icon={faTimes} className="text-xl" /> 
         </button>
-        <div className="lg:px-10 lg:py-5 px-6 py-12">
-          <div className="font-bold text-xl text-white mb-2">{Title}</div>
+        <div className="lg:px-8 lg:py-8 px-6 py-12">
+          <div className="font-bold text-xl text-white mb-10">{Title}</div>
           <p className="text-white text-base">{InputTitle}</p>
         </div>
         <div className="px-6 py-6 flex flex-col justify-center items-center lg:flex-row lg:justify-center lg:py-0">

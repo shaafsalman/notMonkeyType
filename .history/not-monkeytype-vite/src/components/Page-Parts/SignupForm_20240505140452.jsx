@@ -34,10 +34,6 @@ const SignupForm = () => {
     e.preventDefault();
     if (data.password !== confirmPassword) {
       setError("Passwords do not match");
-      // Auto-close error message after 8 seconds
-      setTimeout(() => {
-        setError("");
-      }, 8000);
       return;
     }
   
@@ -49,16 +45,9 @@ const SignupForm = () => {
       setSuccessMessage(response.data.message);
       setError("");
       setShowVerificationInput(true);
-
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 8000);
     } catch (error) {
       if (error.response && error.response.status >= 400 && error.response.status <= 500) {
         setError(error.response.data.message);
-        setTimeout(() => {
-          setError("");
-        }, 2000);
       }
     }
   };

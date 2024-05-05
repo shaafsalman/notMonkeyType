@@ -30,7 +30,7 @@ const InputButtonCard = ({ Title, InputTitle, ButtonTitle, onButtonClick, onCanc
           <FontAwesomeIcon icon={faTimes} className="text-xl" /> 
         </button>
         <div className="lg:px-10 lg:py-5 px-6 py-12">
-          <div className="font-bold text-xl text-white mb-2">{Title}</div>
+          <div className="font-bold text-xl text-white mb-10">{Title}</div>
           <p className="text-white text-base">{InputTitle}</p>
         </div>
         <div className="px-6 py-6 flex flex-col justify-center items-center lg:flex-row lg:justify-center lg:py-0">

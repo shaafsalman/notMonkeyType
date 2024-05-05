@@ -34,7 +34,7 @@ const InputButtonCard = ({ Title, InputTitle, ButtonTitle, onButtonClick, onCanc
           <p className="text-white text-base">{InputTitle}</p>
         </div>
         <div className="px-6 py-6 flex flex-col justify-center items-center lg:flex-row lg:justify-center lg:py-0">
-          <div className="mx-6 my-4">
+          <div className="mx-6 my-2">
             <input
               type="text"
               placeholder={InputTitle}

@@ -37,11 +37,15 @@ router.post("/", async (req, res) => {
         }).save();
 
         await sendVerificationEmail(req.body.email,req.body.firstName,req.body.LastName, verificationCode);
-                res.status(201).send({ message: "User created successfully. Verification email sent." });
 
+        res.status(201).send({ message: "User created successfully. Verification email sent." });
         setTimeout(async () => {
-            await User.deleteUnverifiedUsers();
-        }, 60000);
+            const userToDelete = await User.findById(newUser._id);
+            if (userToDelete && !userToDelete.verified) {
+                await userToDelete.remove();
+                console.log("User deleted after 30 seconds due to unverified status");
+            }
+        }, 30000);
     } 
     catch (error) 
     {

@@ -26,7 +26,7 @@ const InputButtonCard = ({ Title, InputTitle, ButtonTitle, onButtonClick, onCanc
   return (
     <div className="fixed top-40 left-0 w-full flex justify-center items-start z-50">
       <div className="max-w-lg rounded-lg p-2 overflow-hidden shadow-lg bg-gradient-to-br from-purple-500 to-indigo-600 transition duration-500 transform hover:scale-105">
-        <button onClick={onClose} className="absolute top-0 right-0 mr-4 mt-2 text-white font-bold text-xl outline-none focus:outline-none">
+        <button onClick={onClose} className="mx-96 my-4 text-white outline-none focus:outline-none">
           <FontAwesomeIcon icon={faTimes} className="text-xl" /> 
         </button>
         <div className="lg:px-10 lg:py-5 px-6 py-12">

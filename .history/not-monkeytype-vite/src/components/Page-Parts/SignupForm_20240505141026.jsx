@@ -49,16 +49,17 @@ const SignupForm = () => {
       setSuccessMessage(response.data.message);
       setError("");
       setShowVerificationInput(true);
-
+      // Auto-close success message after 8 seconds
       setTimeout(() => {
         setSuccessMessage("");
       }, 8000);
     } catch (error) {
       if (error.response && error.response.status >= 400 && error.response.status <= 500) {
         setError(error.response.data.message);
+        // Auto-close error message after 8 seconds
         setTimeout(() => {
           setError("");
-        }, 2000);
+        }, 8000);
       }
     }
   };

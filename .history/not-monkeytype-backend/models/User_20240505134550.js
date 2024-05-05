@@ -19,17 +19,30 @@ userSchema.methods.generateAuthToken = function () {
     return token;
 };
 
+
+const User = mongoose.models.users || mongoose.model("User", userSchema);
+
 userSchema.statics.deleteUnverifiedUsers = async function () {
     try {
-        await this.deleteMany({ verified: false });
-        console.log("Unverified users deleted successfully.");
-    } catch (error) 
-    {
+        const currentTime = new Date();
+        const thirtySecondsAgo = new Date(currentTime.getTime() - 30000);
+        
+        // Find unverified users created more than 30 seconds ago
+        const unverifiedUsers = await this.find({
+            verified: false,
+            createdAt: { $lte: thirtySecondsAgo }
+        });
+        
+        // Delete unverified users
+        if (unverifiedUsers.length > 0) {
+            await this.deleteMany({ _id: { $in: unverifiedUsers.map(user => user._id) } });
+            console.log("Unverified users deleted successfully");
+        }
+    } catch (error) {
         console.error("Error deleting unverified users:", error);
     }
 };
 
-const User = mongoose.models.users || mongoose.model("User", userSchema);
 
 const validate = (data) => {
     const schema = Joi.object({

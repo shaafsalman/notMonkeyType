@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const InputButtonCard = ({ Title, InputTitle, ButtonTitle, onButtonClick, onCancel, setVerificationCode,setCancel }) => {
+const InputButtonCard = ({ Title, InputTitle, ButtonTitle, onButtonClick, onCancel, setVerificationCode, setCancel }) => {
   const [verificationCodeInput, setVerificationCodeInput] = useState(""); // Manage verification code input separately
 
   const handleChange = (e) => {
@@ -17,18 +15,20 @@ const InputButtonCard = ({ Title, InputTitle, ButtonTitle, onButtonClick, onCanc
   };
 
   const onClose = () => {
-    setVerificationCodeInput("-1"); 
-    setVerificationCode("-1");
+    setVerificationCodeInput(""); 
+    setVerificationCode("");
     setCancel(true);
     onCancel(false); 
+  };
+
+  const handleCancel = () => {
+    setCancel(true);
+    onCancel(false);
   };
 
   return (
     <div className="fixed top-40 left-0 w-full flex justify-center items-start z-50">
       <div className="max-w-lg rounded-lg p-2 overflow-hidden shadow-lg bg-gradient-to-br from-purple-500 to-indigo-600 transition duration-500 transform hover:scale-105">
-        <button onClick={onClose} className="absolute top-0 right-0 mr-4 mt-2 text-white font-bold text-xl outline-none focus:outline-none">
-          <FontAwesomeIcon icon={faTimes} className="text-xl" /> 
-        </button>
         <div className="lg:px-10 lg:py-5 px-6 py-12">
           <div className="font-bold text-xl text-white mb-2">{Title}</div>
           <p className="text-white text-base">{InputTitle}</p>
@@ -46,6 +46,9 @@ const InputButtonCard = ({ Title, InputTitle, ButtonTitle, onButtonClick, onCanc
           <button onClick={handleClick} className="w-full lg:w-auto mx-2 my-4 px-6 py-3 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center">
             {ButtonTitle}
           </button>
+          <button onClick={handleCancel} className="w-full lg:w-auto mx-2 my-4 px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg transition duration-300 text-center">
+            Cancel
+          </button>
         </div>
       </div>
     </div>
@@ -58,7 +61,8 @@ InputButtonCard.propTypes = {
   ButtonTitle: PropTypes.string.isRequired,
   onButtonClick: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  setVerificationCode: PropTypes.func.isRequired, // Add setVerificationCode to PropTypes
+  setVerificationCode: PropTypes.func.isRequired,
+  setCancel: PropTypes.func.isRequired, 
 };
 
 export default InputButtonCard;

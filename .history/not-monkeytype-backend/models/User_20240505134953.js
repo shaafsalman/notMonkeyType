@@ -21,10 +21,11 @@ userSchema.methods.generateAuthToken = function () {
 
 userSchema.statics.deleteUnverifiedUsers = async function () {
     try {
-        await this.deleteMany({ verified: false });
+        const currentDate = new Date();
+        const thirtySecondsAgo = new Date(currentDate - 30 * 1000); // 30 seconds ago
+        await this.deleteMany({ verified: false, createdAt: { $lte: thirtySecondsAgo } });
         console.log("Unverified users deleted successfully.");
-    } catch (error) 
-    {
+    } catch (error) {
         console.error("Error deleting unverified users:", error);
     }
 };

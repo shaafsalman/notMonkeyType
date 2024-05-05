@@ -37,11 +37,8 @@ router.post("/", async (req, res) => {
         }).save();
 
         await sendVerificationEmail(req.body.email,req.body.firstName,req.body.LastName, verificationCode);
-                res.status(201).send({ message: "User created successfully. Verification email sent." });
 
-        setTimeout(async () => {
-            await User.deleteUnverifiedUsers();
-        }, 60000);
+       //here
     } 
     catch (error) 
     {

@@ -14,7 +14,7 @@ const SignupForm = () => {
     password: '',
   });
   const [verificationCode, setVerificationCode] = useState("");
-  const [cancel,setCancel] = useState(false);
+  const [cancel,setCancel] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [showVerificationInput, setShowVerificationInput] = useState(false);
@@ -34,10 +34,6 @@ const SignupForm = () => {
     e.preventDefault();
     if (data.password !== confirmPassword) {
       setError("Passwords do not match");
-      // Auto-close error message after 8 seconds
-      setTimeout(() => {
-        setError("");
-      }, 8000);
       return;
     }
   
@@ -49,16 +45,9 @@ const SignupForm = () => {
       setSuccessMessage(response.data.message);
       setError("");
       setShowVerificationInput(true);
-
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 8000);
     } catch (error) {
       if (error.response && error.response.status >= 400 && error.response.status <= 500) {
         setError(error.response.data.message);
-        setTimeout(() => {
-          setError("");
-        }, 2000);
       }
     }
   };
@@ -176,7 +165,7 @@ const SignupForm = () => {
 
       {showVerificationInput && (
         <InputButtonCard 
-          Title="Email Verification {Code expires after 1 min} after that close and try again" 
+          Title="Email Verification" 
           InputTitle="Enter Verification Code" 
           ButtonTitle="Verify Email" 
           onButtonClick={handleInputButtonClick} 

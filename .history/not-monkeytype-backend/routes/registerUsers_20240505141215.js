@@ -42,6 +42,7 @@ router.post("/", async (req, res) => {
         setTimeout(async () => {
             await User.deleteUnverifiedUsers();
         }, 60000);
+       //here
     } 
     catch (error) 
     {

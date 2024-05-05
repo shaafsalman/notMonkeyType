@@ -58,7 +58,7 @@ const SignupForm = () => {
         setError(error.response.data.message);
         setTimeout(() => {
           setError("");
-        }, 2000);
+        }, 8000);
       }
     }
   };
