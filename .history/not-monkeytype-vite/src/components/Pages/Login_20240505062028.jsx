@@ -5,6 +5,7 @@ import SignupForm from '../Page-Parts/SignupForm';
 import logoImage from '../../assets/Logo2Transparent.png';
 import loginGIF from '../../assets/loginGIF.gif';
 import staticLogin from '../../assets/StaticLogin.png';
+import {}
 
 const Login = () => {
   const [isLoginView, setIsLoginView] = useState(true);
@@ -27,7 +28,6 @@ const Login = () => {
     setIsLoginView(false);
     playGif();
   };
-
 
   return (
     <div className="wrapper">

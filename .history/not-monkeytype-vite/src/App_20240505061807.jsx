@@ -39,14 +39,13 @@ const ProtectedRoutes = () => {
       <div className="page-content">
         <Routes>
           <Route path="/" element={<GameMenu />} /> 
-          <Route path="/Home" element={<GameMenu />} /> 
-          <Route path="/Home/GameMenu" element={<GameMenu />} /> 
-          <Route path="/Home/Leaderboards" element={<Leaderboards />} />
-          <Route path="/Home/Friends" element={<Friends />} />
-          <Route path="/Home/Scores" element={<Scores />} />
-          <Route path="/Home/Settings" element={<Settings />} />
-          <Route path="/Home/Profile" element={<Profile />} />
-          <Route path="/Home/About" element={<About />} />
+          <Route path="/GameMenu" element={<GameMenu />} /> 
+          <Route path="/Leaderboards" element={<Leaderboards />} />
+          <Route path="/Friends" element={<Friends />} />
+          <Route path="/Scores" element={<Scores />} />
+          <Route path="/Settings" element={<Settings />} />
+          <Route path="/Profile" element={<Profile />} />
+          <Route path="/About" element={<About />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </div>

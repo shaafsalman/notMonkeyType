@@ -4,14 +4,13 @@ import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios'; 
 import '../style/Login.css';
 import MessageCard from './../Page-Parts/mesgCard';
-import { useNavigate } from 'react-router-dom'; 
+// import { Link, useHistory } from 'react-router-dom'; // Import Link and useHistory
 
 const LoginForm = () => {
   const [data, setData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [showMessage, setShowMessage] = useState(false);
-  const navigate = useNavigate();
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -25,8 +24,13 @@ const LoginForm = () => {
       localStorage.setItem('token', response.data.token);
       setSuccessMessage('Login successful');
       setShowMessage(true);
-      // Navigate to Home after successful login
-      navigate('/Home');
+      setTimeout(() => {
+        setShowMessage(false);
+        setSuccessMessage('');
+        history.push('/Home');
+        navigate("/Home");
+
+      }, 8000);
     } catch (error) {
       if (
         error.response &&
@@ -35,10 +39,13 @@ const LoginForm = () => {
       ) {
         setError(error.response.data.message);
         setShowMessage(true);
+        setTimeout(() => {
+          setShowMessage(false);
+          setError('');
+        }, 8000);
       }
     }
   };
-  
 
   useEffect(() => {
     let timeout;

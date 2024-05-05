@@ -25,8 +25,12 @@ const LoginForm = () => {
       localStorage.setItem('token', response.data.token);
       setSuccessMessage('Login successful');
       setShowMessage(true);
-      // Navigate to Home after successful login
-      navigate('/Home');
+      setTimeout(() => {
+        setShowMessage(false);
+        setSuccessMessage('');
+        // Navigate to Home after successful login
+        navigate('/Home');
+      }, 8000);
     } catch (error) {
       if (
         error.response &&
@@ -35,10 +39,13 @@ const LoginForm = () => {
       ) {
         setError(error.response.data.message);
         setShowMessage(true);
+        setTimeout(() => {
+          setShowMessage(false);
+          setError('');
+        }, 2000);
       }
     }
   };
-  
 
   useEffect(() => {
     let timeout;
