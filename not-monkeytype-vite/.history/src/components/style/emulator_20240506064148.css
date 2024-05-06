@@ -289,10 +289,6 @@
   color:white;
   font-weight: 600;
 }
-  .stats {
-    display: flex;
-    flex-direction: column;
-   }
 
   .stat {
     margin:  5px;
@@ -327,9 +323,9 @@
 
 
   .navbar {
-    display: hidden;
+    /* Adjust styles for smaller screens */
     justify-content: space-between; /* Space elements evenly */
-    margin-left: 0;
+    margin-left: 0; /* Remove left margin */
   }
   
   .externalMonitor 

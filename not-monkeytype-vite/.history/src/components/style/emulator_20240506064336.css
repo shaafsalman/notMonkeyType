@@ -327,9 +327,8 @@
 
 
   .navbar {
-    display: hidden;
     justify-content: space-between; /* Space elements evenly */
-    margin-left: 0;
+    margin-left: 0; /* Remove left margin */
   }
   
   .externalMonitor 

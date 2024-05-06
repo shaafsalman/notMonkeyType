@@ -97,8 +97,7 @@ const SinglePlayer = () => {
 
     return (
         <div className="singlePlayer">
-            <div className="keyBoardContainer"><Keyboard/></div>
-
+            <Keyboard/>
              <div className="mainGameContainer">
         <nav className="navbar">
             <button className="navBtn">Back</button>

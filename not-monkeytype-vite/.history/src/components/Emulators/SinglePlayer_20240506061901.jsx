@@ -56,7 +56,6 @@ const SinglePlayer = () => {
         setWpm(wordsPerMinute.toFixed(2));
         setAccuracy(accuracyPercentage.toFixed(2));
     };
-
     const onInput = (e) => {
         if (!testStarted) return;
 
@@ -79,17 +78,8 @@ const SinglePlayer = () => {
 
         setUserInput(value);
         setCharClasses(newCharClasses);
-
-        // Calculate WPM and accuracy in real-time
-        const typedChars = value.length;
-        const correctChars = newCharClasses.filter(c => c === 'correct').length;
-
-        const wordsPerMinute = (correctChars / 5) / (testDuration / 60);
-        const accuracyPercentage = (correctChars / typedChars) * 100;
-
-        setWpm(wordsPerMinute.toFixed(2));
-        setAccuracy(accuracyPercentage.toFixed(2));
     };
+
 
     const handleDurationChange = (e) => {
         setTestDuration(parseInt(e.target.value));
@@ -97,12 +87,11 @@ const SinglePlayer = () => {
 
     return (
         <div className="singlePlayer">
-            <div className="keyBoardContainer"><Keyboard/></div>
-
+            <Keyboard/>
              <div className="mainGameContainer">
         <nav className="navbar">
             <button className="navBtn">Back</button>
-            <h1 className="tittleText">notMonkeyType</h1>
+            <h1 className="title">notMonkeyType</h1>
             <div className="mode">Mode: SinglePlayer</div>
             <select className="duration" onChange={handleDurationChange} value={testDuration}>
                 <option value={10}>10 seconds</option>
@@ -135,7 +124,6 @@ const SinglePlayer = () => {
             </div>
             <div className="display">
             <div className="stats">
-            <h1 className="tittleText">Stats</h1>
                 <div className="stat">
                     <h3>WPM</h3>
                     <p>{wpm}</p>

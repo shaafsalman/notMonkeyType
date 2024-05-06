@@ -263,78 +263,25 @@
 
 
 
+  /* Default styles */
 
+/* Media query for screens smaller than 768px */
 @media (max-width: 768px) {
-  .mainGameContainer
-  {
-    width: 100%; 
-    margin-left: 0;
-    align-items: center;
-    overflow-y: auto;
-  }
-  .keyBoardContainer
-  {
-    display: none;
-  }
-  .display
-  {
-    width:80%;
-    bottom: 40vh;
-    height: 40vh;
-
-  }
-  .tittleText
-{
-  font-size:24px;
-  color:white;
-  font-weight: 600;
-}
-  .stats {
-    display: flex;
-    flex-direction: column;
-   }
-
-  .stat {
-    margin:  5px;
-    padding: 2px;
-    width: 80%;
-    background-color: #434190; 
-    border-radius: 10px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    transition: all 0.3s ease; /* Smooth transition for stats */
+  .mainGameContainer {
+    /* Adjust styles for smaller screens */
+    width: 100%; /* Occupy full width */
+    margin-left: 0; /* Remove left margin */
+    align-items: center; /* Center items vertically */
   }
   
-  .stat:hover {
-    transform: translateY(-5px); /* Hover effect */
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.4); /* Hover shadow */
-  }
-  
-  .stat h3 {
-    margin-bottom: 2px;
-    font-size:14px;
-    color: #fff;
-  }
-  
-  .stat p {
-    margin: 0;
-    font-size: 14px;
-    color: #B18DD3; 
-  }
-  
-
-
-
-
   .navbar {
-    display: hidden;
+    /* Adjust styles for smaller screens */
     justify-content: space-between; /* Space elements evenly */
-    margin-left: 0;
+    margin-left: 0; /* Remove left margin */
   }
   
-  .externalMonitor 
-  {
-    background-image:none;
+  .externalMonitor {
+    /* Adjust styles for smaller screens */
     width: 90%; /* Occupy 90% of the width */
     margin-left: 5%; /* Center horizontally */
   }
@@ -345,17 +292,21 @@
   }
 }
 
+/* Media query for screens smaller than 480px */
 @media (max-width: 480px) {
   .navbar {
-    flex-direction: column; 
-    align-items: center; 
+    /* Adjust styles for even smaller screens */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center items horizontally */
   }
   
   .navBtn {
-    margin: 5px; 
+    /* Adjust styles for even smaller screens */
+    margin: 5px; /* Reduce margin */
   }
   
   .stat {
-    width: 90%; 
+    /* Adjust styles for even smaller screens */
+    width: 90%; /* Occupy 90% of the width */
   }
 }

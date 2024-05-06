@@ -97,8 +97,7 @@ const SinglePlayer = () => {
 
     return (
         <div className="singlePlayer">
-            <div className="keyBoardContainer"><Keyboard/></div>
-
+            <Keyboard/>
              <div className="mainGameContainer">
         <nav className="navbar">
             <button className="navBtn">Back</button>
@@ -134,8 +133,9 @@ const SinglePlayer = () => {
                 </div>
             </div>
             <div className="display">
+            <h1 className="tittleText">notMonkeyType</h1>
+
             <div className="stats">
-            <h1 className="tittleText">Stats</h1>
                 <div className="stat">
                     <h3>WPM</h3>
                     <p>{wpm}</p>
