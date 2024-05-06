@@ -3,12 +3,11 @@ import styled from 'styled-components';
 import Spline from '@splinetool/react-spline';
 
 const Wrapper = styled.div`
-   position: absolute;
-   margin-left: 25vh;
-   margin-top:35vh;
-   width: 830px;
-   min-height: 200px;
-   z-index :10;
+   position: absolute
+   margin-left: 40vh;
+   margin-top:30vh;
+   width: 850px;
+   min-height: 490px;
    
 `;
 

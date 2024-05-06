@@ -95,9 +95,7 @@ const SinglePlayer = () => {
     };
 
     return (
-        <div className="singlePlayer">
-            <Keyboard/>
-             <div className="mainGameContainer">
+    <div className="mainGameContainer">
         <nav className="navbar">
             <button className="navBtn">Back</button>
             <h1 className="title">notMonkeyType</h1>
@@ -143,10 +141,10 @@ const SinglePlayer = () => {
                 <Timer timeRemaining={timeRemaining} />
                 </div>
         </div> 
+        <Keybaord/>
+
        
-         </div> 
-        </div>
-   
+    </div> //end main
 
      
     );

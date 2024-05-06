@@ -4,10 +4,10 @@ import Spline from '@splinetool/react-spline';
 
 const Wrapper = styled.div`
    position: absolute;
-   margin-left: 25vh;
-   margin-top:35vh;
-   width: 830px;
-   min-height: 200px;
+   margin-left: 30vh;
+   margin-top:32vh;
+   width: 850px;
+   min-height: 300px;
    z-index :10;
    
 `;
