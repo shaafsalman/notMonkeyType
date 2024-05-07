@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require("cors");
 const connection = require("./db");
 const { User } = require("./models/user");
-const { gameSession } = require("./models/gameSession");
 const userRoutes = require("./routes/registerUsers");
 const authRoutes = require("./routes/authenticate");
 const verifyEmailRoutes = require("./routes/verifyEmail");

@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 import Keyboard from '../Spline/keyboard';
 import ScoreCard from './../Cards/scoreCard'; 
 import axios from 'axios';
-import { jwtDecode } from "jwt-decode";
-
+import { Link } from 'react-router-dom';
 
 
 
@@ -22,7 +21,7 @@ const SinglePlayer = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [charClasses, setCharClasses] = useState(Array(testText.length).fill("default"));
   const [showScoreCard, setShowScoreCard] = useState(false);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(0); // Added score state
   const inputRef = useRef(null);
 
   const startTest = () => {
@@ -54,31 +53,6 @@ const SinglePlayer = () => {
     return () => clearInterval(timer);
   }, [testStarted, timeRemaining, userInput, testText]);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const { userId, email } = decodeToken(token);
-        setEmail(email);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-  
-    fetchUserData();
-  }, []);
-
-  const decodeToken = (token) => {
-    const decoded = jwtDecode(token);
-    const userId = decoded._id;
-    const email = decoded.email;
-
-    console.log("User Here");
-    console.log(userId, email);
-    return { userId, email };
-  };
-
-  
   const endTest = async () => { 
     setTestStarted(false);
     const typedChars = userInput.length;
@@ -100,27 +74,22 @@ const SinglePlayer = () => {
     setAccuracy(accuracyPercentage);
     setShowScoreCard(true);
   
+    // Send data to backend
     try {
-      const token = localStorage.getItem('token');
-      const { userId } = decodeToken(token);
-  
-      // Send data to backend
-      await axios.post('http://localhost:8080/api/gameSession/add', {
+      await axios.post('/api/game-sessions', {
         textUsed: testText,
         score: newScore,
         wpm: wordsPerMinute,
         accuracy: accuracyPercentage,
         sessionTime: testDuration,
-        userId: userId,
+        userId: 'yourUserId', // Replace with actual user ID
       });
-  
       setShowScoreCard(true);
     } catch (error) {
       console.error('Error saving game session:', error);
     }
   };
   
-
 
   const onInput = (e) => {
     if (!testStarted) return;

@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
 userSchema.methods.generateAuthToken = function () {
     const payload = {
         _id: this._id,
-        email: this.email 
+        email: this.email // Include the email in the payload
     };
 
     const token = jwt.sign(payload, process.env.JWTPRIVATEKEY, {

@@ -70,14 +70,11 @@ const SinglePlayer = () => {
 
   const decodeToken = (token) => {
     const decoded = jwtDecode(token);
+    console.log(decoded); // Log the decoded token
     const userId = decoded._id;
     const email = decoded.email;
-
-    console.log("User Here");
-    console.log(userId, email);
     return { userId, email };
   };
-
   
   const endTest = async () => { 
     setTestStarted(false);

@@ -72,11 +72,9 @@ const SinglePlayer = () => {
     const decoded = jwtDecode(token);
     const userId = decoded._id;
     const email = decoded.email;
-
-    console.log("User Here");
-    console.log(userId, email);
     return { userId, email };
   };
+  
 
   
   const endTest = async () => { 

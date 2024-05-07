@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Keyboard from '../Spline/keyboard';
 import ScoreCard from './../Cards/scoreCard'; 
 import axios from 'axios';
-import { jwtDecode } from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 
 
@@ -69,7 +69,7 @@ const SinglePlayer = () => {
   }, []);
 
   const decodeToken = (token) => {
-    const decoded = jwtDecode(token);
+    const decoded = jwt_decode(token);
     const userId = decoded._id;
     const email = decoded.email;
 

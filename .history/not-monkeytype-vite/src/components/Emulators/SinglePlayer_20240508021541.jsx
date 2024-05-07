@@ -10,6 +10,12 @@ import { jwtDecode } from "jwt-decode";
 
 
 
+const decodeToken = (token) => {
+  const decoded = jwt_decode(token);
+  const userId = decoded._id;
+  const email = decoded.email;
+  return { userId, email };
+};
 
 const SinglePlayer = () => {
   const [timeRemaining, setTimeRemaining] = useState(10);
@@ -69,14 +75,12 @@ const SinglePlayer = () => {
   }, []);
 
   const decodeToken = (token) => {
-    const decoded = jwtDecode(token);
+    const decoded = jwt_decode(token);
     const userId = decoded._id;
     const email = decoded.email;
-
-    console.log("User Here");
-    console.log(userId, email);
     return { userId, email };
   };
+  
 
   
   const endTest = async () => { 

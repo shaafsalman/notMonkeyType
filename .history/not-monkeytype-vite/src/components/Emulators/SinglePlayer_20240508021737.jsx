@@ -69,7 +69,7 @@ const SinglePlayer = () => {
   }, []);
 
   const decodeToken = (token) => {
-    const decoded = jwtDecode(token);
+    const decoded = jwt_decode(token);
     const userId = decoded._id;
     const email = decoded.email;
 

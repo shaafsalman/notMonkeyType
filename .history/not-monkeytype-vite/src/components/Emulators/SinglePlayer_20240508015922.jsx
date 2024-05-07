@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 import Keyboard from '../Spline/keyboard';
 import ScoreCard from './../Cards/scoreCard'; 
 import axios from 'axios';
-import { jwtDecode } from "jwt-decode";
-
 
 
 
@@ -22,7 +20,7 @@ const SinglePlayer = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [charClasses, setCharClasses] = useState(Array(testText.length).fill("default"));
   const [showScoreCard, setShowScoreCard] = useState(false);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(0); // Added score state
   const inputRef = useRef(null);
 
   const startTest = () => {
@@ -67,17 +65,6 @@ const SinglePlayer = () => {
   
     fetchUserData();
   }, []);
-
-  const decodeToken = (token) => {
-    const decoded = jwtDecode(token);
-    const userId = decoded._id;
-    const email = decoded.email;
-
-    console.log("User Here");
-    console.log(userId, email);
-    return { userId, email };
-  };
-
   
   const endTest = async () => { 
     setTestStarted(false);
@@ -104,23 +91,27 @@ const SinglePlayer = () => {
       const token = localStorage.getItem('token');
       const { userId } = decodeToken(token);
   
-      // Send data to backend
       await axios.post('http://localhost:8080/api/gameSession/add', {
         textUsed: testText,
         score: newScore,
         wpm: wordsPerMinute,
         accuracy: accuracyPercentage,
         sessionTime: testDuration,
-        userId: userId,
+        userId: userId, 
       });
-  
       setShowScoreCard(true);
     } catch (error) {
       console.error('Error saving game session:', error);
     }
   };
   
-
+  const decodeToken = (token) => {
+    const decoded = jwt_decode(token);
+    const userId = decoded._id;
+    const email = decoded.email;
+    return { userId, email };
+  };
+  
 
   const onInput = (e) => {
     if (!testStarted) return;
