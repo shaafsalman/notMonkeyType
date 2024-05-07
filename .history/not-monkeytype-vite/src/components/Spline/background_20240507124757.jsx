@@ -20,12 +20,9 @@ const Background = () => {
             <Spline
                  //darkmode
                 // scene= "https://prod.spline.design/DoKI4QlUg-OWEklY/scene.splinecode"
-                
+
                  //brightmode
-                // scene = "https://prod.spline.design/DoTBdvAUV6DRYatg/scene.splinecode"
-                   scene= "https://prod.spline.design/DoTBdvAUV6DRYatg/scene.splinecode"
-
-
+                scene = "https://prod.spline.design/DoTBdvAUV6DRYatg/scene.splinecode"
 
             />
         </Wrapper>

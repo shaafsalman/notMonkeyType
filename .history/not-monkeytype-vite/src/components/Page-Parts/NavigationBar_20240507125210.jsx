@@ -52,14 +52,13 @@ const NavigationBar = () => {
                 <FaCog className="inline-block mr-1" />
                 Settings
               </Link> */}
-             
+              <Link to="/Home/settings" className={`text-white hover:bg-indigo-800 hover:text-white rounded-md px-3 py-2 text-lg font-medium ${location.pathname === '/Home/settings' ? 'bg-indigo-800' : 'hover:bg-indigo-900 hover:text-white'}`}>
+                <FaCog className="inline-block mr-1" />
+                Settings
+              </Link>
               <Link to="/Home/Profile" className={`text-white hover:bg-indigo-800 hover:text-white rounded-md px-3 py-2 text-lg font-medium ${location.pathname === '/Home/Profile' ? 'bg-indigo-800' : 'hover:bg-indigo-900 hover:text-white'}`}>
                 <FaUser className="inline-block mr-1" />
                 Profile
-              </Link>
-              <Link to="/Login" className={`text-white hover:bg-indigo-800 hover:text-white rounded-md px-3 py-2 text-lg font-medium ${location.pathname === '/Home/settings' ? 'bg-indigo-800' : 'hover:bg-indigo-900 hover:text-white'}`}>
-                <FaCog className="inline-block mr-1" />
-                Logout
               </Link>
               <Link to="Home/about" className={`text-white  hover:bg-indigo-800 hover:text-white rounded-md ml-10 px-20 py-2 text-lg font-medium ${location.pathname === '/Home/about' ? 'bg-indigo-800' : 'hover:bg-indigo-900 hover:text-white'}`}>
                 <FaInfoCircle className="inline-block mr-1" />

@@ -27,7 +27,6 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Login />} />
             <Route path="/*" element={<ProtectedRoutes />} />
-            <Route path="/single-player" element={<SinglePlayer />} /> 
           </Routes>
         </div>
       </Router>
@@ -44,6 +43,7 @@ const ProtectedRoutes = () => {
           <Route path="/" element={<Login />} /> 
           <Route path="/Home" element={<GameMenu />} /> 
           <Route path="/Home/GameMenu" element={<GameMenu />} /> 
+          <Route path="/Home/single-player" element={<SinglePlayer />} /> 
           <Route path="/Home/Leaderboards" element={<Leaderboards />} />
           <Route path="/Home/Friends" element={<Friends />} />
           <Route path="/Home/Scores" element={<Scores />} />

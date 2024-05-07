@@ -3,7 +3,6 @@ import "./../style/emulator.css";
 import TestArea from './TestArea'; 
 import Timer from './Timer'; 
 import Results from './Results'; 
-import { Link } from 'react-router-dom';
 import Keyboard from '../Spline/keyboard';
 
 const SinglePlayer = () => {

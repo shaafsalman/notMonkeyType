@@ -27,7 +27,6 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Login />} />
             <Route path="/*" element={<ProtectedRoutes />} />
-            <Route path="/single-player" element={<SinglePlayer />} /> 
           </Routes>
         </div>
       </Router>

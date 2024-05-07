@@ -3,7 +3,6 @@ import "./../style/emulator.css";
 import TestArea from './TestArea'; 
 import Timer from './Timer'; 
 import Results from './Results'; 
-import { Link } from 'react-router-dom';
 import Keyboard from '../Spline/keyboard';
 
 const SinglePlayer = () => {
@@ -103,7 +102,7 @@ const SinglePlayer = () => {
              <div className="mainGameContainer">
         <nav className="navbar">
             {/* <button className="navBtn">Back</button> */}
-            <Link to="/home" className="w-full lg:w-auto mx-6 my-4 px-6 py-3 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center">
+            <Link to="/" className="w-full lg:w-auto mx-6 my-4 px-6 py-3 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center">
                 Back to Menu
               </Link>
             <h1 className="tittleText">notMonkeyType</h1>

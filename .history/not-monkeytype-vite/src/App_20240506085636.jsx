@@ -14,26 +14,28 @@ import NoPage from './components/Page-Parts/NoPage';
 import "./components/style/Home.css";
 import Background from './components/Spline/background';
 import SinglePlayer  from './components/Emulators/SinglePlayer';
-import Home from './components/Pages/Home';
+
 
 const App = () => {
   return (
     <div className="App">
-      <Background/>
-      <Router>
-        <div>
-          <Routes>
-            <Route path="/" element={<Login />} /> 
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Login />} />
-            <Route path="/*" element={<ProtectedRoutes />} />
-            <Route path="/single-player" element={<SinglePlayer />} /> 
-          </Routes>
-        </div>
-      </Router>
+       <SinglePlayer/> 
     </div>
   );
 };
+
+
+{/* <Background/>
+<Router>
+  <div>
+    <Routes>
+      <Route path="/" element={<Login />} /> 
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Login />} />
+      <Route path="/*" element={<ProtectedRoutes />} />
+    </Routes>
+  </div>
+</Router> */}
 
 const ProtectedRoutes = () => {
   return (
@@ -41,7 +43,7 @@ const ProtectedRoutes = () => {
       <NavigationBar />
       <div className="page-content">
         <Routes>
-          <Route path="/" element={<Login />} /> 
+          <Route path="/" element={<GameMenu />} /> 
           <Route path="/Home" element={<GameMenu />} /> 
           <Route path="/Home/GameMenu" element={<GameMenu />} /> 
           <Route path="/Home/Leaderboards" element={<Leaderboards />} />
@@ -50,6 +52,7 @@ const ProtectedRoutes = () => {
           <Route path="/Home/Settings" element={<Settings />} />
           <Route path="/Home/Profile" element={<Profile />} />
           <Route path="/Home/About" element={<About />} />
+          <Route path="/Home/SinglePlayer" element={<SinglePlayer />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </div>

@@ -3,7 +3,6 @@ import "./../style/emulator.css";
 import TestArea from './TestArea'; 
 import Timer from './Timer'; 
 import Results from './Results'; 
-import { Link } from 'react-router-dom';
 import Keyboard from '../Spline/keyboard';
 
 const SinglePlayer = () => {
@@ -11,7 +10,7 @@ const SinglePlayer = () => {
     const [testDuration, setTestDuration] = useState(60);
     const [wpm, setWpm] = useState('-');
     const [accuracy, setAccuracy] = useState('-');
-    const [testText] = useState("Betty decided to write a short story Betty decided to write a short story Betty decided to write a short story Betty decided to write a short story");
+    const [testText] = useState("Betty decided to write a short story...");
     const [userInput, setUserInput] = useState("");
     const [testStarted, setTestStarted] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -101,26 +100,30 @@ const SinglePlayer = () => {
             <div className="keyBoardContainer"><Keyboard/></div>
 
              <div className="mainGameContainer">
-        <nav className="navbar">
-            {/* <button className="navBtn">Back</button> */}
-            <Link to="/home" className="w-full lg:w-auto mx-6 my-4 px-6 py-3 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center">
-                Back to Menu
-              </Link>
-            <h1 className="tittleText">notMonkeyType</h1>
-            <div className="mode">Mode: SinglePlayer</div>
-            <select className="duration" onChange={handleDurationChange} value={testDuration}>
-                <option value={10}>10 seconds</option>
-                <option value={30}>30 seconds</option>
-                <option value={60}>60 seconds</option>
-                <option value={90}>90 seconds</option>
-                <option value={120}>120 seconds</option>
-            </select>
-            {testStarted ? (
-                <button className="navBtn" onClick={endTest}>Stop</button>
-            ) : (
-                <button className="navBtn" onClick={startTest}>Start</button>
-            )}
-        </nav>
+       <nav className="flex mx-50 mt-5 justify-between items-center px-10 py-2 bg-gradient-to-br from-purple-500 to-indigo-600 text-white w-max min-h-16 rounded-lg shadow-md transition duration-300">
+    <button className="px-10 py-2 flex items-center justify-center h-10 w-24 text-base text-white bg-purple-700 rounded-lg border border-purple-700 transition duration-300 hover:bg-indigo-700">
+        Back
+    </button>
+    <h1 className="text-2xl px-10 font-bold">notMonkeyType</h1>
+    <div className="mode text-xl">Mode: SinglePlayer</div>
+    <select className="px-4 py-2 ml-10 text-base text-white bg-gray-800 rounded-lg border border-gray-800 focus:outline-none focus:border-indigo-500">
+        <option value={10}>10 seconds</option>
+        <option value={30}>30 seconds</option>
+        <option value={60}>60 seconds</option>
+        <option value={90}>90 seconds</option>
+        <option value={120}>120 seconds</option>
+    </select>
+    {testStarted ? (
+        <button className="px-4 py-2 ml-10 flex items-center justify-center h-10 w-24 text-base text-white bg-purple-700 rounded-lg border border-purple-700 transition duration-300 hover:bg-indigo-700" onClick={endTest}>
+            Stop
+        </button>
+    ) : (
+        <button className="px-4 ml-10 py-2 flex items-center justify-center h-10 w-24 text-base text-white bg-purple-700 rounded-lg border border-purple-700 transition duration-300 hover:bg-indigo-700" onClick={startTest}>
+            Start
+        </button>
+    )}
+</nav>
+
 
             <div className="externalMonitor">
                 <div className="screen">
@@ -154,6 +157,8 @@ const SinglePlayer = () => {
        
          </div> 
         </div>
+   
+
      
     );
 }

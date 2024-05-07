@@ -22,12 +22,11 @@ const LoginForm = () => {
     try {
       const url = 'http://localhost:8080/api/authenticate';
       const response = await axios.post(url, data);
-      const token = response.data.data; // Retrieve token from response
-      localStorage.setItem('token', token); // Store token in local storage
+      localStorage.setItem('token', response.data.token);
       setSuccessMessage('Login successful');
       setShowMessage(true);
       // Navigate to Home after successful login
-      navigate('/Home');
+      // navigate('/Home');
     } catch (error) {
       if (
         error.response &&
