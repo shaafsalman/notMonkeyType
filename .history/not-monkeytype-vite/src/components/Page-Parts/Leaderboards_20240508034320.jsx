@@ -10,7 +10,7 @@ const Leaderboards = () => {
   useEffect(() => {
     const fetchGameSessions = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/gameSession/`); 
+        const response = await axios.get(`http://localhost:8080/api/gameSessions`); // Fetch data for all users
         setUserGameSessions(response.data);
       } catch (error) {
         console.error('Error fetching game sessions:', error);
@@ -109,7 +109,7 @@ const Leaderboards = () => {
               {userGameSessions.map((session, index) => (
                 <tr key={index} className={index % 2 === 0 ? "" : ""}>
                   <td className="py-2 text-center text-xl">{index + 1}</td>
-                  <td className="py-2 text-center text-xl">{session.email}</td>
+                  <td className="py-2 text-center text-xl">{session.name}</td>
                   <td className="py-2 text-center text-xl">{session.wpm}</td>
                   <td className="py-2 text-center text-xl">{session.accuracy}%</td>
                   <td className="py-2 text-center text-xl">{formatDate(session.createdAt)}</td>

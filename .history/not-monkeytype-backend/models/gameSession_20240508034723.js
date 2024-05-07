@@ -8,8 +8,7 @@ const gameSessionSchema = new mongoose.Schema({
     accuracy: { type: Number, required: true },
     sessionTime: { type: Number, required: true },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    createdAt: { type: Date, default: Date.now },
-    email: { type: String, required: true }
+    createdAt: { type: Date, default: Date.now }
 });
 
 const GameSession = mongoose.models.GameSession || mongoose.model("GameSession", gameSessionSchema);
@@ -21,9 +20,7 @@ const validateGameSession = (data) => {
         wpm: Joi.number().required().label("Words Per Minute"),
         accuracy: Joi.number().required().label("Accuracy"),
         sessionTime: Joi.number().required().label("Session Time"),
-        userId: Joi.string().required().label("User ID"),
-        email: Joi.string().required().label("email")
-
+        userId: Joi.string().required().label("User ID")
     });
     return schema.validate(data);
 };

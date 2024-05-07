@@ -113,7 +113,7 @@ const SinglePlayer = () => {
         accuracy: accuracyPercentage,
         sessionTime: testDuration,
         userId: userId,
-        email: email
+        email: name
 
       });
   

@@ -103,8 +103,6 @@ const SinglePlayer = () => {
     try {
       const token = localStorage.getItem('token');
       const { userId } = decodeToken(token);
-      const { email } = decodeToken(token);
-
   
       await axios.post('http://localhost:8080/api/gameSession/add', {
         textUsed: testText,
@@ -113,7 +111,7 @@ const SinglePlayer = () => {
         accuracy: accuracyPercentage,
         sessionTime: testDuration,
         userId: userId,
-        email: email
+        username: name
 
       });
   

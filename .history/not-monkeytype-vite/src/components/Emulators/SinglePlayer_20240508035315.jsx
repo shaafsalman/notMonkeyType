@@ -72,7 +72,7 @@ const SinglePlayer = () => {
     const decoded = jwtDecode(token);
     const userId = decoded._id;
     const email = decoded.email;
-    
+
     // console.log("User Here");
     // console.log(userId, email);
     return { userId, email };
@@ -103,8 +103,6 @@ const SinglePlayer = () => {
     try {
       const token = localStorage.getItem('token');
       const { userId } = decodeToken(token);
-      const { email } = decodeToken(token);
-
   
       await axios.post('http://localhost:8080/api/gameSession/add', {
         textUsed: testText,
@@ -113,7 +111,7 @@ const SinglePlayer = () => {
         accuracy: accuracyPercentage,
         sessionTime: testDuration,
         userId: userId,
-        email: email
+        username: name
 
       });
   

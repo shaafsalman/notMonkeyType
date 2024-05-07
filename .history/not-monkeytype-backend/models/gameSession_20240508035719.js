@@ -21,7 +21,7 @@ const validateGameSession = (data) => {
         wpm: Joi.number().required().label("Words Per Minute"),
         accuracy: Joi.number().required().label("Accuracy"),
         sessionTime: Joi.number().required().label("Session Time"),
-        userId: Joi.string().required().label("User ID"),
+        userId: Joi.string().required().label("User ID")
         email: Joi.string().required().label("email")
 
     });

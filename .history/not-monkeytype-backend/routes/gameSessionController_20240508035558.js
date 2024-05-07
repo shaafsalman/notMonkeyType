@@ -5,7 +5,7 @@ const { GameSession, validateGameSession } = require('../models/gameSession');
 router.post('/add', async (req, res) => {
   try {
     console.log('Request to add game session');
-    const { textUsed, score, wpm, accuracy, sessionTime, userId, email } = req.body;
+    const { textUsed, score, wpm, accuracy, sessionTime, userId } = req.body;
 
     const { error } = validateGameSession(req.body);
     if (error) return res.status(400).send(error.details[0].message);
