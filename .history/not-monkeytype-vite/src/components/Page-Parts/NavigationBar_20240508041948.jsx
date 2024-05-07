@@ -32,7 +32,7 @@ const NavigationBar = () => {
           </div> 
           <div className="hidden lg:block lg:ml-6">
             <div className="flex space-x-4">
-             <Link to="/Home/gamemenu" className={`text-white rounded-md px-3 py-2 text-lg font-medium ${location.pathname === '/Home/gamemenu' || location.pathname === '/Home'|| location.pathname === '/Home/GameMenu'  ? 'bg-indigo-800' : 'hover:bg-indigo-900 hover:text-white'}`}>
+             <Link to="/Home/gamemenu" className={`text-white rounded-md px-3 py-2 text-lg font-medium ${location.pathname === '/Home/gamemenu' || location.pathname === '/Home'|| location.pathname === '//Home/GameMenu'  ? 'bg-indigo-800' : 'hover:bg-indigo-900 hover:text-white'}`}>
                 <FaGamepad className="inline-block mr-1" />
                 Game Menu
               </Link>
@@ -73,7 +73,7 @@ const NavigationBar = () => {
       {/* Mobile Menu */}
       <div className={`${isOpen ? 'block' : 'hidden'} lg:hidden z-20`} id="mobile-menu">
         <div className="px-2 pt-2 pb-3 space-y-1">
-          <Link to="/Home/gamemenu" className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          <Link to="/GameMenu" className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
             <FaGamepad className="inline-block mr-1" />
             Game Menu
           </Link>

@@ -19,7 +19,7 @@ const ProjectCard = ({ name, technologiesUsed,detail, githubLink }) => {
   };
 
   return (
-    <div className=" bg-gradient-to-br from-purple-500 to-indigo-600 lg:rounded-lg  lg:w-max	 shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:-translate-y-1">
+    <div className=" bg-gradient-to-br from-purple-500 to-indigo-600 lg:rounded-lg  xl:w-max sm:w-210	 shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:-translate-y-1">
       <div className="p-5">
         <div className="mt-4 ">
           <h2 className="text-3xl font-bold text-white mb-2">{name}</h2>
@@ -40,7 +40,7 @@ const ProjectCard = ({ name, technologiesUsed,detail, githubLink }) => {
            <motion.button
                whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-               className="bg-black text-white py-2 lg:px-4 mt-2 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+               className="bg-black text-white py-2 px-4 mt-2 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
            >
               View on GitHub
            </motion.button>

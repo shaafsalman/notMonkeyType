@@ -40,7 +40,7 @@ const ProjectCard = ({ name, technologiesUsed,detail, githubLink }) => {
            <motion.button
                whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-               className="bg-black text-white py-2 lg:px-4 mt-2 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+               className="bg-black text-white py-2 lgpx-4 mt-2 rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
            >
               View on GitHub
            </motion.button>
