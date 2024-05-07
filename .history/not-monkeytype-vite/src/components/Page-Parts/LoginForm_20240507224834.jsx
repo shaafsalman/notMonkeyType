@@ -48,7 +48,7 @@ const LoginForm = () => {
         setShowMessage(false);
         setError('');
         setSuccessMessage('');
-      }, 3000);
+      }, 4000);
     }
     return () => clearTimeout(timeout);
   }, [showMessage]);

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import MessageCard from './mesgCard';
 
 const Profile = () => {
   const [email, setEmail] = useState('');
@@ -31,7 +30,7 @@ const Profile = () => {
   // Function to handle changing the password
   const handleChangePassword = async () => {
     try {
-      await axios.post('http://localhost:8080/api/profile/changePassword', {
+      await axios.post('/api/changePassword', {
         currentPassword,
         newPassword,
       }, {
@@ -51,9 +50,10 @@ const Profile = () => {
     }
   };
 
+  // Function to handle deleting the account
   const handleDeleteAccount = async () => {
     try {
-      await axios.post('http://localhost:8080/api/profile/deleteAccount', {}, {
+      await axios.post('/api/deleteAccount', {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`, 
         },
@@ -61,11 +61,14 @@ const Profile = () => {
       localStorage.removeItem('token');
       setDeleted(true);
     } catch (error) {
+      // Set failure message
       setMessage({ heading: 'Error', message: 'Failed to delete account. Please try again.' });
+      // Show message
       setIsMessageVisible(true);
     }
   };
 
+  // Function to close the message card
   const closeMessageCard = () => {
     setIsMessageVisible(false);
   };
@@ -82,7 +85,6 @@ const Profile = () => {
   }, [isMessageVisible]);
 
 
-  
   return (
     <>
       {deleted ? (
@@ -135,13 +137,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-      )}
-      {isMessageVisible && (
-        <MessageCard
-          Heading={message.heading}
-          Message={message.message}
-          onClose={closeMessageCard}
-        />
+        
       )}
     </>
   );

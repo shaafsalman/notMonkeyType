@@ -53,7 +53,7 @@ const Profile = () => {
 
   const handleDeleteAccount = async () => {
     try {
-      await axios.post('http://localhost:8080/api/profile/deleteAccount', {}, {
+      await axios.post('http://localhost:8080/api/deleteAccount', {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`, 
         },
