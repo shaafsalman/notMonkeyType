@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { User } = require('../models/user');
 const bcrypt = require('bcrypt');
-const authMiddleware = require('../middleware/authMiddleware');
+const authMiddleware = require('../middleware/authMiddleware'); // Import the authentication middleware
 
 // Apply the authMiddleware to the profile route
 router.get('/', authMiddleware, async (req, res) => {
