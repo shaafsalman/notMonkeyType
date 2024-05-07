@@ -1,7 +1,7 @@
 import React from 'react';
 import MemberCard from '../Cards/memberCard';
 import TeamCard from '../Cards/teamCard';
-import ProjectCard from '../Cards/ProjectCard';
+import ProjectCard from './ProjectCard';
 import member1Pic from '../../assets/racoon-pedro.gif'; 
 import member2Pic from '../../assets/racoon-pedro.gif'; 
 import member3Pic from '../../assets/racoon-pedro.gif'; 
@@ -25,13 +25,13 @@ const About = () => {
           </div>
           
           {/* Project Section */}
-          <div>
+          <div className='bg-gradient-to-br from-purple-500 to-indigo-600 lg:rounded-lg'>
             <h2 className="text-4xl font-bold text-white mb-8">Project</h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <ProjectCard
                 name="notMonkeyType"
                 detail="typing speed Game Single / MutiPlayer"
-                technologiesUsed="Vite,React,NodeJS,MongoDB,Spline"
+                technologiesUsed="Vite,React,NodeJS,MongoDB"
                 githubLink="https://github.com/shaafsalman/notMonkeyType.git"
               />
             </div>

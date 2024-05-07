@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaReact, FaNodeJs, FaDatabase } from 'react-icons/fa';
+import { FaReact, FaNodeJs, FaDatabase, FaAtom, FaCube } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 const ProjectCard = ({ name, technologiesUsed,detail, githubLink }) => {
@@ -8,31 +8,33 @@ const ProjectCard = ({ name, technologiesUsed,detail, githubLink }) => {
       case 'react':
         return <FaReact key={technology} className="inline-block text-2xl mr-1" />;
       case 'nodejs':
-        return <FaNodeJs key={technology} className="inline-block text-2xl mr-1" />;
+        return <FaNodeJs key={technology} className="inline-block text-2xl mx-1" />;
       case 'mongodb':
         return <FaDatabase key={technology} className="inline-block text-2xl mr-1" />;
+        case 'spline':
+          return <FaAtom key={technology} className="inline-block text-2xl mr-1" />;  
       default:
         return null;
     }
   };
 
   return (
-    <div className=" bg-white w-max	 shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:-translate-y-1">
+    <div className=" bg-gradient-to-br from-purple-500 to-indigo-600 lg:rounded-lg w-max	 shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:-translate-y-1">
       <div className="p-5">
-        <div className="mt-4">
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">{name}</h2>
-          <p className="text-xl text-gray-600 mb-2">
+        <div className="mt-4 px-4">
+          <h2 className="text-3xl font-bold text-white mb-2">{name}</h2>
+          <p className="text-xl mx-4 text-white mb-2">
              {technologiesUsed.split(',').map(tech => (
-              <span key={tech} className="mr-2">
+              <span key={tech} className="mr-2 ">
                 {getIcon(tech.trim())}
                 {tech.trim()}
               </span>
             ))}
           </p>
           <p></p>
-          <p className="text-xl text-gray-600 mb-2">{detail}</p>
+          <p className="text-xl text-white mb-2">{detail}</p>
 
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-white">
           </p>
           <a href={githubLink}className='m-40' target="_blank" rel="noopener noreferrer">
            <motion.button
@@ -42,7 +44,7 @@ const ProjectCard = ({ name, technologiesUsed,detail, githubLink }) => {
            >
               View on GitHub
            </motion.button>
-</a>
+          </a>
 
         </div>
       </div>

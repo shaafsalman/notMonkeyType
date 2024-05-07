@@ -23,17 +23,17 @@ const MemberCard = ({ profilePic, name, rollNumber, linkedin, email }) => {
           <div className="flex justify-center mt-4">
             <button
               onClick={handleContactClick}
-              className="bg-indigo-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-indigo-600 transition-colors duration-300"
+              className="bg-indigo-800 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-green-600 transition-colors duration-300"
             >
               Contact
             </button>
           </div>
           {showEmail && (
-            <p className="text-sm text-white mt-2">
+            <p className="text-sm text-gray-600 mt-2">
               Email:{' '}
               <a
                 href={`mailto:${email}`}
-                className=" text-xl text-white hover:underline"
+                className="text-blue-500 hover:underline"
               >
                 {email}
               </a>

@@ -29,11 +29,11 @@ const MemberCard = ({ profilePic, name, rollNumber, linkedin, email }) => {
             </button>
           </div>
           {showEmail && (
-            <p className="text-sm text-white mt-2">
+            <p className="text-sm text-gray-600 mt-2">
               Email:{' '}
               <a
                 href={`mailto:${email}`}
-                className=" text-xl text-white hover:underline"
+                className="text-blue-500 hover:underline"
               >
                 {email}
               </a>

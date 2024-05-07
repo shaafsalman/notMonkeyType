@@ -6,8 +6,8 @@ const TeamCard = ({ name, supervisor, teacher, assistant }) => {
       <div className="p-4">
         <div className="mt-4">
           <h2 className="text-3xl font-bold text-white mb-2">{name}</h2>
-          <p className=" text-xl text-white mb-2">Teacher: {teacher}</p>
-          <p className=" text-xl text-white mb-2">Assistant: {assistant}</p>
+          <p className=" text-xl text-gray-600 mb-2">Teacher: {teacher}</p>
+          <p className=" text-xl text-gray-600 mb-2">Assistant: {assistant}</p>
         </div>
       </div>
     </div>

@@ -45,6 +45,7 @@ body,html
 #verticalCard {
   min-width: 500px;   
   overflow: hidden;
+  background: #fff;
   padding: 25px;
 }
 

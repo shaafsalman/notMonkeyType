@@ -1,7 +1,7 @@
 import React from 'react';
 import MemberCard from '../Cards/memberCard';
 import TeamCard from '../Cards/teamCard';
-import ProjectCard from '../Cards/ProjectCard';
+import ProjectCard from './ProjectCard';
 import member1Pic from '../../assets/racoon-pedro.gif'; 
 import member2Pic from '../../assets/racoon-pedro.gif'; 
 import member3Pic from '../../assets/racoon-pedro.gif'; 
@@ -31,7 +31,7 @@ const About = () => {
               <ProjectCard
                 name="notMonkeyType"
                 detail="typing speed Game Single / MutiPlayer"
-                technologiesUsed="Vite,React,NodeJS,MongoDB,Spline"
+                technologiesUsed="Vite,React,NodeJS,MongoDB"
                 githubLink="https://github.com/shaafsalman/notMonkeyType.git"
               />
             </div>

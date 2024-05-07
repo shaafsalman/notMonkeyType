@@ -33,7 +33,7 @@ const MemberCard = ({ profilePic, name, rollNumber, linkedin, email }) => {
               Email:{' '}
               <a
                 href={`mailto:${email}`}
-                className=" text-xl text-white hover:underline"
+                className=" text-l text-white hover:underline"
               >
                 {email}
               </a>

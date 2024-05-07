@@ -31,7 +31,7 @@ const About = () => {
               <ProjectCard
                 name="notMonkeyType"
                 detail="typing speed Game Single / MutiPlayer"
-                technologiesUsed="Vite,React,NodeJS,MongoDB,Spline"
+                technologiesUsed="Vite,React,NodeJS,MongoDB"
                 githubLink="https://github.com/shaafsalman/notMonkeyType.git"
               />
             </div>
