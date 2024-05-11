@@ -89,18 +89,10 @@ body,html
 }
 
 .wrapper .logo:hover {
-  animation: glow 1.5s infinite alternate;
-  filter: drop-shadow(0 0 10px rgba(177, 141, 211, 0.8));
+  
+  shad
 }
 
-@keyframes glow {
-  0% {
-    filter: drop-shadow(0 0 10px rgba(177, 141, 211, 0.8));
-  }
-  100% {
-    filter: drop-shadow(0 0 20px rgba(177, 141, 211, 0.8));
-  }
-}
 
 .wrapper .title 
 {

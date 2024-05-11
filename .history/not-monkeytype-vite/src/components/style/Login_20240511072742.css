@@ -57,8 +57,7 @@ body,html
 
 .wrapper {
 
-  min-width: 550px ;
-  min-height: 620px ;
+
   margin-left: 55%;
   margin-top: 1vh;
   margin-bottom: 1vh;
@@ -86,20 +85,6 @@ body,html
   height: 120px;
   margin-right: 10px;
   margin-bottom: 10px;
-}
-
-.wrapper .logo:hover {
-  animation: glow 1.5s infinite alternate;
-  filter: drop-shadow(0 0 10px rgba(177, 141, 211, 0.8));
-}
-
-@keyframes glow {
-  0% {
-    filter: drop-shadow(0 0 10px rgba(177, 141, 211, 0.8));
-  }
-  100% {
-    filter: drop-shadow(0 0 20px rgba(177, 141, 211, 0.8));
-  }
 }
 
 .wrapper .title 
@@ -357,7 +342,7 @@ form .btn input[type="submit"] {
   margin-right: 10px;
 }
 
-@media only screen and (max-width: 1300px) {
+@media only screen and (max-width: 768px) {
   
   body {
     /* background-image: none; */
@@ -371,20 +356,20 @@ form .btn input[type="submit"] {
      overflow-y: hidden;
 
    }
+   
+
 
   .wrapper {
     min-width: 100% ;
-    min-height: 100% ;
+    min-height: 550px ;
     width: 60%; 
     padding: 2px;
     margin: 0%;
-    border-radius: 0px;
-
-    
   }
   .wrapper .logo {
     width: 120px;
     height: 140px;
+    margin-right: 20%;
     margin-bottom: 10px;
   }
 
@@ -410,7 +395,7 @@ form .btn input[type="submit"] {
 
 .form-container .form-inner 
 {
-  display: flex;
+  display:inline-block;
 
  
 }
@@ -421,14 +406,14 @@ form .btn input[type="submit"] {
 
 .form-inner form .field {
   height: 50px;
-  width: 100%;
+  width: 70%;
   margin-top: 60px;
 }
 .wrapper .title-text {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 80%;
 }
 
 .form-inner form .field input {
@@ -448,7 +433,7 @@ form .btn input[type="submit"] {
   position: relative;
   display: flex;
   height: 50%;
-  width: 100%;
+  width: 70%;
   overflow: hidden;
   margin: 10px 6 6px 6;
   justify-content: space-between;
