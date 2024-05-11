@@ -73,35 +73,35 @@ const NavigationBar = () => {
       {/* Mobile Menu */}
       <div className={`${isOpen ? 'block' : 'hidden'} lg:hidden z-20`} id="mobile-menu">
         <div className="px-2 pt-2 pb-3 space-y-1">
-          <Link to="/Home/gamemenu" className="text-white hover:bg-indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          <Link to="/Home/gamemenu" className="text-white hover:indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
             <FaGamepad className="inline-block mr-1" />
             Game Menu
           </Link>
-          <Link to="/Home/Leaderboards" className="text-white hover:bg-indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          <Link to="/Home/Leaderboards" className="text-white hover:indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
             <FaTrophy className="inline-block mr-1" />
             Leaderboard
           </Link>
-          <Link to="/Home/Friends" className="text-white hover:bg-indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          <Link to="/Home/Friends" className="text-white hover:indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
             <FaUserFriends className="inline-block mr-1" />
             Friends
           </Link>
-          <Link to="/Home/Scores" className="text-white hover:bg-indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          <Link to="/Home/Scores" className="text-white hover:indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
             <FaListAlt className="inline-block mr-1" />
             Scores
           </Link>
-          {/* <Link to="/Home/settings" className="text-white hover:bg-indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          {/* <Link to="/Home/settings" className="text-white hover:indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
             <FaCog className="inline-block mr-1" />
             Settings
           </Link> */}
-          <Link to="/Home/Profile" className="text-white hover:bg-indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          <Link to="/Home/Profile" className="text-white hover:indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
             <FaUser className="inline-block mr-1" />
             Profile
           </Link>
-          <Link to="/Home/about" className="text-white hover:bg-indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          <Link to="/Home/about" className="text-white hover:indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
             <FaInfoCircle className="inline-block mr-1" />
             About
           </Link>
-          <Link to="/Login" className="text-white hover:bg-indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+          <Link to="/Login" className="text-white hover:indigo-800 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
             <FaInfoCircle className="inline-block mr-1" />
             Log Out
           </Link>

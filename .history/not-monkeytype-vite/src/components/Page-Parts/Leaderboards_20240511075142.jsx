@@ -136,10 +136,7 @@ const Leaderboards = () => {
           </button>
         </th>
         <th className="py-2 text-center">
-          <button onClick={() => sortColumn('score')} className="flex items-center justify-center">
-            Score
-            {sortOrder.column === 'score' && (sortOrder.ascending ? <span>&uarr;</span> : <span>&darr;</span>)}
-          </button>
+       
         </th>
       </tr>
     </thead>
@@ -151,6 +148,7 @@ const Leaderboards = () => {
             <details>
               <summary>
                 {session.score}
+                <span className="ml-2">▼</span>
               </summary>
               <p>Word Per Minute: {session.wpm}</p>
               <p>Accuracy: {session.accuracy}%</p>

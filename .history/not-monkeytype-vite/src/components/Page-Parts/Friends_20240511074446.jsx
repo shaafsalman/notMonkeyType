@@ -22,7 +22,7 @@ const Friends = () => {
   };
 
   return (
-    <div className="max-w-screen-xl rounded-lg mx-auto mt-20 mb-40 overflow-hidden shadow-lg bg-transparent backdrop-filter backdrop-blur-md backdrop-saturate-150 bg-opacity-20 transition duration-500 transform hover:scale-105">
+    <div className="max-w-screen-xl rounded-lg ml-10 my-20 mr-20 ml-20	 overflow-hidden shadow-lg bg-gradient-to-br from-purple-500 to-indigo-600">
     <div className="px-6 py-4">
       <div className="font-bold text-4xl text-white mb-2">Friends</div>
         <div className="flex pr-2 items-center mb-8">

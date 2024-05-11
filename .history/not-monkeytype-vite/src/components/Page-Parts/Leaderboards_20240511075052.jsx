@@ -145,20 +145,33 @@ const Leaderboards = () => {
     </thead>
     <tbody>
       {userGameSessions.map((session, index) => (
-        <tr key={index} className={index % 2 === 0 ? "" : ""}>
-          <td className="py-2 text-center text-xl">{index + 1}</td>
-          <td className="py-2 text-center text-xl">
-            <details>
-              <summary>
-                {session.score}
-              </summary>
-              <p>Word Per Minute: {session.wpm}</p>
-              <p>Accuracy: {session.accuracy}%</p>
-              <p>Date: {formatDate(session.createdAt)}</p>
-              <p>Time Interval: {session.sessionTime}</p>
-            </details>
-          </td>
-        </tr>
+        <React.Fragment key={index}>
+          <tr className={index % 2 === 0 ? "" : ""}>
+            <td className="py-2 text-center text-xl">{index + 1}</td>
+            <td className="py-2 text-center text-xl relative">
+              {session.score}
+              <button
+                onClick={() => toggleDropdown(index)}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2"
+              >
+                <span className="text-xl">&#9660;</span>
+              </button>
+            </td>
+          </tr>
+          {dropdownOpen === index && (
+            <tr className={index % 2 === 0 ? "" : ""}>
+              <td colSpan="2" className="py-2 px-5">
+                <div className="flex justify-around">
+                  <span>{session.email}</span>
+                  <span>{session.wpm} WPM</span>
+                  <span>{session.accuracy}% Accuracy</span>
+                  <span>{formatDate(session.createdAt)}</span>
+                  <span>{session.sessionTime} Time Interval</span>
+                </div>
+              </td>
+            </tr>
+          )}
+        </React.Fragment>
       ))}
     </tbody>
   </table>

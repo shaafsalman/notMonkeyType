@@ -147,10 +147,10 @@ const Leaderboards = () => {
       {userGameSessions.map((session, index) => (
         <tr key={index} className={index % 2 === 0 ? "" : ""}>
           <td className="py-2 text-center text-xl">{index + 1}</td>
-          <td className="py-2 text-center text-xl">
             <details>
               <summary>
                 {session.score}
+                <span className="ml-2">▼</span>
               </summary>
               <p>Word Per Minute: {session.wpm}</p>
               <p>Accuracy: {session.accuracy}%</p>

@@ -10,6 +10,7 @@ import About from '../Page-Parts/About';
 import Footer from '../Page-Parts/Footer';
 import Profile from '../Page-Parts/Profile';
 import NoPage from '../Page-Parts/NoPage';
+import "../style/Home.css";
 import Background from '../Spline/background';
 
 

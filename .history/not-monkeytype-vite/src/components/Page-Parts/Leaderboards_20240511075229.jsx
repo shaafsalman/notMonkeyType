@@ -151,6 +151,7 @@ const Leaderboards = () => {
             <details>
               <summary>
                 {session.score}
+                <span className="ml-2">▼</span>
               </summary>
               <p>Word Per Minute: {session.wpm}</p>
               <p>Accuracy: {session.accuracy}%</p>

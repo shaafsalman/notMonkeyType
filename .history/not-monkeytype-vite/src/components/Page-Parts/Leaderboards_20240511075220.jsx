@@ -151,7 +151,6 @@ const Leaderboards = () => {
             <details>
               <summary>
                 {session.score}
-              </summary>
               <p>Word Per Minute: {session.wpm}</p>
               <p>Accuracy: {session.accuracy}%</p>
               <p>Date: {formatDate(session.createdAt)}</p>

@@ -90,7 +90,7 @@ const Profile = () => {
           <div className="max-w-screen-xl rounded-lg ml- my-20 mr-20 ml-20 overflow-hidden shadow-lg bg-gradient-to-br from-purple-500 to-indigo-600">
             <div className="px-6 py-4">
               <p>Your account has been successfully deleted.</p>
-              <p><Link to="/hero">Click here to login again.</Link></p>
+              <p><Link to="/login">Click here to login again.</Link></p>
             </div>
           </div>
         </div>

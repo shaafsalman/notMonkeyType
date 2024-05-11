@@ -87,10 +87,10 @@ const Profile = () => {
     <>
       {deleted ? (
         <div className="flex justify-center items-center h-full">
-          <div className="max-w-screen-xl rounded-lg ml- my-20 mr-20 ml-20 overflow-hidden shadow-lg bg-gradient-to-br from-purple-500 to-indigo-600">
+    <div className="max-w-screen-xl rounded-lg mx-auto my-20 overflow-hidden shadow-lg bg-transparent backdrop-filter backdrop-blur-md backdrop-saturate-150 bg-opacity-20 transition duration-500 transform hover:scale-105">
             <div className="px-6 py-4">
               <p>Your account has been successfully deleted.</p>
-              <p><Link to="/hero">Click here to login again.</Link></p>
+              <p><Link to="/login">Click here to login again.</Link></p>
             </div>
           </div>
         </div>

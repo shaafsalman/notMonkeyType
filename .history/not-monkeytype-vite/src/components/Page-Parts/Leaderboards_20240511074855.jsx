@@ -124,46 +124,34 @@ const Leaderboards = () => {
         </div>
   
         {/* Mobile version */}
-       {/* Mobile version */}
-<div className="sm:hidden">
-  <table className="w-full text-white">
-    <thead>
-      <tr className="text-2xl pb-10 px-5">
-        <th className="mx-10 text-center">
-          <button onClick={() => sortColumn('rank')} className="flex items-center justify-center">
-            Rank
-            {sortOrder.column === 'rank' && (sortOrder.ascending ? <span>&uarr;</span> : <span>&darr;</span>)}
-          </button>
-        </th>
-        <th className="py-2 text-center">
-          <button onClick={() => sortColumn('score')} className="flex items-center justify-center">
-            Score
-            {sortOrder.column === 'score' && (sortOrder.ascending ? <span>&uarr;</span> : <span>&darr;</span>)}
-          </button>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {userGameSessions.map((session, index) => (
-        <tr key={index} className={index % 2 === 0 ? "" : ""}>
-          <td className="py-2 text-center text-xl">{index + 1}</td>
-          <td className="py-2 text-center text-xl">
-            <details>
-              <summary>
-                {session.score}
-              </summary>
-              <p>Word Per Minute: {session.wpm}</p>
-              <p>Accuracy: {session.accuracy}%</p>
-              <p>Date: {formatDate(session.createdAt)}</p>
-              <p>Time Interval: {session.sessionTime}</p>
-            </details>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
-
+        <div className="sm:hidden">
+          <table className="w-full text-white">
+            <thead>
+              <tr className="text-2xl pb-10 px-5">
+                <th className="mx-10 text-center">
+                  <button onClick={() => sortColumn('rank')} className="flex items-center justify-center">
+                    Rank
+                    {sortOrder.column === 'rank' && (sortOrder.ascending ? <span>&uarr;</span> : <span>&darr;</span>)}
+                  </button>
+                </th>
+                <th className="py-2 text-center">
+                  <button onClick={() => sortColumn('score')} className="flex items-center justify-center">
+                    Score
+                    {sortOrder.column === 'score' && (sortOrder.ascending ? <span>&uarr;</span> : <span>&darr;</span>)}
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {userGameSessions.map((session, index) => (
+                <tr key={index} className={index % 2 === 0 ? "" : ""}>
+                  <td className="py-2 text-center text-xl">{index + 1}</td>
+                  <td className="py-2 text-center text-xl">{session.score}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
