@@ -175,7 +175,7 @@ const SinglePlayer = () => {
     Mode: SinglePlayer
   </div>
   <div className="duration-container ml-20">
-    <select className="duration bg-white border border-gray-300 rounded-md px-3 py-2 outline-none focus:border-indigo-500 transition duration-300" onChange={handleDurationChange} value={testDuration}>
+    <select className="duration bg-white border border-gray-300 rounded-md px-3 py-2 outline-none focus:border-indigo-500 transition duration-300">
       <option value={10}>10 seconds</option>
       <option value={30}>30 seconds</option>
       <option value={60}>60 seconds</option>
@@ -192,8 +192,6 @@ const SinglePlayer = () => {
     <button className="navBtn ml-6" onClick={startTest}>Start</button>
   )}
 </nav>
-
-     
 
 
         <div className="externalMonitor">

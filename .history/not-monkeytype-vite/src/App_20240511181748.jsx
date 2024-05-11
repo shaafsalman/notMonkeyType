@@ -26,7 +26,7 @@ const App = () => {
       <Router>
         <div>
           <Routes>
-            <Route path="/" element={<HeroPage/>} /> 
+            <Route path="/" element={<HeroPage />} /> 
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Login />} />
             <Route path="/*" element={<ProtectedRoutes />} />

@@ -1,22 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import "./../style/emulator.css";
-import TestArea from './TestArea'; 
-import Timer from './Timer'; 
+import TestArea from './TestArea';
+import Timer from './Timer';
 import { Link } from 'react-router-dom';
 import Keyboard from '../Spline/keyboard';
-import ScoreCard from './../Cards/scoreCard'; 
+import ScoreCard from './../Cards/scoreCard';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
-
-
-
 
 const SinglePlayer = () => {
   const [timeRemaining, setTimeRemaining] = useState(10);
   const [testDuration, setTestDuration] = useState(10);
   const [wpm, setWpm] = useState('-');
   const [accuracy, setAccuracy] = useState('-');
-  const [testText] = useState("Betty decided to write a short story Betty decided to write a short story Betty decided to write a short story Betty decided to write a short story");
+  const [testText] = useState("In the heart of the ancient and mystical lands of Hogwarts, the air shimmered with the echo of enchantments and whispered secrets. The grand castle, with its towering spires and labyrinthine corridors, was more than just a school for wizardry; it was a place where legends came to life.");
   const [userInput, setUserInput] = useState("");
   const [testStarted, setTestStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -25,7 +22,7 @@ const SinglePlayer = () => {
   const [score, setScore] = useState(0);
   const inputRef = useRef(null);
 
-  const startTest = () => {
+  const startTest = useCallback(() => {
     setTestStarted(true);
     setTimeRemaining(testDuration);
     setUserInput("");
@@ -34,7 +31,7 @@ const SinglePlayer = () => {
     setCurrentIndex(0);
     setCharClasses(Array(testText.length).fill("default"));
     setShowScoreCard(false);
-  };
+  }, [testDuration, testText.length]);
 
   useEffect(() => {
     if (testStarted) {
@@ -42,31 +39,23 @@ const SinglePlayer = () => {
     }
   }, [testStarted]);
 
-
   useEffect(() => {
-    let timer;
-    if (testStarted && timeRemaining > 0) {
-      timer = setInterval(() => {
-        setTimeRemaining((prev) => prev - 1);
+    if (!testStarted) return;
+    if (timeRemaining > 0) {
+      const timer = setTimeout(() => {
+        setTimeRemaining(timeRemaining - 1);
       }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [testStarted, timeRemaining]);
-  
-
-
-  useEffect(() => {
-    if (userInput.length === testText.length || timeRemaining === 0 || !testStarted) {
+      return () => clearTimeout(timer);
+    } else {
       endTest();
     }
-  }, [userInput, testText, timeRemaining, testStarted]);
+  }, [testStarted, timeRemaining]);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem('token');
         const { userId, email } = decodeToken(token);
-        setEmail(email);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -75,46 +64,36 @@ const SinglePlayer = () => {
     fetchUserData();
   }, []);
 
-  const decodeToken = (token) => {
+  const decodeToken = useCallback((token) => {
     const decoded = jwtDecode(token);
     const userId = decoded._id;
     const email = decoded.email;
-    
-    // console.log("User Here");
-    // console.log(userId, email);
     return { userId, email };
-  };
+  }, []);
 
-  
-  const endTest = async () => { 
+  const endTest = useCallback(async () => {
     setTestStarted(false);
     const typedChars = userInput.length;
     const correctChars = charClasses.filter(c => c === 'correct').length;
-  
-    // Calculating WPM
+
     const wordsTyped = typedChars / 5;
     const minutes = testDuration / 60;
     const wordsPerMinute = (wordsTyped / minutes).toFixed(2);
-  
-    // Calculating Accuracy
+
     const accuracyPercentage = ((correctChars / typedChars) * 100).toFixed(2);
-  
-    // Computing Score
+
     const newScore = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
     setScore(newScore);
-  
+
     setWpm(wordsPerMinute);
     setAccuracy(accuracyPercentage);
     setShowScoreCard(true);
-    setTimeRemaining(60);
 
-  
     try {
       const token = localStorage.getItem('token');
       const { userId } = decodeToken(token);
       const { email } = decodeToken(token);
 
-  
       await axios.post('http://localhost:8080/api/gameSession/add', {
         textUsed: testText,
         score: newScore,
@@ -123,22 +102,18 @@ const SinglePlayer = () => {
         sessionTime: testDuration,
         userId: userId,
         email: email
-
       });
-  
+
       setShowScoreCard(true);
     } catch (error) {
       console.error('Error saving game session:', error);
     }
-  };
-  
+  }, [charClasses, decodeToken, testDuration, testText, userInput]);
 
-
-  const onInput = (e) => {
+  const onInput = useCallback((e) => {
     if (!testStarted) return;
 
     const value = e.target.value;
-
     const newCharClasses = [...charClasses];
 
     if (value.length < userInput.length && currentIndex > 0) {
@@ -155,46 +130,36 @@ const SinglePlayer = () => {
 
     setUserInput(value);
     setCharClasses(newCharClasses);
-  };
+  }, [testStarted, charClasses, currentIndex, testText, userInput]);
 
-  const handleDurationChange = (e) => {
+  const handleDurationChange = useCallback((e) => {
     setTestDuration(parseInt(e.target.value));
-  };
+  }, []);
 
   return (
     <div className="singlePlayer">
       <div className="keyBoardContainer"><Keyboard/></div>
 
       <div className="mainGameContainer">
-      <nav className="navbar flex justify-end items-center px-10 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg shadow-lg transition duration-300">
-  <Link to="/home" className="mx-6 my-4 px-6 py-3 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center">
-    Back to Menu
-  </Link>
-  <h1 className="tittleText">notMonkeyType</h1>
-  <div className="mode ml-auto">
-    Mode: SinglePlayer
-  </div>
-  <div className="duration-container ml-20">
-    <select className="duration bg-white border border-gray-300 rounded-md px-3 py-2 outline-none focus:border-indigo-500 transition duration-300" onChange={handleDurationChange} value={testDuration}>
-      <option value={10}>10 seconds</option>
-      <option value={30}>30 seconds</option>
-      <option value={60}>60 seconds</option>
-      <option value={90}>90 seconds</option>
-      <option value={120}>120 seconds</option>
-    </select>
-    <div className="duration-arrow">
-      <svg className="w-4 h-4 fill-current text-gray-500" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" /></svg>
-    </div>
-  </div>
-  {testStarted ? (
-    <button className="navBtn ml-6" onClick={endTest}>Stop</button>
-  ) : (
-    <button className="navBtn ml-6" onClick={startTest}>Start</button>
-  )}
-</nav>
-
-     
-
+        <nav className="navbar">
+          <Link to="/home" className="w-full lg:w-auto mx-6 my-4 px-6 py-3 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center">
+            Back to Menu
+          </Link>
+          <h1 className="tittleText">notMonkeyType</h1>
+          <div className="mode">Mode: SinglePlayer</div>
+          <select className="duration" onChange={handleDurationChange} value={testDuration}>
+            <option value={10}>10 seconds</option>
+            <option value={30}>30 seconds</option>
+            <option value={60}>60 seconds</option>
+            <option value={90}>90 seconds</option>
+            <option value={120}>120 seconds</option>
+          </select>
+          {testStarted ? (
+            <button className="navBtn" onClick={endTest}>Stop</button>
+          ) : (
+            <button className="navBtn" onClick={startTest}>Start</button>
+          )}
+        </nav>
 
         <div className="externalMonitor">
           <div className="screen">
@@ -233,7 +198,7 @@ const SinglePlayer = () => {
           wpm={wpm}
           time={testDuration}
           accuracy={accuracy}
-          score={score} // Passing score to ScoreCard
+          score={score}
           onClose={() => setShowScoreCard(false)}
         />
       )}
