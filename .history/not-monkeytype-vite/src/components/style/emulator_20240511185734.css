@@ -355,11 +355,10 @@
   .screen {
     position: absolute;
     height: auto;
-    width: 100%; 
+    width: 120%; 
     margin-left: 5%; 
   }
-  .display {
-    display: none; 
+  .display { 
   }
   
   .navBtn {

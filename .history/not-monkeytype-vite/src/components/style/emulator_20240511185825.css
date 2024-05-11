@@ -352,12 +352,6 @@
     flex-direction: column; 
     align-items: center; 
   }
-  .screen {
-    position: absolute;
-    height: auto;
-    width: 100%; 
-    margin-left: 5%; 
-  }
   .display {
     display: none; 
   }

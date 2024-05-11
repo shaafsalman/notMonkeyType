@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import "./../style/emulator.css";
-import TestArea from './TestArea'; 
-import Timer from './Timer'; 
-import { Link } from 'react-router-dom';
 import Keyboard from '../Spline/keyboard';
+import Navbar from './Navbar';
+import MainGameContainer from './MainGameController';
 import ScoreCard from './../Cards/scoreCard'; 
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
-import NavigationBar from './emulatorNavigationBar';
-
-
 
 const SinglePlayer = () => {
   const [timeRemaining, setTimeRemaining] = useState(10);
@@ -24,8 +20,6 @@ const SinglePlayer = () => {
   const [showScoreCard, setShowScoreCard] = useState(false);
   const [score, setScore] = useState(0);
   const inputRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
-
 
   const startTest = () => {
     setTestStarted(true);
@@ -44,7 +38,6 @@ const SinglePlayer = () => {
     }
   }, [testStarted]);
 
-
   useEffect(() => {
     let timer;
     if (testStarted && timeRemaining > 0) {
@@ -54,8 +47,6 @@ const SinglePlayer = () => {
     }
     return () => clearInterval(timer);
   }, [testStarted, timeRemaining]);
-  
-
 
   useEffect(() => {
     if (userInput.length === testText.length || timeRemaining === 0 || !testStarted) {
@@ -81,27 +72,20 @@ const SinglePlayer = () => {
     const decoded = jwtDecode(token);
     const userId = decoded._id;
     const email = decoded.email;
-    
-    // console.log("User Here");
-    // console.log(userId, email);
     return { userId, email };
   };
 
-  
   const endTest = async () => { 
     setTestStarted(false);
     const typedChars = userInput.length;
     const correctChars = charClasses.filter(c => c === 'correct').length;
   
-    // Calculating WPM
     const wordsTyped = typedChars / 5;
     const minutes = testDuration / 60;
     const wordsPerMinute = (wordsTyped / minutes).toFixed(2);
   
-    // Calculating Accuracy
     const accuracyPercentage = ((correctChars / typedChars) * 100).toFixed(2);
   
-    // Computing Score
     const newScore = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
     setScore(newScore);
   
@@ -109,14 +93,12 @@ const SinglePlayer = () => {
     setAccuracy(accuracyPercentage);
     setShowScoreCard(true);
     setTimeRemaining(60);
-
   
     try {
       const token = localStorage.getItem('token');
       const { userId } = decodeToken(token);
       const { email } = decodeToken(token);
 
-  
       await axios.post('http://localhost:8080/api/gameSession/add', {
         textUsed: testText,
         score: newScore,
@@ -125,7 +107,6 @@ const SinglePlayer = () => {
         sessionTime: testDuration,
         userId: userId,
         email: email
-
       });
   
       setShowScoreCard(true);
@@ -133,8 +114,6 @@ const SinglePlayer = () => {
       console.error('Error saving game session:', error);
     }
   };
-  
-
 
   const onInput = (e) => {
     if (!testStarted) return;
@@ -162,71 +141,22 @@ const SinglePlayer = () => {
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
   };
-  
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Adjust the breakpoint as needed
-    };
-
-    handleResize(); // Set initial state based on window width
-    window.addEventListener('resize', handleResize); // Listen for window resize events
-
-    return () => {
-      window.removeEventListener('resize', handleResize); // Clean up event listener on unmount
-    };
-  }, []);
-
-
-
-
 
   return (
     <div className="singlePlayer">
-      <div className="keyBoardContainer"><Keyboard/></div>
-
-      <div className="mainGameContainer">
-      <NavigationBar
-        isMobile={isMobile}
-        handleDurationChange={handleDurationChange}
-        testDuration={testDuration}
-        testStarted={testStarted}
-        startTest={startTest}
-        endTest={endTest}
-      />
-
-
-        <div className="externalMonitor">
-          <div className="screen">
-            <TestArea testText={testText} charClasses={charClasses} />
-            <input
-              type="text"
-              onChange={onInput}
-              value={userInput}
-              ref={inputRef}
-              disabled={!testStarted}
-              style={{ opacity: 0, position: 'absolute', left: '-9999px' }}
-              autoFocus
-              tabIndex={-1}
-            />
-          </div>
-        </div>
-
-        <div className="display">
-          <div className="stats">
-            <h1 className="tittleText">Stats</h1>
-            <div className="stat">
-              <h3>WPM</h3>
-              <p>{wpm}</p>
-            </div>
-            <div className="stat">
-              <h3>Accuracy</h3>
-              <p>{accuracy}%</p>
-            </div>
-            <Timer timeRemaining={timeRemaining} />
-          </div>
-        </div>
+      <div className="keyBoardContainer">
+        <Keyboard/>
       </div>
-
+      <MainGameContainer
+        testText={testText}
+        charClasses={charClasses}
+        userInput={userInput}
+        onInput={onInput}
+        testStarted={testStarted}
+        timeRemaining={timeRemaining}
+        wpm={wpm}
+        accuracy={accuracy}
+      />
       {showScoreCard && (
         <ScoreCard
           wpm={wpm}

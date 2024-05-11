@@ -7,7 +7,7 @@ import Keyboard from '../Spline/keyboard';
 import ScoreCard from './../Cards/scoreCard'; 
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
-import NavigationBar from './emulatorNavigationBar';
+
 
 
 
@@ -24,8 +24,6 @@ const SinglePlayer = () => {
   const [showScoreCard, setShowScoreCard] = useState(false);
   const [score, setScore] = useState(0);
   const inputRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
-
 
   const startTest = () => {
     setTestStarted(true);
@@ -57,11 +55,11 @@ const SinglePlayer = () => {
   
 
 
-  useEffect(() => {
-    if (userInput.length === testText.length || timeRemaining === 0 || !testStarted) {
-      endTest();
-    }
-  }, [userInput, testText, timeRemaining, testStarted]);
+useEffect(() => {
+  if (userInput.length === testText.length || timeRemaining === 0 || !testStarted) {
+    endTest();
+  }
+}, [userInput, testText, timeRemaining, testStarted]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -108,8 +106,6 @@ const SinglePlayer = () => {
     setWpm(wordsPerMinute);
     setAccuracy(accuracyPercentage);
     setShowScoreCard(true);
-    setTimeRemaining(60);
-
   
     try {
       const token = localStorage.getItem('token');
@@ -162,38 +158,31 @@ const SinglePlayer = () => {
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
   };
-  
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Adjust the breakpoint as needed
-    };
-
-    handleResize(); // Set initial state based on window width
-    window.addEventListener('resize', handleResize); // Listen for window resize events
-
-    return () => {
-      window.removeEventListener('resize', handleResize); // Clean up event listener on unmount
-    };
-  }, []);
-
-
-
-
 
   return (
     <div className="singlePlayer">
       <div className="keyBoardContainer"><Keyboard/></div>
 
       <div className="mainGameContainer">
-      <NavigationBar
-        isMobile={isMobile}
-        handleDurationChange={handleDurationChange}
-        testDuration={testDuration}
-        testStarted={testStarted}
-        startTest={startTest}
-        endTest={endTest}
-      />
-
+        <nav className="navbar">
+          <Link to="/home" className="w-full lg:w-auto mx-6 my-4 px-6 py-3 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center">
+            Back to Menu
+          </Link>
+          <h1 className="tittleText">notMonkeyType</h1>
+          <div className="mode">Mode: SinglePlayer</div>
+          <select className="duration" onChange={handleDurationChange} value={testDuration}>
+            <option value={10}>10 seconds</option>
+            <option value={30}>30 seconds</option>
+            <option value={60}>60 seconds</option>
+            <option value={90}>90 seconds</option>
+            <option value={120}>120 seconds</option>
+          </select>
+          {testStarted ? (
+            <button className="navBtn" onClick={endTest}>Stop</button>
+          ) : (
+            <button className="navBtn" onClick={startTest}>Start</button>
+          )}
+        </nav>
 
         <div className="externalMonitor">
           <div className="screen">

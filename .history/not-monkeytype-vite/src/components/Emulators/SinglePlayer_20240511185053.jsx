@@ -7,7 +7,7 @@ import Keyboard from '../Spline/keyboard';
 import ScoreCard from './../Cards/scoreCard'; 
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
-import NavigationBar from './emulatorNavigationBar';
+
 
 
 
@@ -24,8 +24,6 @@ const SinglePlayer = () => {
   const [showScoreCard, setShowScoreCard] = useState(false);
   const [score, setScore] = useState(0);
   const inputRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
-
 
   const startTest = () => {
     setTestStarted(true);
@@ -162,37 +160,16 @@ const SinglePlayer = () => {
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
   };
-  
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Adjust the breakpoint as needed
-    };
-
-    handleResize(); // Set initial state based on window width
-    window.addEventListener('resize', handleResize); // Listen for window resize events
-
-    return () => {
-      window.removeEventListener('resize', handleResize); // Clean up event listener on unmount
-    };
-  }, []);
-
-
-
-
 
   return (
     <div className="singlePlayer">
       <div className="keyBoardContainer"><Keyboard/></div>
 
       <div className="mainGameContainer">
-      <NavigationBar
-        isMobile={isMobile}
-        handleDurationChange={handleDurationChange}
-        testDuration={testDuration}
-        testStarted={testStarted}
-        startTest={startTest}
-        endTest={endTest}
-      />
+        
+     
+
+     
 
 
         <div className="externalMonitor">

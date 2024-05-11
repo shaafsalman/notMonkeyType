@@ -7,7 +7,7 @@ import Keyboard from '../Spline/keyboard';
 import ScoreCard from './../Cards/scoreCard'; 
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
-import NavigationBar from './emulatorNavigationBar';
+
 
 
 
@@ -24,8 +24,6 @@ const SinglePlayer = () => {
   const [showScoreCard, setShowScoreCard] = useState(false);
   const [score, setScore] = useState(0);
   const inputRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
-
 
   const startTest = () => {
     setTestStarted(true);
@@ -162,37 +160,38 @@ const SinglePlayer = () => {
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
   };
-  
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Adjust the breakpoint as needed
-    };
-
-    handleResize(); // Set initial state based on window width
-    window.addEventListener('resize', handleResize); // Listen for window resize events
-
-    return () => {
-      window.removeEventListener('resize', handleResize); // Clean up event listener on unmount
-    };
-  }, []);
-
-
-
-
 
   return (
     <div className="singlePlayer">
       <div className="keyBoardContainer"><Keyboard/></div>
 
       <div className="mainGameContainer">
-      <NavigationBar
-        isMobile={isMobile}
-        handleDurationChange={handleDurationChange}
-        testDuration={testDuration}
-        testStarted={testStarted}
-        startTest={startTest}
-        endTest={endTest}
-      />
+      <nav className="navbar flex justify-end items-center px-10 py-1 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg shadow-lg transition duration-300">
+  <Link to="/home" className="mx-6 my-4 px-6 py-3 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center">
+    Back to Menu
+  </Link>
+  <h1 className="tittleText">notMonkeyType</h1>
+  <div className="mode ml-auto">
+    Mode: SinglePlayer
+  </div>
+  <div className="duration-container ml-20">
+    <select className="duration bg-white border border-gray-300 rounded-md px-3 py-2 outline-none focus:border-indigo-500 transition duration-300" onChange={handleDurationChange} value={testDuration}>
+      <option value={10}>10 seconds</option>
+      <option value={30}>30 seconds</option>
+      <option value={60}>60 seconds</option>
+      <option value={90}>90 seconds</option>
+      <option value={120}>120 seconds</option>
+    </select>
+ 
+  </div>
+  {testStarted ? (
+    <button className="mx-12 my-4 px-6 py-3 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center" onClick={endTest}>Stop</button>
+  ) : (
+    <button className="mx-12 my-4 px-6 py-3 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center" onClick={startTest}>Start</button>
+  )}
+</nav>
+
+     
 
 
         <div className="externalMonitor">

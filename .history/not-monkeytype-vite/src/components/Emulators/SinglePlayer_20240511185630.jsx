@@ -7,7 +7,7 @@ import Keyboard from '../Spline/keyboard';
 import ScoreCard from './../Cards/scoreCard'; 
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
-import NavigationBar from './emulatorNavigationBar';
+
 
 
 
