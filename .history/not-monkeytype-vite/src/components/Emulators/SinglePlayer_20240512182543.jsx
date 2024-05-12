@@ -193,6 +193,7 @@ const SinglePlayer = () => {
         startTest={startTest}
         endTest={endTest}
         mode = "SinglePlayer"
+
       />
       <ExternalMonitor
         testText={testText}

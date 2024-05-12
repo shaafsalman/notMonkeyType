@@ -10,34 +10,13 @@ const NavigationBar = ({ isMobile, handleDurationChange, testDuration, testStart
             Back to Menu
           </Link>
           <h1 className="mx-10 flex-grow text-xl md:text-2xl font-bold">notMonkeyType</h1>
-         
- 
-            {mode == "SinglePlayer" &&
-            
-            <div className="flex items-center px-10">
-            
-                <div className="mode mr-4">
-                      Mode: {mode}
-                </div>
-                </div>
-            }
-            
-            {mode == "MultiPlayer" &&
-            <div className="flex items-center px-1">
-            {finalCode&&  
-            <div className="room-code mr-4">
-              Room Code: {finalCode}
-            </div>}
-           
-            <div className="mode mr-4">
-              Mode: {mode}
-            </div>
-             </div>
-            }
-
-
-          
-          
+          <div className="mode mr-auto0">
+            Mode: {mode}
+          </div>
+          {finalCode&&  
+          <div className="room-code mr-4">
+            Room Code: {finalCode}
+          </div>}
           
           <div className="duration-container">
             <select className="duration bg-white border border-gray-300 rounded-md px-3 py-2 outline-none focus:border-indigo-500 transition duration-300 mr-4" onChange={handleDurationChange} value={testDuration}>

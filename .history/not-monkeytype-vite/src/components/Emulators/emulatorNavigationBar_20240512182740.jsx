@@ -11,32 +11,15 @@ const NavigationBar = ({ isMobile, handleDurationChange, testDuration, testStart
           </Link>
           <h1 className="mx-10 flex-grow text-xl md:text-2xl font-bold">notMonkeyType</h1>
          
- 
-            {mode == "SinglePlayer" &&
-            
-            <div className="flex items-center px-10">
-            
-                <div className="mode mr-4">
-                      Mode: {mode}
-                </div>
-                </div>
-            }
-            
-            {mode == "MultiPlayer" &&
-            <div className="flex items-center px-1">
-            {finalCode&&  
-            <div className="room-code mr-4">
-              Room Code: {finalCode}
-            </div>}
-           
-            <div className="mode mr-4">
-              Mode: {mode}
-            </div>
-             </div>
-            }
-
-
-          
+         
+          {finalCode&&  
+          <div className="room-code mr-3">
+            Room Code: {finalCode}
+          </div>}
+         
+          <div className="mode mr-4">
+            Mode: {mode}
+          </div>
           
           
           <div className="duration-container">

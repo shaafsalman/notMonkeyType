@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import "./../style/emulator.css";
-import TestArea from './TestArea'; 
-import Timer from './Timer'; 
+import MultiPlayerForm from './multiPlayerForm';
 import { Link } from 'react-router-dom';
 import Keyboard from '../Spline/keyboard';
 import ScoreCard from './../Cards/scoreCard'; 
@@ -11,7 +9,9 @@ import NavigationBar from './emulatorNavigationBar';
 import ExternalMonitor from './externalMonitor';
 import StatsDisplay from './statsDisplay';
 
-const SinglePlayer = () => {
+const MultiPlayer = () => {
+  const [roomCode, setRoomCode] = useState('');
+  const [showInput, setShowInput] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(10);
   const [testDuration, setTestDuration] = useState(10);
   const [wpm, setWpm] = useState('-');
@@ -25,6 +25,8 @@ const SinglePlayer = () => {
   const [score, setScore] = useState(0);
   const inputRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [finalCode, setFinalCode] = useState('');
+
 
 
   const startTest = () => {
@@ -162,7 +164,10 @@ const SinglePlayer = () => {
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
   };
-  
+
+
+
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -176,50 +181,52 @@ const SinglePlayer = () => {
     };
   }, []);
 
-
-
-
-
   return (
-    <div className="singlePlayer">
-      <div className="keyBoardContainer"><Keyboard/></div>
+    <div className="multiplayer-page">
 
-      <div className="mainGameContainer">
-      <NavigationBar
-        isMobile={isMobile}
-        handleDurationChange={handleDurationChange}
-        testDuration={testDuration}
-        testStarted={testStarted}
-        startTest={startTest}
-        endTest={endTest}
-        mode = "SinglePlayer"
-      />
-      <ExternalMonitor
-        testText={testText}
-        charClasses={charClasses}
-        onInput={onInput}
-        userInput={userInput}
-        inputRef={inputRef}
-        testStarted={testStarted}
-      />
-      <StatsDisplay
-        wpm={wpm}
-        accuracy={accuracy}
-        timeRemaining={timeRemaining}
-      />
-      {showScoreCard && (
-        <ScoreCard
-          wpm={wpm}
-          time={testDuration}
-          accuracy={accuracy}
-          score={score}
-          onClose={() => setShowScoreCard(false)}
-        />
-      )}
+      
+            {!finalCode && <MultiPlayerForm setFinalCode={setFinalCode} />}
+            {finalCode && 
+
+            <div className="emulator">
+         <div className="keyBoardContainer"><Keyboard/></div>
+        <div className="mainGameContainer">
+          <NavigationBar
+            isMobile={isMobile}
+            handleDurationChange={handleDurationChange}
+            testDuration={testDuration}
+            testStarted={testStarted}
+            startTest={startTest}
+            endTest={endTest}
+          />
+          <ExternalMonitor
+            testText={testText}
+            charClasses={charClasses}
+            onInput={onInput}
+            userInput={userInput}
+            inputRef={inputRef}
+            testStarted={testStarted}
+          />
+          <StatsDisplay
+            wpm={wpm}
+            accuracy={accuracy}
+            timeRemaining={timeRemaining}
+            roomCode={finalCode}
+          />
+          {showScoreCard && (
+            <ScoreCard
+              wpm={wpm}
+              time={testDuration}
+              accuracy={accuracy}
+              score={score}
+              onClose={() => setShowScoreCard(false)}
+            />
+          )}
         </div>
-    </div>
-
-  );
+      </div>
 }
+  </div>
+  );
+};
 
-export default SinglePlayer;
+export default MultiPlayer;

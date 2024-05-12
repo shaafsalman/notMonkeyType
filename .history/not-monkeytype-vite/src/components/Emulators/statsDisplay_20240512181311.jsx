@@ -1,7 +1,7 @@
 import React from 'react';
 import Timer from './Timer';
 
-const StatsDisplay = ({ wpm, accuracy, timeRemaining}) => {
+const StatsDisplay = ({ wpm, accuracy, timeRemaining,finalCode }) => {
   return (
     <div className="statsDisplay">
       <div className="display">
@@ -14,7 +14,7 @@ const StatsDisplay = ({ wpm, accuracy, timeRemaining}) => {
           <div className="stat">
             <h3>Accuracy</h3>
             <p>{accuracy}%</p>
-          </div>  
+          </div>
           <Timer timeRemaining={timeRemaining} />
         </div>
       </div>

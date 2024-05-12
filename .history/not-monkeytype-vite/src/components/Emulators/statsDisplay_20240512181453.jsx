@@ -14,7 +14,9 @@ const StatsDisplay = ({ wpm, accuracy, timeRemaining}) => {
           <div className="stat">
             <h3>Accuracy</h3>
             <p>{accuracy}%</p>
-          </div>  
+          </div>
+        
+          
           <Timer timeRemaining={timeRemaining} />
         </div>
       </div>

@@ -21,21 +21,7 @@ const NavigationBar = ({ isMobile, handleDurationChange, testDuration, testStart
                 </div>
                 </div>
             }
-            
-            {mode == "MultiPlayer" &&
-            <div className="flex items-center px-1">
-            {finalCode&&  
-            <div className="room-code mr-4">
-              Room Code: {finalCode}
-            </div>}
            
-            <div className="mode mr-4">
-              Mode: {mode}
-            </div>
-             </div>
-            }
-
-
           
           
           

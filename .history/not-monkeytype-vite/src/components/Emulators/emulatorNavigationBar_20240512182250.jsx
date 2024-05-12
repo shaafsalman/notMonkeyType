@@ -9,36 +9,13 @@ const NavigationBar = ({ isMobile, handleDurationChange, testDuration, testStart
           <Link to="/home" className="mx-2 my-2 px-4 py-2 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center">
             Back to Menu
           </Link>
-          <h1 className="mx-10 flex-grow text-xl md:text-2xl font-bold">notMonkeyType</h1>
-         
- 
-            {mode == "SinglePlayer" &&
-            
-            <div className="flex items-center px-10">
-            
-                <div className="mode mr-4">
-                      Mode: {mode}
-                </div>
-                </div>
-            }
-            
-            {mode == "MultiPlayer" &&
-            <div className="flex items-center px-1">
-            {finalCode&&  
-            <div className="room-code mr-4">
-              Room Code: {finalCode}
-            </div>}
-           
-            <div className="mode mr-4">
-              Mode: {mode}
-            </div>
-             </div>
-            }
-
-
-          
-          
-          
+          <h1 className="mr-10 flex-grow text-xl md:text-2xl font-bold">notMonkeyType</h1>
+          <div className="mode mr-4">
+            Mode: {mode}
+          </div>
+          <div className="room-code mr-4">
+            Room Code: {finalCode}
+          </div>
           <div className="duration-container">
             <select className="duration bg-white border border-gray-300 rounded-md px-3 py-2 outline-none focus:border-indigo-500 transition duration-300 mr-4" onChange={handleDurationChange} value={testDuration}>
               <option value={10}>10 seconds</option>
@@ -61,9 +38,6 @@ const NavigationBar = ({ isMobile, handleDurationChange, testDuration, testStart
             Back
           </Link>
           <h1 className="title-text my-2 text-xl md:text-2xl">notMonkeyType</h1>
-          <div className="room-code mr-4">
-            Room Code: {finalCode}
-          </div>
           <div className="flex items-center">
             <select className="duration bg-white border border-gray-300 rounded-md px-2 py-1 outline-none focus:border-indigo-500 transition duration-300 mr-4" onChange={handleDurationChange} value={testDuration}>
               <option value={10}>10s</option>
