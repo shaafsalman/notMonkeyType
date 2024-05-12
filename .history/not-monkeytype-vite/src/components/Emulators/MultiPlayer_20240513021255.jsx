@@ -10,8 +10,6 @@ import MultiPlayerForm from "./multiPlayerForm";
 import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
 import baseURL from '../../../config';
-import { useLocation } from 'react-router-dom';
-
 
 // const socket = io('http://localhost:8080'); 
 const socket = io(`http://${baseURL}`);
@@ -35,23 +33,9 @@ const MultiPlayer = () => {
   const [showResults, setShowResults] = useState(false);
   const [scores, setScores] = useState([]);
 
-  const location = useLocation(); // Get the current location
-
-  useEffect(() => {
-    const handleUnload = () => {
-      socket.emit('disconnect');
-    };
-
-    window.addEventListener('beforeunload', handleUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleUnload);
-    };
-  }, [location.pathname]);
-
-
   useEffect(() => {
     if (roomCode) {
+      // Establish socket connection and set up listeners
       const connectSocket = () => {
         socket.on('countdown', (number) => {
           setTestDuration(number);
@@ -70,31 +54,21 @@ const MultiPlayer = () => {
         });
       };
   
-      connectSocket(); 
+      connectSocket(); // Call once when roomCode changes
   
+      // Clean up listeners when component unmounts or roomCode changes
       return () => {
         socket.off('countdown');
         socket.off('score');
       };
     }
-  }, [roomCode]); 
+  }, [roomCode]); // Run when roomCode changes
   
-  useEffect(() => {
-    const handleUnload = () => {
-      socket.emit('disconnect');
-    };
-  
-    window.addEventListener('beforeunload', handleUnload);
-  
-    return () => {
-      window.removeEventListener('beforeunload', handleUnload);
-    };
-  }, []);
-
   useEffect(() => {
     if (roomCode) {
       socket.emit('joinRoom', roomCode);
     }
+  
     return () => {
       socket.off('connect');
     };

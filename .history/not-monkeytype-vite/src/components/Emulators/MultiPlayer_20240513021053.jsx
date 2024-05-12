@@ -10,8 +10,6 @@ import MultiPlayerForm from "./multiPlayerForm";
 import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
 import baseURL from '../../../config';
-import { useLocation } from 'react-router-dom';
-
 
 // const socket = io('http://localhost:8080'); 
 const socket = io(`http://${baseURL}`);
@@ -35,74 +33,45 @@ const MultiPlayer = () => {
   const [showResults, setShowResults] = useState(false);
   const [scores, setScores] = useState([]);
 
-  const location = useLocation(); // Get the current location
-
   useEffect(() => {
-    const handleUnload = () => {
-      socket.emit('disconnect');
-    };
+     
+    
+    
 
-    window.addEventListener('beforeunload', handleUnload);
+      socket.on('countdown', (number) => {
+        setTestDuration(number);
+        if (number === 1) {
+          setTimeout(() => {
+            setTestStarted(true);
+            setTimeRemaining(30);
+            setTestDuration(null);
+          }, 1000);
+        }
+      });
 
-    return () => {
-      window.removeEventListener('beforeunload', handleUnload);
-    };
-  }, [location.pathname]);
-
-
-  useEffect(() => {
-    if (roomCode) {
-      const connectSocket = () => {
-        socket.on('countdown', (number) => {
-          setTestDuration(number);
-          if (number === 1) {
-            setTimeout(() => {
-              setTestStarted(true);
-              setTimeRemaining(30);
-              setTestDuration(null);
-            }, 1000);
-          }
-        });
-  
-        socket.on("score", (scoreData) => {
-          console.log("Received score data:", scoreData);
-          setScores(prevScores => [...prevScores, scoreData]);
-        });
-      };
-  
-      connectSocket(); 
-  
+      socket.on("score", (scoreData) => {
+        console.log("Received score data:", scoreData);
+        setScores(prevScores => [...prevScores, scoreData]);
+      });
+      
       return () => {
+        socket.off('connect');
         socket.off('countdown');
         socket.off('score');
       };
     }
-  }, [roomCode]); 
-  
-  useEffect(() => {
-    const handleUnload = () => {
-      socket.emit('disconnect');
-    };
-  
-    window.addEventListener('beforeunload', handleUnload);
-  
-    return () => {
-      window.removeEventListener('beforeunload', handleUnload);
-    };
-  }, []);
+  }, [roomCode]);
 
   useEffect(() => {
     if (roomCode) {
+      {
+
+        socket.on('connect')
       socket.emit('joinRoom', roomCode);
     }
-    return () => {
-      socket.off('connect');
-    };
   }, [roomCode]);
 
-
-
-
+  
   useEffect(() => {
     if (testStarted) {
       inputRef.current.focus();

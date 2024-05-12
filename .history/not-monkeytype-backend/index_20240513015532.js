@@ -63,12 +63,11 @@ io.on("connection", (socket) => {
       }
     }, 1000);
   });
-
-
-socket.on("score", (scoreData) => {
-  console.log("Received score data:", scoreData);
-  setScores(prevScores => [...prevScores, scoreData]);
-});
+  socket.on("score", (scoreData) => {
+    console.log("Received score data:", scoreData);
+    setScores(prevScores => [...prevScores, scoreData]);
+  });
+  
 
   socket.on("submitScore", (data) => {
     const { wpm, accuracy, score, email, name, userId } = data.score;

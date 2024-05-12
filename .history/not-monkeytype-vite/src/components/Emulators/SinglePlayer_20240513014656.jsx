@@ -120,7 +120,7 @@ const SinglePlayer = () => {
       const { email } = decodeToken(token);
 
   
-      await axios.post(`http://${baseURL}/api/gameSession/add`, {
+      await axios.post('http://${baseURL}/api/gameSession/add', {
         textUsed: testText,
         score: newScore,
         wpm: wordsPerMinute,

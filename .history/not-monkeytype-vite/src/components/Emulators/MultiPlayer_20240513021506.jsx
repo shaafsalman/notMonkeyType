@@ -10,8 +10,6 @@ import MultiPlayerForm from "./multiPlayerForm";
 import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
 import baseURL from '../../../config';
-import { useLocation } from 'react-router-dom';
-
 
 // const socket = io('http://localhost:8080'); 
 const socket = io(`http://${baseURL}`);
@@ -34,21 +32,6 @@ const MultiPlayer = () => {
   const [showTimerCard, setShowTimerCard] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [scores, setScores] = useState([]);
-
-  const location = useLocation(); // Get the current location
-
-  useEffect(() => {
-    const handleUnload = () => {
-      socket.emit('disconnect');
-    };
-
-    window.addEventListener('beforeunload', handleUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleUnload);
-    };
-  }, [location.pathname]);
-
 
   useEffect(() => {
     if (roomCode) {

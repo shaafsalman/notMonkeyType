@@ -10,6 +10,7 @@ import MultiPlayerForm from "./multiPlayerForm";
 import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
 import baseURL from '../../../config';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 

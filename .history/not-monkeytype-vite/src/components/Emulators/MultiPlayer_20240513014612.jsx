@@ -10,11 +10,10 @@ import MultiPlayerForm from "./multiPlayerForm";
 import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
 import baseURL from '../../../config';
-import { useLocation } from 'react-router-dom';
-
 
 // const socket = io('http://localhost:8080'); 
-const socket = io(`http://${baseURL}`);
+const socket = io('http://${baseURL}'); 
+
 
 const MultiPlayer = () => {
   const [roomCode, setRoomCode] = useState('');
@@ -35,73 +34,40 @@ const MultiPlayer = () => {
   const [showResults, setShowResults] = useState(false);
   const [scores, setScores] = useState([]);
 
-  const location = useLocation(); // Get the current location
-
-  useEffect(() => {
-    const handleUnload = () => {
-      socket.emit('disconnect');
-    };
-
-    window.addEventListener('beforeunload', handleUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleUnload);
-    };
-  }, [location.pathname]);
-
-
   useEffect(() => {
     if (roomCode) {
-      const connectSocket = () => {
-        socket.on('countdown', (number) => {
-          setTestDuration(number);
-          if (number === 1) {
-            setTimeout(() => {
-              setTestStarted(true);
-              setTimeRemaining(30);
-              setTestDuration(null);
-            }, 1000);
-          }
-        });
+      socket.on('connect', () => {
+        console.log('Connected to server');
+      });
   
-        socket.on("score", (scoreData) => {
-          console.log("Received score data:", scoreData);
-          setScores(prevScores => [...prevScores, scoreData]);
-        });
-      };
+      socket.on('countdown', (number) => {
+        setTestDuration(number); 
+        if (number === 1) {
+          setTimeout(() => {
+            setTestStarted(true);
+            setTimeRemaining(30);
+            setTestDuration(null); 
+          }, 1000); 
+        }
+      });
   
-      connectSocket(); 
+      socket.on('score', (scoreData) => {
+        setScores(prevScores => [...prevScores, scoreData]);
+        setShowResults(true); 
+      });
   
       return () => {
         socket.off('countdown');
         socket.off('score');
       };
     }
-  }, [roomCode]); 
-  
-  useEffect(() => {
-    const handleUnload = () => {
-      socket.emit('disconnect');
-    };
-  
-    window.addEventListener('beforeunload', handleUnload);
-  
-    return () => {
-      window.removeEventListener('beforeunload', handleUnload);
-    };
-  }, []);
+  }, [roomCode]);
 
   useEffect(() => {
     if (roomCode) {
       socket.emit('joinRoom', roomCode);
     }
-    return () => {
-      socket.off('connect');
-    };
   }, [roomCode]);
-
-
-
 
   useEffect(() => {
     if (testStarted) {
@@ -152,13 +118,13 @@ const MultiPlayer = () => {
     setTestStarted(false);
     const typedChars = userInput.length;
     const correctChars = charClasses.filter(c => c === 'correct').length;
-    const wordsPerMinute = (correctChars / 5) / (0.5);
-    const accuracyPercentage = (correctChars / typedChars) * 100;
+    const wordsPerMinute = (correctChars / 5) / (0.5); 
+    const accuracyPercentage = (correctChars / typedChars) * 100; 
     const score = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
-
+    
     const token = localStorage.getItem('token');
     const { userId, email } = decodeToken(token);
-
+  
     const userInfo = {
       wpm: wordsPerMinute.toFixed(2),
       accuracy: accuracyPercentage.toFixed(2),
@@ -166,8 +132,10 @@ const MultiPlayer = () => {
       email: email,
       userId: userId
     };
-
+  
     socket.emit('submitScore', { roomCode, score: userInfo });
+    setTestDuration("");
+    setTimeRemaining("");
     setShowResults(true);
   };
 
@@ -209,9 +177,6 @@ const MultiPlayer = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  // Remaining JSX components...
-
 
   return (
     <div className="multiplayer-page">
