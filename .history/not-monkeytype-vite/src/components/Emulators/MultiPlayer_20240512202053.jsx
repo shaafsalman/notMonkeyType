@@ -96,7 +96,6 @@ useEffect(() => {
 
   const startTest = () => 
     {
-      setTimeRemaining("");
       setShowTimerCard(true);
     socket.emit('startTest', roomCode);
     setTestStarted(true);

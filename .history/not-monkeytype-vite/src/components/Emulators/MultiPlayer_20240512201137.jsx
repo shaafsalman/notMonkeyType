@@ -8,8 +8,7 @@ import ExternalMonitor from './externalMonitor';
 import StatsDisplay from './statsDisplay';
 import ScoreCard from './../Cards/scoreCard';
 import MultiPlayerForm from "./multiPlayerForm";
-import TimerCard from '../Cards/timerCard';
-
+import TimerCard from './../Cards/timerCard'; 
 
 const socket = io('http://localhost:8080'); 
 
@@ -26,9 +25,9 @@ const MultiPlayer = () => {
   const [charClasses, setCharClasses] = useState(Array(testText.length).fill("default"));
   const [showScoreCard, setShowScoreCard] = useState(false);
   const [score, setScore] = useState(0);
+  const [showTimerCard, setShowTimerCard] = useState(false); 
   const inputRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [showTimerCard, setShowTimerCard] = useState(false);
 
   useEffect(() => {
     if (roomCode) {
@@ -36,24 +35,24 @@ const MultiPlayer = () => {
       socket.on('connect', () => {
         console.log('Connected to server');
       });
-  
-   
+
       socket.on('countdown', (number) => {
         setTestDuration(number); 
         if (number === 1) {
-            setTimeout(() => {
-                setTestStarted(true);
-                setTimeRemaining(30);
-                setTestDuration(null); 
-            }, 1000); 
+          setShowTimerCard(true);
+          setTimeout(() => {
+            setTestStarted(true);
+            setTimeRemaining(30);
+            setTestDuration(null); 
+          }, 1000); 
         }
-    });
-  
+      });
+
       socket.on('score', (scoreData) => {
         setScores(prevScores => [...prevScores, scoreData]);
         setShowResults(true);
       });
-  
+
       return () => {
         socket.off('countdown');
         socket.off('startTest');
@@ -62,13 +61,11 @@ const MultiPlayer = () => {
     }
   }, [roomCode]);
 
-
-useEffect(() => {
+  useEffect(() => {
     if (roomCode) {
       socket.emit('joinRoom', roomCode);
     }
   }, [roomCode]);
-
 
   useEffect(() => {
     if (testStarted) {
@@ -88,16 +85,8 @@ useEffect(() => {
     return () => clearInterval(timer);
   }, [testStarted, timeRemaining]);
 
-  useEffect(() => {
-    if (userInput.length === testText.length || timeRemaining === 0 || !testStarted) {
-      endTest();
-    }
-  }, [userInput, testText, timeRemaining, testStarted]);
-
-  const startTest = () => 
-    {
-      setTimeRemaining("");
-      setShowTimerCard(true);
+  const startTest = () => {
+    setShowTimerCard(true);
     socket.emit('startTest', roomCode);
     setTestStarted(true);
     setTimeRemaining(testDuration);
@@ -113,11 +102,14 @@ useEffect(() => {
     const decoded = jwtDecode(token);
     const userId = decoded._id;
     const email = decoded.email;
-    
-    // console.log("User Here");
-    // console.log(userId, email);
     return { userId, email };
   };
+
+  useEffect(() => {
+    if (userInput.length === testText.length || timeRemaining === 0 || !testStarted) {
+      endTest();
+    }
+  }, [userInput, testText, timeRemaining, testStarted]);
 
   const endTest = () => {
     setTestStarted(false);
@@ -128,9 +120,8 @@ useEffect(() => {
     const score = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
     
     const token = localStorage.getItem('token');
-    const { userId, email } = decodeToken(token); // Assuming token is accessible here
-  
-    // Construct user information object
+    const { userId, email } = decodeToken(token);
+
     const userInfo = {
       wpm: wordsPerMinute.toFixed(2),
       accuracy: accuracyPercentage.toFixed(2),
@@ -140,10 +131,7 @@ useEffect(() => {
     };
   
     socket.emit('submitScore', { roomCode, score: userInfo });
-    setTestDuration("");
-    setTimeRemaining("");
   };
-
 
   const onInput = (e) => {
     if (!testStarted) return;
@@ -168,7 +156,6 @@ useEffect(() => {
     setCharClasses(newCharClasses);
   };
 
-  
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
   };
@@ -186,64 +173,56 @@ useEffect(() => {
     };
   }, []);
 
-
-
-
   return (
     <div className="multiplayer-page">
-
-      
-            {!roomCode && <MultiPlayerForm setRoomCode={setRoomCode} />}
-            
-            
-            
-            {roomCode &&  <div className="emulator">
-               <div className="keyBoardContainer"><Keyboard/></div>
-        <div className="mainGameContainer">
-          <NavigationBar
-            isMobile={isMobile}
-            handleDurationChange={handleDurationChange}
-            testDuration={testDuration}
-            testStarted={testStarted}
-            startTest={startTest}
-            endTest={endTest}
-            mode = "MultiPlayer"
-            roomCode={roomCode}
-          />
-          <ExternalMonitor
-            testText={testText}
-            charClasses={charClasses}
-            onInput={onInput}
-            userInput={userInput}
-            inputRef={inputRef}
-            testStarted={testStarted}
-          />
-          <StatsDisplay
-            wpm={wpm}
-            accuracy={accuracy}
-            timeRemaining={timeRemaining}
-          />
-          {showScoreCard && (
-            <ScoreCard
-              wpm={wpm}
-              time={testDuration}
-              accuracy={accuracy}
-              score={score}
-              onClose={() => setShowScoreCard(false)}
+      {!roomCode && <MultiPlayerForm setRoomCode={setRoomCode} />}
+      {roomCode &&  
+        <div className="emulator">
+          <div className="keyBoardContainer"><Keyboard/></div>
+          <div className="mainGameContainer">
+            <NavigationBar
+              isMobile={isMobile}
+              handleDurationChange={handleDurationChange}
+              testDuration={testDuration}
+              testStarted={testStarted}
+              startTest={startTest}
+              endTest={endTest}
+              mode="MultiPlayer"
+              roomCode={roomCode}
             />
-          )}
+            <ExternalMonitor
+              testText={testText}
+              charClasses={charClasses}
+              onInput={onInput}
+              userInput={userInput}
+              inputRef={inputRef}
+              testStarted={testStarted}
+            />
+            <StatsDisplay
+              wpm={wpm}
+              accuracy={accuracy}
+              timeRemaining={timeRemaining}
+            />
+            {showScoreCard && (
+              <ScoreCard
+                wpm={wpm}
+                time={testDuration}
+                accuracy={accuracy}
+                score={score}
+                onClose={() => setShowScoreCard(false)}
+              />
+            )}
+            {/* Conditionally render TimerCard */}
             {showTimerCard && (
               <TimerCard
-                duration={4} 
+                duration={3} // Set the duration of the countdown
                 onClose={() => setShowTimerCard(false)}
               />
             )}
-
-           
+          </div>
         </div>
-      </div>
-}
-  </div>
+      }
+    </div>
   );
 };
 

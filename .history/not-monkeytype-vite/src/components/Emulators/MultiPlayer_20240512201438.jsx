@@ -8,7 +8,6 @@ import ExternalMonitor from './externalMonitor';
 import StatsDisplay from './statsDisplay';
 import ScoreCard from './../Cards/scoreCard';
 import MultiPlayerForm from "./multiPlayerForm";
-import TimerCard from '../Cards/timerCard';
 
 
 const socket = io('http://localhost:8080'); 
@@ -28,7 +27,6 @@ const MultiPlayer = () => {
   const [score, setScore] = useState(0);
   const inputRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [showTimerCard, setShowTimerCard] = useState(false);
 
   useEffect(() => {
     if (roomCode) {
@@ -88,16 +86,11 @@ useEffect(() => {
     return () => clearInterval(timer);
   }, [testStarted, timeRemaining]);
 
-  useEffect(() => {
-    if (userInput.length === testText.length || timeRemaining === 0 || !testStarted) {
-      endTest();
-    }
-  }, [userInput, testText, timeRemaining, testStarted]);
+
 
   const startTest = () => 
     {
-      setTimeRemaining("");
-      setShowTimerCard(true);
+      
     socket.emit('startTest', roomCode);
     setTestStarted(true);
     setTimeRemaining(testDuration);
@@ -140,8 +133,6 @@ useEffect(() => {
     };
   
     socket.emit('submitScore', { roomCode, score: userInfo });
-    setTestDuration("");
-    setTimeRemaining("");
   };
 
 
@@ -232,12 +223,6 @@ useEffect(() => {
               onClose={() => setShowScoreCard(false)}
             />
           )}
-            {showTimerCard && (
-              <TimerCard
-                duration={4} 
-                onClose={() => setShowTimerCard(false)}
-              />
-            )}
 
            
         </div>

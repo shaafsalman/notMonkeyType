@@ -88,17 +88,13 @@ useEffect(() => {
     return () => clearInterval(timer);
   }, [testStarted, timeRemaining]);
 
-  useEffect(() => {
-    if (userInput.length === testText.length || timeRemaining === 0 || !testStarted) {
-      endTest();
-    }
-  }, [userInput, testText, timeRemaining, testStarted]);
+
 
   const startTest = () => 
     {
-      setTimeRemaining("");
-      setShowTimerCard(true);
     socket.emit('startTest', roomCode);
+    setShowTimerCard(true);
+
     setTestStarted(true);
     setTimeRemaining(testDuration);
     setUserInput("");
@@ -140,8 +136,6 @@ useEffect(() => {
     };
   
     socket.emit('submitScore', { roomCode, score: userInfo });
-    setTestDuration("");
-    setTimeRemaining("");
   };
 
 

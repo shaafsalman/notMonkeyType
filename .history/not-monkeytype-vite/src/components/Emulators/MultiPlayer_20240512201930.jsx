@@ -96,7 +96,6 @@ useEffect(() => {
 
   const startTest = () => 
     {
-      setTimeRemaining("");
       setShowTimerCard(true);
     socket.emit('startTest', roomCode);
     setTestStarted(true);
@@ -140,8 +139,6 @@ useEffect(() => {
     };
   
     socket.emit('submitScore', { roomCode, score: userInfo });
-    setTestDuration("");
-    setTimeRemaining("");
   };
 
 
