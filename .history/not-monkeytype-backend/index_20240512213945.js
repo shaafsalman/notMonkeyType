@@ -90,6 +90,6 @@ setInterval(async () => {
 }, 90 * 1000);
 
 const port = process.env.PORT || 8080;
-server.listen(port, '0.0.0.0', () => {
+server.listen(port, 0.0.0.0, () => {
   console.log(`Listening on port ${port}...`);
 });

@@ -12,6 +12,7 @@ const verifyEmailRoutes = require("./routes/verifyEmail");
 const deleteUserRoutes = require("./routes/deleteUser");
 const profileRoutes = require("./routes/profileController");
 const gameSessionController = require("./routes/gameSessionController");
+const [showResults, setShowResults] = useState(false);
 
 
 const app = express();
@@ -90,6 +91,6 @@ setInterval(async () => {
 }, 90 * 1000);
 
 const port = process.env.PORT || 8080;
-server.listen(port, '0.0.0.0', () => {
+server.listen(port, () => {
   console.log(`Listening on port ${port}...`);
 });

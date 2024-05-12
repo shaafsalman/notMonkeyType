@@ -10,9 +10,7 @@ import MultiPlayerForm from "./multiPlayerForm";
 import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
 
-// const socket = io('http://localhost:8080'); 
-const socket = io('http://192.168.100.7:8080'); 
-
+const socket = io('http://localhost:8080'); 
 
 const MultiPlayer = () => {
   const [roomCode, setRoomCode] = useState('');
@@ -52,7 +50,7 @@ const MultiPlayer = () => {
   
       socket.on('score', (scoreData) => {
         setScores(prevScores => [...prevScores, scoreData]);
-        setShowResults(true); // Set showResults to true when score is received
+        setShowResults(true);
       });
   
       return () => {
@@ -223,7 +221,7 @@ const MultiPlayer = () => {
           )}
         </div>
       </div>}
-      {showResults && scores.length > 0 && ( 
+      {showResults && (
         <Results scores={scores} />
       )}
     </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
+import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import Keyboard from '../Spline/keyboard';
 import NavigationBar from './emulatorNavigationBar';
@@ -10,9 +11,8 @@ import MultiPlayerForm from "./multiPlayerForm";
 import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
 
-// const socket = io('http://localhost:8080'); 
-const socket = io('http://192.168.100.7:8080'); 
 
+const socket = io('http://localhost:8080'); 
 
 const MultiPlayer = () => {
   const [roomCode, setRoomCode] = useState('');
@@ -30,43 +30,46 @@ const MultiPlayer = () => {
   const inputRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
   const [showTimerCard, setShowTimerCard] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const [scores, setScores] = useState([]);
 
   useEffect(() => {
     if (roomCode) {
+      // Connect to the socket server only if roomCode is not null or empty
       socket.on('connect', () => {
         console.log('Connected to server');
       });
   
+   
       socket.on('countdown', (number) => {
         setTestDuration(number); 
         if (number === 1) {
-          setTimeout(() => {
-            setTestStarted(true);
-            setTimeRemaining(30);
-            setTestDuration(null); 
-          }, 1000); 
+            setTimeout(() => {
+                setTestStarted(true);
+                setTimeRemaining(30);
+                setTestDuration(null); 
+            }, 1000); 
         }
-      });
+    });
   
       socket.on('score', (scoreData) => {
         setScores(prevScores => [...prevScores, scoreData]);
-        setShowResults(true); // Set showResults to true when score is received
+        setShowResults(true);
       });
   
       return () => {
         socket.off('countdown');
+        socket.off('startTest');
         socket.off('score');
       };
     }
   }, [roomCode]);
 
-  useEffect(() => {
+
+useEffect(() => {
     if (roomCode) {
       socket.emit('joinRoom', roomCode);
     }
   }, [roomCode]);
+
 
   useEffect(() => {
     if (testStarted) {
@@ -92,9 +95,10 @@ const MultiPlayer = () => {
     }
   }, [userInput, testText, timeRemaining, testStarted]);
 
-  const startTest = () => {
-    setTimeRemaining("");
-    setShowTimerCard(true);
+  const startTest = () => 
+    {
+      setTimeRemaining("");
+      setShowTimerCard(true);
     socket.emit('startTest', roomCode);
     setTestStarted(true);
     setTimeRemaining(testDuration);
@@ -110,6 +114,9 @@ const MultiPlayer = () => {
     const decoded = jwtDecode(token);
     const userId = decoded._id;
     const email = decoded.email;
+    
+    // console.log("User Here");
+    // console.log(userId, email);
     return { userId, email };
   };
 
@@ -122,8 +129,9 @@ const MultiPlayer = () => {
     const score = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
     
     const token = localStorage.getItem('token');
-    const { userId, email } = decodeToken(token);
+    const { userId, email } = decodeToken(token); // Assuming token is accessible here
   
+    // Construct user information object
     const userInfo = {
       wpm: wordsPerMinute.toFixed(2),
       accuracy: accuracyPercentage.toFixed(2),
@@ -138,10 +146,12 @@ const MultiPlayer = () => {
     setShowResults(true);
   };
 
+
   const onInput = (e) => {
     if (!testStarted) return;
 
     const value = e.target.value;
+
     const newCharClasses = [...charClasses];
 
     if (value.length < userInput.length && currentIndex > 0) {
@@ -160,6 +170,7 @@ const MultiPlayer = () => {
     setCharClasses(newCharClasses);
   };
 
+  
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
   };
@@ -177,11 +188,19 @@ const MultiPlayer = () => {
     };
   }, []);
 
+
+
+
   return (
     <div className="multiplayer-page">
-      {!roomCode && <MultiPlayerForm setRoomCode={setRoomCode} />}
-      {roomCode &&  <div className="emulator">
-        <div className="keyBoardContainer"><Keyboard/></div>
+
+      
+            {!roomCode && <MultiPlayerForm setRoomCode={setRoomCode} />}
+            
+            
+            
+            {roomCode &&  <div className="emulator">
+               <div className="keyBoardContainer"><Keyboard/></div>
         <div className="mainGameContainer">
           <NavigationBar
             isMobile={isMobile}
@@ -190,7 +209,7 @@ const MultiPlayer = () => {
             testStarted={testStarted}
             startTest={startTest}
             endTest={endTest}
-            mode="MultiPlayer"
+            mode = "MultiPlayer"
             roomCode={roomCode}
           />
           <ExternalMonitor
@@ -215,18 +234,23 @@ const MultiPlayer = () => {
               onClose={() => setShowScoreCard(false)}
             />
           )}
-          {showTimerCard && (
-            <TimerCard
-              duration={4} 
-              onClose={() => setShowTimerCard(false)}
-            />
-          )}
+            {showTimerCard && (
+              <TimerCard
+                duration={4} 
+                onClose={() => setShowTimerCard(false)}
+              />
+            )}
+
+           
         </div>
-      </div>}
-      {showResults && scores.length > 0 && ( 
-        <Results scores={scores} />
-      )}
-    </div>
+        
+      </div>
+}
+        {showResults && (
+                <Results scores={scores} />
+            )}
+
+  </div>
   );
 };
 
