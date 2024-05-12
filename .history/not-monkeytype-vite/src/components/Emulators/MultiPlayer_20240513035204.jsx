@@ -77,11 +77,8 @@ const MultiPlayer = () => {
   useEffect(() => {
     let timer;
     
-    if (timeRemaining == "30" ||  timeRemaining == 30) 
-      {   
-        setUserInput("");
-        setCurrentIndex(0);
-        setCharClasses(Array(testText.length).fill("default"));
+    if (timeRemaining=30) 
+      {    setCharClasses(Array(testText.length).fill("default"));
       }
     if (testStarted && timeRemaining > 0)
        {

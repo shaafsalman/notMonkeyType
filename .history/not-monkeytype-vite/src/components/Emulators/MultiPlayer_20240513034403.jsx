@@ -76,15 +76,7 @@ const MultiPlayer = () => {
 
   useEffect(() => {
     let timer;
-    
-    if (timeRemaining == "30" ||  timeRemaining == 30) 
-      {   
-        setUserInput("");
-        setCurrentIndex(0);
-        setCharClasses(Array(testText.length).fill("default"));
-      }
-    if (testStarted && timeRemaining > 0)
-       {
+    if (testStarted && timeRemaining > 0) {
       timer = setInterval(() => {
         setTimeRemaining(prev => prev - 1);
       }, 1000);
@@ -123,11 +115,12 @@ const MultiPlayer = () => {
     const correctChars = charClasses.filter(c => c === 'correct').length;
     var wordsPerMinute = (correctChars / 5) / (0.5); 
     var accuracyPercentage = (correctChars / typedChars) * 100; 
-    var score = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
+    var  score = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
     
     const token = localStorage.getItem('token');
     const { userId, email } = decodeToken(token);
 
+     // Check if wordsPerMinute is NaN or 0, then set it to a default value of 10
   if (isNaN(wordsPerMinute) || wordsPerMinute === 0) {
     wordsPerMinute = 22;
   }

@@ -76,15 +76,7 @@ const MultiPlayer = () => {
 
   useEffect(() => {
     let timer;
-    
-    if (timeRemaining == "30" ||  timeRemaining == 30) 
-      {   
-        setUserInput("");
-        setCurrentIndex(0);
-        setCharClasses(Array(testText.length).fill("default"));
-      }
-    if (testStarted && timeRemaining > 0)
-       {
+    if (testStarted && timeRemaining > 0) {
       timer = setInterval(() => {
         setTimeRemaining(prev => prev - 1);
       }, 1000);
@@ -128,6 +120,7 @@ const MultiPlayer = () => {
     const token = localStorage.getItem('token');
     const { userId, email } = decodeToken(token);
 
+     // Check if wordsPerMinute is NaN or 0, then set it to a default value of 10
   if (isNaN(wordsPerMinute) || wordsPerMinute === 0) {
     wordsPerMinute = 22;
   }

@@ -76,15 +76,7 @@ const MultiPlayer = () => {
 
   useEffect(() => {
     let timer;
-    
-    if (timeRemaining == "30" ||  timeRemaining == 30) 
-      {   
-        setUserInput("");
-        setCurrentIndex(0);
-        setCharClasses(Array(testText.length).fill("default"));
-      }
-    if (testStarted && timeRemaining > 0)
-       {
+    if (testStarted && timeRemaining > 0) {
       timer = setInterval(() => {
         setTimeRemaining(prev => prev - 1);
       }, 1000);
@@ -121,32 +113,25 @@ const MultiPlayer = () => {
     setTestStarted(false);
     const typedChars = userInput.length;
     const correctChars = charClasses.filter(c => c === 'correct').length;
-    var wordsPerMinute = (correctChars / 5) / (0.5); 
-    var accuracyPercentage = (correctChars / typedChars) * 100; 
-    var score = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
+    const wordsPerMinute = (correctChars / 5) / (0.5); 
+    const accuracyPercentage = (correctChars / typedChars) * 100; 
+    const score = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
     
     const token = localStorage.getItem('token');
     const { userId, email } = decodeToken(token);
 
   if (isNaN(wordsPerMinute) || wordsPerMinute === 0) {
-    wordsPerMinute = 22;
+    wordsPerMinute = 10;
   }
 
-  // Check if accuracyPercentage is NaN, then set it to a default value of 10
-  if (isNaN(accuracyPercentage)) {
-    accuracyPercentage = 85;
+
+  if (isNaN(accuracyPercentage) || accuracyPercentage === 0) {
+    accuracyPercentage = 10;
   }
 
-  // Check if score is null, then set it to a default value of 10
-  if (score === null) {
-    score = 60;
+  if (isNaN(score) || score === 0) {
+    score = 48;
   }
-
-  // Check if score is NaN, then set it to a default value of 10
-  if (isNaN(score)) {
-    score = 60;
-  }
-
 
     const userInfo = {
       wpm: wordsPerMinute.toFixed(2),
