@@ -11,7 +11,8 @@ import NavigationBar from './emulatorNavigationBar';
 import ExternalMonitor from './externalMonitor';
 import StatsDisplay from './statsDisplay';
 
-const SinglePlayer = () => {
+const SinglePlayer = () => 
+  {
   const [timeRemaining, setTimeRemaining] = useState(10);
   const [testDuration, setTestDuration] = useState(10);
   const [wpm, setWpm] = useState('-');
@@ -58,7 +59,7 @@ const SinglePlayer = () => {
 
 
   useEffect(() => {
-    if (userInput.length === testText.length || timeRemaining === 0 ) {
+    if (timeRemaining === 0 || !testStarted) {
       endTest();
     }
   }, [userInput, testText, timeRemaining, testStarted]);

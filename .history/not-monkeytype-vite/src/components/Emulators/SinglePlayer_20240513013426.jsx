@@ -58,7 +58,7 @@ const SinglePlayer = () => {
 
 
   useEffect(() => {
-    if (userInput.length === testText.length || timeRemaining === 0 ) {
+    if () {
       endTest();
     }
   }, [userInput, testText, timeRemaining, testStarted]);
