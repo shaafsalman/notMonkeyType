@@ -5,7 +5,6 @@ import axios from 'axios';
 import '../style/Login.css';
 import MessageCard from '../Cards/mesgCard';
 import { useNavigate } from 'react-router-dom'; 
-import baseURL from '../../../config';
 
 const LoginForm = () => {
   const [data, setData] = useState({ email: '', password: '' });
@@ -19,30 +18,27 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const url = `http://${baseURL}/api/authenticate`; 
-    const response = await axios.post(url, data);
-    const token = response.data.data;
-    localStorage.setItem('token', token);
-    setSuccessMessage('Login successful');
-    setShowMessage(true);
-    navigate('/Home/GameMenu');
-  } catch (error) {
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      setError(error.response.data.message);
-    } else if (error.request) {
-      // The request was made but no response was received
-      setError('Could not connect to the server. Please try again later.');
-    } else {
-      setError('An unexpected error occurred. Please try again later.');
+    e.preventDefault();
+    try {
+      const url = 'http://localhost:8080/api/authenticate';
+      const response = await axios.post(url, data);
+      const token = response.data.data;
+      localStorage.setItem('token', token);
+      console.log("token is" + token);
+      setSuccessMessage('Login successful');
+      setShowMessage(true);
+      navigate('/Home/GameMenu');
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setError(error.response.data.message);
+        setShowMessage(true);
+      }
     }
-    
-    setShowMessage(true);
-  }
-};
-
+  };
   
 
   useEffect(() => {

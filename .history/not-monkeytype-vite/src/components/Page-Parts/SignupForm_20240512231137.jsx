@@ -6,6 +6,7 @@ import ErrorCard from './../Cards/mesgCard';
 import InputButtonCard from './../Cards/inputButtonCard'; // Import the InputButtonCard component
 import baseURL from '../../../config';
 
+
 const SignupForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [data, setData] = useState({
@@ -33,41 +34,38 @@ const SignupForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (data.password !== confirmPassword) {
-      setError("Passwords do not match");
-      // Auto-close error message after 8 seconds
-      setTimeout(() => {
-        setError("");
-      }, 8000);
-      return;
-    }
-  
-    const { confirm_password, ...requestData } = data;
-  
     try {
-      const url = `http://${baseURL}/api/registerUsers`; 
-      const response = await axios.post(url, requestData);
+      const url = `http://192.168.100.7:8080/api/registerUsers`;
+      const response = await axios.post(url, data);
       setSuccessMessage(response.data.message);
       setError("");
       setShowVerificationInput(true);
-
+  
       setTimeout(() => {
         setSuccessMessage("");
       }, 8000);
+      setShowMessage(true); // Show message only when request is successful
     } catch (error) {
-      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+      if (error.response) {
         setError(error.response.data.message);
-        setTimeout(() => {
-          setError("");
-        }, 2000);
+      } else if (error.request) {
+        setError('Could not connect to the server. Please try again later.');
+      } else {
+        setError('An unexpected error occurred. Please try again later.');
       }
+  
+      setTimeout(() => {
+        setError("");
+      }, 2000);
+      setShowMessage(true);
     }
   };
+  
+  
 
   const handleVerifyEmail = async () => {
     try {
-      const url = `http://${baseURL}/api/verifyEmail`; 
-
+      const url = "http://${baseURL}/api/verifyEmail";
       const response = await axios.post(url, { email: data.email, verificationCode });
       setSuccessMessage(response.data.message);
       setError("");
@@ -80,7 +78,7 @@ const SignupForm = () => {
 
   const handleDeleteUser = async () => {
     try {
-      const url = `http://${baseURL}/api/deleteUser`; 
+      const url = "http://${baseURL}/api/deleteUser";
       await axios.post(url, { email: data.email });
       setSuccessMessage("User deleted successfully.");
       setError("");

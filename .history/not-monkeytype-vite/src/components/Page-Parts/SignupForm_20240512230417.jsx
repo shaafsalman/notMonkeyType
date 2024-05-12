@@ -4,7 +4,6 @@ import { faUser, faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import ErrorCard from './../Cards/mesgCard';
 import InputButtonCard from './../Cards/inputButtonCard'; // Import the InputButtonCard component
-import baseURL from '../../../config';
 
 const SignupForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -35,6 +34,38 @@ const SignupForm = () => {
     e.preventDefault();
     if (data.password !== confirmPassword) {
       setError("Passwords do not match");
+      setTimeout(() => {
+        setError("");
+      }, 8000);
+      return;
+    }
+  
+    const { confirm_password, ...requestData } = data;
+  
+    try {
+      const url = "http://192.168.100.7/api/registerUsers";
+      const response = await axios.post(url, requestData);
+      setSuccessMessage(response.data.message);
+      setError("");
+      setShowVerificationInput(true);
+  
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 8000);
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError("An unexpected error occurred. Please try again later.");
+      }
+      setTimeout(() => {
+        setError("");
+      }, 8000);
+    }
+  };
+      e.preventDefault();
+    if (data.password !== confirmPassword) {
+      setError("Passwords do not match");
       // Auto-close error message after 8 seconds
       setTimeout(() => {
         setError("");
@@ -45,7 +76,7 @@ const SignupForm = () => {
     const { confirm_password, ...requestData } = data;
   
     try {
-      const url = `http://${baseURL}/api/registerUsers`; 
+      const url = "http://192.168.100.7/api/registerUsers";
       const response = await axios.post(url, requestData);
       setSuccessMessage(response.data.message);
       setError("");
@@ -66,8 +97,7 @@ const SignupForm = () => {
 
   const handleVerifyEmail = async () => {
     try {
-      const url = `http://${baseURL}/api/verifyEmail`; 
-
+      const url = "http://192.168.100.7/api/verifyEmail";
       const response = await axios.post(url, { email: data.email, verificationCode });
       setSuccessMessage(response.data.message);
       setError("");
@@ -80,7 +110,7 @@ const SignupForm = () => {
 
   const handleDeleteUser = async () => {
     try {
-      const url = `http://${baseURL}/api/deleteUser`; 
+      const url = "http://192.168.100.7/api/deleteUser";
       await axios.post(url, { email: data.email });
       setSuccessMessage("User deleted successfully.");
       setError("");

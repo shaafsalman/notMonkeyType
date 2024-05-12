@@ -6,6 +6,7 @@ import ErrorCard from './../Cards/mesgCard';
 import InputButtonCard from './../Cards/inputButtonCard'; // Import the InputButtonCard component
 import baseURL from '../../../config';
 
+
 const SignupForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [data, setData] = useState({
@@ -45,7 +46,7 @@ const SignupForm = () => {
     const { confirm_password, ...requestData } = data;
   
     try {
-      const url = `http://${baseURL}/api/registerUsers`; 
+      const url = "http://${baseURL}/api/registerUsers";
       const response = await axios.post(url, requestData);
       setSuccessMessage(response.data.message);
       setError("");
@@ -66,8 +67,7 @@ const SignupForm = () => {
 
   const handleVerifyEmail = async () => {
     try {
-      const url = `http://${baseURL}/api/verifyEmail`; 
-
+      const url = "http://${baseURL}/api/verifyEmail";
       const response = await axios.post(url, { email: data.email, verificationCode });
       setSuccessMessage(response.data.message);
       setError("");
@@ -80,7 +80,7 @@ const SignupForm = () => {
 
   const handleDeleteUser = async () => {
     try {
-      const url = `http://${baseURL}/api/deleteUser`; 
+      const url = "http://${baseURL}/api/deleteUser";
       await axios.post(url, { email: data.email });
       setSuccessMessage("User deleted successfully.");
       setError("");

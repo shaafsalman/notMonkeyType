@@ -15,7 +15,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://${baseURL}/api/profile`, {
+        const response = await axios.get('http://${baseURL}/api/profile', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`, 
           },
@@ -32,7 +32,7 @@ const Profile = () => {
   // Function to handle changing the password
   const handleChangePassword = async () => {
     try {
-      await axios.post(`http://${baseURL}/api/profile/changePassword`, {
+      await axios.post('http://192.168.100.7/api/profile/changePassword', {
         currentPassword,
         newPassword,
       }, {
@@ -54,7 +54,7 @@ const Profile = () => {
 
   const handleDeleteAccount = async () => {
     try {
-      await axios.post(`http://${baseURL}/api/profile/deleteAccount`, {}, {
+      await axios.post('http://192.168.100.7/api/profile/deleteAccount', {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`, 
         },

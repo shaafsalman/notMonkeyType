@@ -45,7 +45,7 @@ const SignupForm = () => {
     const { confirm_password, ...requestData } = data;
   
     try {
-      const url = `http://${baseURL}/api/registerUsers`; 
+      const url = "http://localhost:8080/api/registerUsers";
       const response = await axios.post(url, requestData);
       setSuccessMessage(response.data.message);
       setError("");
@@ -66,8 +66,7 @@ const SignupForm = () => {
 
   const handleVerifyEmail = async () => {
     try {
-      const url = `http://${baseURL}/api/verifyEmail`; 
-
+      const url = "http://localhost:8080/api/verifyEmail";
       const response = await axios.post(url, { email: data.email, verificationCode });
       setSuccessMessage(response.data.message);
       setError("");
@@ -80,7 +79,7 @@ const SignupForm = () => {
 
   const handleDeleteUser = async () => {
     try {
-      const url = `http://${baseURL}/api/deleteUser`; 
+      const url = "http://localhost:8080/api/deleteUser";
       await axios.post(url, { email: data.email });
       setSuccessMessage("User deleted successfully.");
       setError("");
