@@ -65,7 +65,7 @@ io.on("connection", (socket) => {
   });
 
 
-socket.on('score', (scoreData) => {
+socket.on("score", (scoreData) => {
   console.log("Received score data:", scoreData);
   setScores(prevScores => [...prevScores, scoreData]);
 });
@@ -75,9 +75,9 @@ socket.on('score', (scoreData) => {
   
     console.log(`Score received from ${userId}: WPM: ${wpm}, Accuracy: ${accuracy}, Score: ${score}, Email: ${email}, User ID: ${userId}`);
   
-    io.in(data.roomCode).emit('score', {
-      socketId: socket.id, 
-      userId: data.score.userId,
+    io.in(data.roomName).emit('score', {
+      id: socket.id,
+      userId: data.score.userId
       wpm: data.score.wpm,
       accuracy: data.score.accuracy,
       score: data.score.score,

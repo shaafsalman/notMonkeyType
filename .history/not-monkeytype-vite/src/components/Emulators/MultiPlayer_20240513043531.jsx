@@ -264,8 +264,8 @@ const MultiPlayer = () => {
         </div>
       </div>}
       {showResults && scores.length > 0 && ( 
-    <Results scores={scores} onClose={() => setShowResults(false)} />
-)}
+        <Results scores={scores} />
+      )}
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 
-function Results({ scores,onClose  }) {
+function Results({ scores }) {
     // Calculate combined score for each player
     const combinedScores = scores.map(score => ({
         ...score,
@@ -36,7 +36,7 @@ function Results({ scores,onClose  }) {
                         ))}
                     </div>
                 </div>
-                <button className="absolute top-0 right-0 mr-4 mt-4 text-white font-bold text-xl outline-none focus:outline-none"onClick={onClose} > ×</button>
+                <button className="absolute top-0 right-0 mr-4 mt-4 text-white font-bold text-xl outline-none focus:outline-none">×</button>
             </div>
         </div>
     );

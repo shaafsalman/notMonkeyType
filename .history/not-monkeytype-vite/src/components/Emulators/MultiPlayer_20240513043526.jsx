@@ -150,7 +150,7 @@ const MultiPlayer = () => {
 
   const userInfo = {
     wpm: wordsPerMinute,
-    accuracy: accuracyPercentage,
+    accuracy: accuracyPercentage.toFixed(2),
     score: score,
     email: email,
     userId: userId
@@ -264,8 +264,8 @@ const MultiPlayer = () => {
         </div>
       </div>}
       {showResults && scores.length > 0 && ( 
-    <Results scores={scores} onClose={() => setShowResults(false)} />
-)}
+        <Results scores={scores} />
+      )}
     </div>
   );
 };

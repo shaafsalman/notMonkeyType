@@ -50,7 +50,6 @@ const MultiPlayer = () => {
         socket.on("score", (scoreData) => {
           console.log("Received score data:", scoreData);
           setScores(prevScores => [...prevScores, scoreData]);
-          setShowResults(true);
         });
       };
   
@@ -148,13 +147,14 @@ const MultiPlayer = () => {
     score = 60;
   }
 
-  const userInfo = {
-    wpm: wordsPerMinute,
-    accuracy: accuracyPercentage,
-    score: score,
-    email: email,
-    userId: userId
-  };
+
+    const userInfo = {
+      wpm: wordsPerMinute.toFixed(2),
+      accuracy: accuracyPercentage.toFixed(2),
+      score: score,
+      email: email,
+      userId: userId
+    };
   
     socket.emit('submitScore', { roomCode, score: userInfo });
     setTestDuration("");
@@ -264,8 +264,8 @@ const MultiPlayer = () => {
         </div>
       </div>}
       {showResults && scores.length > 0 && ( 
-    <Results scores={scores} onClose={() => setShowResults(false)} />
-)}
+        <Results scores={scores} />
+      )}
     </div>
   );
 };

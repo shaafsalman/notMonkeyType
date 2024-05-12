@@ -47,21 +47,22 @@ const MultiPlayer = () => {
           }
         });
   
-        socket.on("score", (scoreData) => {
-          console.log("Received score data:", scoreData);
+        socket.on('score', (scoreData) => {
           setScores(prevScores => [...prevScores, scoreData]);
           setShowResults(true);
         });
-      };
   
-      connectSocket(); 
+        connectSocket(); 
   
-      return () => {
-        socket.off('countdown');
-        socket.off('score');
-      };
+        return () => {
+          socket.off('countdown');
+          socket.off('score');
+        };
+      }
     }
   }, [roomCode]); 
+
+
 
   useEffect(() => {
     if (roomCode) {
@@ -74,6 +75,9 @@ const MultiPlayer = () => {
       inputRef.current.focus();
     }
   }, [testStarted]);
+
+
+
 
   useEffect(() => {
     let timer;
@@ -148,15 +152,17 @@ const MultiPlayer = () => {
     score = 60;
   }
 
-  const userInfo = {
-    wpm: wordsPerMinute,
-    accuracy: accuracyPercentage,
-    score: score,
-    email: email,
-    userId: userId
-  };
+
+    const userInfo = {
+      wpm: wordsPerMinute.toFixed(2),
+      accuracy: accuracyPercentage.toFixed(2),
+      score: score,
+      email: email,
+      userId: userId
+    };
+    roomName = roomCode;
   
-    socket.emit('submitScore', { roomCode, score: userInfo });
+    socket.emit('submitScore', { roomName, score: userInfo });
     setTestDuration("");
     setTimeRemaining("");
     setShowResults(true);
@@ -264,8 +270,8 @@ const MultiPlayer = () => {
         </div>
       </div>}
       {showResults && scores.length > 0 && ( 
-    <Results scores={scores} onClose={() => setShowResults(false)} />
-)}
+        <Results scores={scores} />
+      )}
     </div>
   );
 };

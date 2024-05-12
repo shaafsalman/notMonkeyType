@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 
-function Results({ scores,onClose  }) {
+function Results({ scores }) {
     // Calculate combined score for each player
     const combinedScores = scores.map(score => ({
         ...score,
@@ -28,7 +28,7 @@ function Results({ scores,onClose  }) {
                                     <p className="text-lg mt-2"><span className="font-semibold">Email:</span> {score.email}</p>
                                     <p className="text-lg"><span className="font-semibold">WPM:</span> {score.wpm.toFixed(2)}</p>
                                     <p className="text-lg"><span className="font-semibold">Accuracy:</span> {score.accuracy.toFixed(2)}%</p>
-                                    <p className="text-lg"><span className="font-semibold">Score:</span> {score.score}</p>
+                                    <p className="text-lg"><span className="font-semibold">Score:</span> {score.score.toFixed(2)}</p>
 
                                 </div>
                                 <p className="text-lg mt-6"><span className="font-semibold">Combined Score:</span> {score.combinedScore.toFixed(2)}</p>
@@ -36,7 +36,7 @@ function Results({ scores,onClose  }) {
                         ))}
                     </div>
                 </div>
-                <button className="absolute top-0 right-0 mr-4 mt-4 text-white font-bold text-xl outline-none focus:outline-none"onClick={onClose} > ×</button>
+                <button className="absolute top-0 right-0 mr-4 mt-4 text-white font-bold text-xl outline-none focus:outline-none">×</button>
             </div>
         </div>
     );

@@ -64,24 +64,26 @@ io.on("connection", (socket) => {
     }, 1000);
   });
 
-
-socket.on('score', (scoreData) => {
-  console.log("Received score data:", scoreData);
-  setScores(prevScores => [...prevScores, scoreData]);
-});
-
-  socket.on("submitScore", (data) => {
-    const { wpm, accuracy, score, email, userId } = data.score;
+  socket.on('submitScore', (data) => {
+    const { wpm, accuracy, score, email, userId } = data.userInfo;
   
     console.log(`Score received from ${userId}: WPM: ${wpm}, Accuracy: ${accuracy}, Score: ${score}, Email: ${email}, User ID: ${userId}`);
   
+    io.in(data.roomName).emit('score', {
+      id: socket.id, 
+      userId: data.userInfo.userId,
+      wpm: data.userInfo.wpm,
+      accuracy: data.userInfo.accuracy,
+      score: data.userInfo.score,
+      email: data.userInfo.email
+    });
     io.in(data.roomCode).emit('score', {
-      socketId: socket.id, 
-      userId: data.score.userId,
-      wpm: data.score.wpm,
-      accuracy: data.score.accuracy,
-      score: data.score.score,
-      email: data.score.email,
+      id: socket.id, 
+      userId: data.userInfo.userId,
+      wpm: data.userInfo.wpm,
+      accuracy: data.userInfo.accuracy,
+      score: data.userInfo.score,
+      email: data.userInfo.email
     });
   });
   

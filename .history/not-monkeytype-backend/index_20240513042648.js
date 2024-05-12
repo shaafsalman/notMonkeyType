@@ -76,7 +76,7 @@ socket.on('score', (scoreData) => {
     console.log(`Score received from ${userId}: WPM: ${wpm}, Accuracy: ${accuracy}, Score: ${score}, Email: ${email}, User ID: ${userId}`);
   
     io.in(data.roomCode).emit('score', {
-      socketId: socket.id, 
+      id: socket.id,
       userId: data.score.userId,
       wpm: data.score.wpm,
       accuracy: data.score.accuracy,
