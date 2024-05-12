@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
-import axios from 'axios';
-import { jwtDecode } from "jwt-decode";
 import Keyboard from '../Spline/keyboard';
 import NavigationBar from './emulatorNavigationBar';
 import ExternalMonitor from './externalMonitor';
@@ -9,13 +7,12 @@ import StatsDisplay from './statsDisplay';
 import ScoreCard from './../Cards/scoreCard';
 import MultiPlayerForm from "./multiPlayerForm";
 
-
-const socket = io('http://localhost:8080'); 
+const socket = io('http://localhost:8080');
 
 const MultiPlayer = () => {
-  const [roomCode, setRoomCode] = useState('');
-  const [timeRemaining, setTimeRemaining] = useState(30);
-  const [testDuration, setTestDuration] = useState(30);
+  const [finalCode, setFinalCode] = useState('');
+  const [timeRemaining, setTimeRemaining] = useState(10);
+  const [testDuration, setTestDuration] = useState(10);
   const [wpm, setWpm] = useState('-');
   const [accuracy, setAccuracy] = useState('-');
   const [testText] = useState("Betty decided to write a short story...");
@@ -25,48 +22,48 @@ const MultiPlayer = () => {
   const [charClasses, setCharClasses] = useState(Array(testText.length).fill("default"));
   const [showScoreCard, setShowScoreCard] = useState(false);
   const [score, setScore] = useState(0);
-  const inputRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [userInfo, setUserInfo] = useState(null); // Store user info
 
   useEffect(() => {
-    if (roomCode) {
-      // Connect to the socket server only if roomCode is not null or empty
-      socket.on('connect', () => {
-        console.log('Connected to server');
-      });
-  
-   
-      socket.on('countdown', (number) => {
-        setTestDuration(number); 
-        if (number === 1) {
-            setTimeout(() => {
-                setTestStarted(true);
-                setTimeRemaining(30);
-                setTestDuration(null); 
-            }, 1000); 
-        }
-    });
-  
-      socket.on('score', (scoreData) => {
-        setScores(prevScores => [...prevScores, scoreData]);
-        setShowResults(true);
-      });
-  
-      return () => {
-        socket.off('countdown');
-        socket.off('startTest');
-        socket.off('score');
+    // Send user info to server upon connection
+    socket.on('connect', () => {
+      console.log('Connected to server');
+      // Example user data, replace with actual user data
+      const userData = {
+        email: 'user@example.com',
+        name: 'John Doe',
+        id: '12345'
       };
-    }
-  }, [roomCode]);
+      socket.emit('userInfo', userData);
+      setUserInfo(userData); // Store user info locally
+    });
 
+    socket.on('startTest', () => {
+      setUserInput("");
+      setCurrentIndex(0);
+      setCharClasses(Array(testText.length).fill("default"));
+      setShowScoreCard(false);
+      setTestStarted(true);
+    });
 
-useEffect(() => {
-    if (roomCode) {
-      socket.emit('joinRoom', roomCode);
-    }
-  }, [roomCode]);
+    socket.on('score', (scoreData) => {
+      const { wpm, accuracy } = scoreData;
+      // Check for NaN or undefined values and replace with 0
+      const finalWpm = isNaN(wpm) ? 0 : wpm;
+      const finalAccuracy = isNaN(accuracy) ? 0 : accuracy;
+      setWpm(finalWpm.toFixed(2));
+      setAccuracy(finalAccuracy.toFixed(2));
+      setScore(scoreData.score); // Store the received score
+      setShowScoreCard(true);
+    });
 
+    return () => {
+      socket.off('countdown');
+      socket.off('startTest');
+      socket.off('score');
+    };
+  }, [testText]); // Include testText in the dependency array
 
   useEffect(() => {
     if (testStarted) {
@@ -86,10 +83,7 @@ useEffect(() => {
     return () => clearInterval(timer);
   }, [testStarted, timeRemaining]);
 
-
-
   const startTest = () => {
-    socket.emit('startTest', roomCode);
     setTestStarted(true);
     setTimeRemaining(testDuration);
     setUserInput("");
@@ -98,44 +92,26 @@ useEffect(() => {
     setCurrentIndex(0);
     setCharClasses(Array(testText.length).fill("default"));
     setShowScoreCard(false);
+    socket.emit('startTest', finalCode);
   };
-
-  const decodeToken = (token) => {
-    const decoded = jwtDecode(token);
-    const userId = decoded._id;
-    const email = decoded.email;
-    
-    // console.log("User Here");
-    // console.log(userId, email);
-    return { userId, email };
-  };
-
-
-
 
   const endTest = () => {
     setTestStarted(false);
     const typedChars = userInput.length;
     const correctChars = charClasses.filter(c => c === 'correct').length;
-    const wordsPerMinute = (correctChars / 5) / (0.5); 
-    const accuracyPercentage = (correctChars / typedChars) * 100; 
-    const score = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
-    
-    const token = localStorage.getItem('token');
-    const { userId, email } = decodeToken(token); // Assuming token is accessible here
-  
-    // Construct user information object
-    const userInfo = {
-      wpm: wordsPerMinute.toFixed(2),
-      accuracy: accuracyPercentage.toFixed(2),
-      score: score,
-      email: email,
-      userId: userId
-    };
-  
-    socket.emit('submitScore', { roomCode, score: userInfo });
-  };
+    const wordsPerMinute = (correctChars / 5) / (0.5);
+    const accuracyPercentage = (correctChars / typedChars) * 100;
 
+    // Prepare the score object
+    const newScore = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
+    setScore(newScore);
+
+    setWpm(wordsPerMinute.toFixed(2));
+    setAccuracy(accuracyPercentage.toFixed(2));
+    setShowScoreCard(true);
+    setTimeRemaining(60);
+    socket.emit('submitScore', { finalCode, score: newScore });
+  };
 
   const onInput = (e) => {
     if (!testStarted) return;
@@ -160,7 +136,6 @@ useEffect(() => {
     setCharClasses(newCharClasses);
   };
 
-  
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
   };
@@ -178,19 +153,11 @@ useEffect(() => {
     };
   }, []);
 
-
-
-
   return (
     <div className="multiplayer-page">
-
-      
-            {!roomCode && <MultiPlayerForm setRoomCode={setRoomCode} />}
-            
-            
-            
-            {roomCode &&  <div className="emulator">
-               <div className="keyBoardContainer"><Keyboard/></div>
+      {!finalCode && <MultiPlayerForm setFinalCode={setFinalCode} />}
+      {finalCode && <div className="emulator">
+        <div className="keyBoardContainer"><Keyboard /></div>
         <div className="mainGameContainer">
           <NavigationBar
             isMobile={isMobile}
@@ -199,8 +166,8 @@ useEffect(() => {
             testStarted={testStarted}
             startTest={startTest}
             endTest={endTest}
-            mode = "MultiPlayer"
-            roomCode={roomCode}
+            mode="MultiPlayer"
+            finalCode={finalCode}
           />
           <ExternalMonitor
             testText={testText}
@@ -224,12 +191,9 @@ useEffect(() => {
               onClose={() => setShowScoreCard(false)}
             />
           )}
-
-           
         </div>
-      </div>
-}
-  </div>
+      </div>}
+    </div>
   );
 };
 

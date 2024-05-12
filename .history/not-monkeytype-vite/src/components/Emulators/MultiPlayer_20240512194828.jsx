@@ -14,8 +14,8 @@ const socket = io('http://localhost:8080');
 
 const MultiPlayer = () => {
   const [roomCode, setRoomCode] = useState('');
-  const [timeRemaining, setTimeRemaining] = useState(30);
-  const [testDuration, setTestDuration] = useState(30);
+  const [timeRemaining, setTimeRemaining] = useState(10);
+  const [testDuration, setTestDuration] = useState(10);
   const [wpm, setWpm] = useState('-');
   const [accuracy, setAccuracy] = useState('-');
   const [testText] = useState("Betty decided to write a short story...");
@@ -35,17 +35,13 @@ const MultiPlayer = () => {
         console.log('Connected to server');
       });
   
-   
-      socket.on('countdown', (number) => {
-        setTestDuration(number); 
-        if (number === 1) {
-            setTimeout(() => {
-                setTestStarted(true);
-                setTimeRemaining(30);
-                setTestDuration(null); 
-            }, 1000); 
-        }
-    });
+      socket.on('startTest', () => {
+        setUserInput("");
+        setCurrentIndex(0);
+        setCharClasses(Array(testText.length).fill("default"));
+        setShowResults(false);
+        setTestStarted(true);
+      });
   
       socket.on('score', (scoreData) => {
         setScores(prevScores => [...prevScores, scoreData]);
@@ -89,7 +85,6 @@ useEffect(() => {
 
 
   const startTest = () => {
-    socket.emit('startTest', roomCode);
     setTestStarted(true);
     setTimeRemaining(testDuration);
     setUserInput("");
@@ -98,6 +93,7 @@ useEffect(() => {
     setCurrentIndex(0);
     setCharClasses(Array(testText.length).fill("default"));
     setShowScoreCard(false);
+    socket.emit('startTest', roomCode);
   };
 
   const decodeToken = (token) => {
@@ -133,6 +129,7 @@ useEffect(() => {
       userId: userId
     };
   
+    // Emit the score data along with user information
     socket.emit('submitScore', { roomCode, score: userInfo });
   };
 

@@ -66,14 +66,16 @@ io.on("connection", (socket) => {
   socket.on("submitScore", (data) => {
     const { wpm, accuracy, score, email, name, userId } = data.score;
   
-    console.log(`Score received from ${userId}: WPM: ${wpm}, Accuracy: ${accuracy}, Score: ${score}, Email: ${email}, User ID: ${userId}`);
+    console.log(`Score received from ${userId}: WPM: ${wpm}, Accuracy: ${accuracy}, Score: ${score}, Email: ${email}, Name: ${name}, User ID: ${userId}`);
   
+    // Emit the score along with user information
     io.in(data.roomName).emit("score", {
       id: userId,
       wpm: wpm,
       accuracy: accuracy,
       score: score,
       email: email,
+      name: name,
       userId: userId
     });
   });

@@ -133,6 +133,7 @@ useEffect(() => {
       userId: userId
     };
   
+    // Emit the score data along with user information
     socket.emit('submitScore', { roomCode, score: userInfo });
   };
 

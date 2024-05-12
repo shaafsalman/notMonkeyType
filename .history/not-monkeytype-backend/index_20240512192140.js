@@ -64,20 +64,15 @@ io.on("connection", (socket) => {
   });
 
   socket.on("submitScore", (data) => {
-    const { wpm, accuracy, score, email, name, userId } = data.score;
-  
-    console.log(`Score received from ${userId}: WPM: ${wpm}, Accuracy: ${accuracy}, Score: ${score}, Email: ${email}, User ID: ${userId}`);
-  
+    console.log(
+      `Score received from ${socket.id}: WPM: ${data.score.wpm}, Accuracy: ${data.score.accuracy}`
+    );
     io.in(data.roomName).emit("score", {
-      id: userId,
-      wpm: wpm,
-      accuracy: accuracy,
-      score: score,
-      email: email,
-      userId: userId
+      id: socket.id,
+      wpm: data.score.wpm,
+      accuracy: data.score.accuracy,
     });
   });
-  
 
   socket.on("disconnect", () => {
     console.log("user disconnected");

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import Spline from '@splinetool/react-spline';
 import './../style/emulator.css'
 
-const MultiPlayerForm = ({ setRoomCode }) => {
+const MultiPlayerForm = ({ setFinalCode }) => {
   const [showInput, setShowInput] = useState(false);
   const [generatedCode, setGeneratedCode] = useState('');
   const [selfCode, setSelfCode] = useState('');
@@ -30,13 +30,13 @@ const MultiPlayerForm = ({ setRoomCode }) => {
     setSelfCode(newCode)
   };
   const handleEnterSelfCode = () => {
-      setRoomCode(selfCode);
+      setFinalCode(selfCode);
   };
 
   const handleEnterRoom = () => {
     if (showInput) {
       const enteredCode = inputRef.current.value;
-      setRoomCode(enteredCode);
+      setFinalCode(enteredCode);
     }
   };
 

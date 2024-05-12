@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
-import axios from 'axios';
-import { jwtDecode } from "jwt-decode";
 import Keyboard from '../Spline/keyboard';
 import NavigationBar from './emulatorNavigationBar';
 import ExternalMonitor from './externalMonitor';
@@ -14,8 +12,8 @@ const socket = io('http://localhost:8080');
 
 const MultiPlayer = () => {
   const [roomCode, setRoomCode] = useState('');
-  const [timeRemaining, setTimeRemaining] = useState(30);
-  const [testDuration, setTestDuration] = useState(30);
+  const [timeRemaining, setTimeRemaining] = useState(10);
+  const [testDuration, setTestDuration] = useState(10);
   const [wpm, setWpm] = useState('-');
   const [accuracy, setAccuracy] = useState('-');
   const [testText] = useState("Betty decided to write a short story...");
@@ -29,44 +27,38 @@ const MultiPlayer = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    if (roomCode) {
-      // Connect to the socket server only if roomCode is not null or empty
-      socket.on('connect', () => {
-        console.log('Connected to server');
-      });
-  
-   
-      socket.on('countdown', (number) => {
-        setTestDuration(number); 
-        if (number === 1) {
-            setTimeout(() => {
-                setTestStarted(true);
-                setTimeRemaining(30);
-                setTestDuration(null); 
-            }, 1000); 
-        }
+    socket.on('connect', () => {
+      console.log('Connected to server');
+
     });
-  
-      socket.on('score', (scoreData) => {
-        setScores(prevScores => [...prevScores, scoreData]);
-        setShowResults(true);
-      });
-  
-      return () => {
-        socket.off('countdown');
-        socket.off('startTest');
-        socket.off('score');
-      };
-    }
-  }, [roomCode]);
+    socket.on('startTest', () => {
+      setUserInput("");
+      setCurrentIndex(0);
+      setCharClasses(Array(testText.length).fill("default"));
+      setShowResults(false);
+      setTestStarted(true);
+  });
 
-
-useEffect(() => {
+  useEffect(() => {
     if (roomCode) {
+      // Connect the user to the socket with the room code
       socket.emit('joinRoom', roomCode);
     }
   }, [roomCode]);
 
+  
+
+    socket.on('score', (scoreData) => {
+            setScores(prevScores => [...prevScores, scoreData]);
+            setShowResults(true);
+        });
+    
+        return () => {
+            socket.off('countdown');
+            socket.off('startTest');
+            socket.off('score');
+        };
+  }, []);
 
   useEffect(() => {
     if (testStarted) {
@@ -89,7 +81,6 @@ useEffect(() => {
 
 
   const startTest = () => {
-    socket.emit('startTest', roomCode);
     setTestStarted(true);
     setTimeRemaining(testDuration);
     setUserInput("");
@@ -98,20 +89,8 @@ useEffect(() => {
     setCurrentIndex(0);
     setCharClasses(Array(testText.length).fill("default"));
     setShowScoreCard(false);
+    socket.emit('startTest', roomCode);
   };
-
-  const decodeToken = (token) => {
-    const decoded = jwtDecode(token);
-    const userId = decoded._id;
-    const email = decoded.email;
-    
-    // console.log("User Here");
-    // console.log(userId, email);
-    return { userId, email };
-  };
-
-
-
 
   const endTest = () => {
     setTestStarted(false);
@@ -119,21 +98,16 @@ useEffect(() => {
     const correctChars = charClasses.filter(c => c === 'correct').length;
     const wordsPerMinute = (correctChars / 5) / (0.5); 
     const accuracyPercentage = (correctChars / typedChars) * 100; 
-    const score = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
-    
-    const token = localStorage.getItem('token');
-    const { userId, email } = decodeToken(token); // Assuming token is accessible here
-  
-    // Construct user information object
-    const userInfo = {
-      wpm: wordsPerMinute.toFixed(2),
-      accuracy: accuracyPercentage.toFixed(2),
-      score: score,
-      email: email,
-      userId: userId
-    };
-  
-    socket.emit('submitScore', { roomCode, score: userInfo });
+
+    // Prepare the score object
+    const newScore = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
+    setScore(newScore);
+
+    setWpm(wordsPerMinute.toFixed(2));
+    setAccuracy(accuracyPercentage.toFixed(2));
+    setShowScoreCard(true);
+    setTimeRemaining(60); 
+    socket.emit('submitScore', { roomCode, score: newScore });
   };
 
 

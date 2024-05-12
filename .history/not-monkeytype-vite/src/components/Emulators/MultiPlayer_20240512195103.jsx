@@ -35,7 +35,13 @@ const MultiPlayer = () => {
         console.log('Connected to server');
       });
   
-   
+      socket.on('startTest', () => {
+        setUserInput("");
+        setCurrentIndex(0);
+        setCharClasses(Array(testText.length).fill("default"));
+        setShowResults(false);
+        setTestStarted(true);
+      });
       socket.on('countdown', (number) => {
         setTestDuration(number); 
         if (number === 1) {
@@ -89,7 +95,6 @@ useEffect(() => {
 
 
   const startTest = () => {
-    socket.emit('startTest', roomCode);
     setTestStarted(true);
     setTimeRemaining(testDuration);
     setUserInput("");
@@ -98,6 +103,7 @@ useEffect(() => {
     setCurrentIndex(0);
     setCharClasses(Array(testText.length).fill("default"));
     setShowScoreCard(false);
+    socket.emit('startTest', roomCode);
   };
 
   const decodeToken = (token) => {
@@ -133,6 +139,7 @@ useEffect(() => {
       userId: userId
     };
   
+    // Emit the score data along with user information
     socket.emit('submitScore', { roomCode, score: userInfo });
   };
 
