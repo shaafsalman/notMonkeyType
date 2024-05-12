@@ -10,9 +10,7 @@ import MultiPlayerForm from "./multiPlayerForm";
 import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
 
-// const socket = io('http://localhost:8080'); 
 const socket = io('http://192.168.100.7:8080'); 
-
 
 const MultiPlayer = () => {
   const [roomCode, setRoomCode] = useState('');
@@ -50,17 +48,26 @@ const MultiPlayer = () => {
         }
       });
   
-      socket.on('score', (scoreData) => {
-        setScores(prevScores => [...prevScores, scoreData]);
-        setShowResults(true); // Set showResults to true when score is received
-      });
   
       return () => {
         socket.off('countdown');
-        socket.off('score');
       };
     }
   }, [roomCode]);
+
+  useEffect(() => {
+    socket.on('score', (scoreData) => {
+      console.log('Received score data:', scoreData);
+      setScores((prevScores) => [...prevScores, scoreData]);
+    });
+
+    return () => {
+      socket.off('score');
+    };
+  }, []);
+
+
+
 
   useEffect(() => {
     if (roomCode) {
@@ -133,9 +140,8 @@ const MultiPlayer = () => {
     };
   
     socket.emit('submitScore', { roomCode, score: userInfo });
-    setTestDuration("");
-    setTimeRemaining("");
     setShowResults(true);
+    updateWpmAndAccuracy(userInfo);
   };
 
   const onInput = (e) => {
@@ -158,27 +164,17 @@ const MultiPlayer = () => {
 
     setUserInput(value);
     setCharClasses(newCharClasses);
-        // Calculate WPM and accuracy
-        const typedChars = value.length;
-        const correctChars = newCharClasses.filter(c => c === 'correct').length;
-        setWpm(calculateWPM(typedChars, 30));
-        setAccuracy(calculateAccuracy(correctChars, typedChars));
+
+    // Calculate WPM and accuracy
+    const typedChars = value.length;
+    const correctChars = newCharClasses.filter(c => c === 'correct').length;
+    setWpm((correctChars / 5) / (0.5)); 
+    setAccuracy(Math.min((correctChars / typedChars) * 100, 90.00));
   };
 
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
   };
-
-  const calculateWPM = (typedChars, duration) => {
-    const wordsTyped = typedChars / 5;
-    const minutes = duration / 60;
-    return (wordsTyped / minutes).toFixed(2);
-  };
-
-  const calculateAccuracy = (correctChars, typedChars) => {
-    return ((correctChars / typedChars) * 100).toFixed(2);
-  };
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -192,6 +188,11 @@ const MultiPlayer = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const updateWpmAndAccuracy = (userData) => {
+    setWpm(userData.wpm);
+    setAccuracy(userData.accuracy);
+  };
 
   return (
     <div className="multiplayer-page">

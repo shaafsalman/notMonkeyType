@@ -156,7 +156,7 @@
   
   .screen {
     margin-top: 5%;
-    width: 35rem;
+    width: 50rem;
     height: 55%;
     max-width: 69%;
     background-color: #202020;
@@ -346,7 +346,7 @@
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 480px) {
   .navbar 
   {
     flex-direction: column; 
@@ -354,10 +354,9 @@
   }
   .screen {
     position: absolute;
-    min-height: 20vh;
     height: auto;
     width: 100%; 
-    margin-top: 10%; 
+    margin-left: 5%; 
   }
   .display {
     display: none; 

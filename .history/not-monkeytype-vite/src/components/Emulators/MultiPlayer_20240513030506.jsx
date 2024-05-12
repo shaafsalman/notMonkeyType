@@ -161,7 +161,7 @@ const MultiPlayer = () => {
         // Calculate WPM and accuracy
         const typedChars = value.length;
         const correctChars = newCharClasses.filter(c => c === 'correct').length;
-        setWpm(calculateWPM(typedChars, 30));
+        setWpm(calculateWPM(typedChars, testDuration));
         setAccuracy(calculateAccuracy(correctChars, typedChars));
   };
 

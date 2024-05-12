@@ -114,7 +114,6 @@ const SinglePlayer = () => {
     setShowScoreCard(true);
     setTimeRemaining(60);
 
-
     try {
       const token = localStorage.getItem('token');
       const { userId } = decodeToken(token);
@@ -131,7 +130,6 @@ const SinglePlayer = () => {
       });
 
       setShowScoreCard(true);
-      
     } catch (error) {
       console.error('Error saving game session:', error);
     }

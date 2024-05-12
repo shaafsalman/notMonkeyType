@@ -12,6 +12,8 @@ import ExternalMonitor from './externalMonitor';
 import StatsDisplay from './statsDisplay';
 import baseURL from '../../../config';
 
+
+
 const SinglePlayer = () => {
   const [timeRemaining, setTimeRemaining] = useState(10);
   const [testDuration, setTestDuration] = useState(10);
@@ -27,22 +29,13 @@ const SinglePlayer = () => {
   const inputRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  const calculateWPM = (typedChars, duration) => {
-    const wordsTyped = typedChars / 5;
-    const minutes = duration / 60;
-    return (wordsTyped / minutes).toFixed(2);
-  };
-
-  const calculateAccuracy = (correctChars, typedChars) => {
-    return ((correctChars / typedChars) * 100).toFixed(2);
-  };
 
   const startTest = () => {
     setTestStarted(true);
     setTimeRemaining(testDuration);
     setUserInput("");
-    setWpm('-');
-    setAccuracy('-');
+    setWpm("-");
+    setAccuracy("-");
     setCurrentIndex(0);
     setCharClasses(Array(testText.length).fill("default"));
     setShowScoreCard(false);
@@ -54,26 +47,103 @@ const SinglePlayer = () => {
     }
   }, [testStarted]);
 
+
   useEffect(() => {
     let timer;
     if (testStarted && timeRemaining > 0) {
       timer = setInterval(() => {
-        setTimeRemaining(prev => prev - 1);
+        setTimeRemaining((prev) => prev - 1);
       }, 1000);
     }
     return () => clearInterval(timer);
   }, [testStarted, timeRemaining]);
+  
+
 
   useEffect(() => {
-    if (userInput.length === testText.length || timeRemaining === 0) {
+    if (userInput.length === testText.length || timeRemaining === 0 ) {
       endTest();
     }
   }, [userInput, testText, timeRemaining, testStarted]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const { userId, email } = decodeToken(token);
+        setEmail(email);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+  
+    fetchUserData();
+  }, []);
+
+  const decodeToken = (token) => {
+    const decoded = jwtDecode(token);
+    const userId = decoded._id;
+    const email = decoded.email;
+    
+    // console.log("User Here");
+    // console.log(userId, email);
+    return { userId, email };
+  };
+
+  
+  const endTest = async () => { 
+    setTestStarted(false);
+    const typedChars = userInput.length;
+    const correctChars = charClasses.filter(c => c === 'correct').length;
+  
+    // Calculating WPM
+    const wordsTyped = typedChars / 5;
+    const minutes = testDuration / 60;
+    const wordsPerMinute = (wordsTyped / minutes).toFixed(2);
+  
+    // Calculating Accuracy
+    const accuracyPercentage = ((correctChars / typedChars) * 100).toFixed(2);
+  
+    // Computing Score
+    const newScore = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
+    setScore(newScore);
+  
+    setWpm(wordsPerMinute);
+    setAccuracy(accuracyPercentage);
+    setShowScoreCard(true);
+    setTimeRemaining(60);
+
+  
+    try {
+      const token = localStorage.getItem('token');
+      const { userId } = decodeToken(token);
+      const { email } = decodeToken(token);
+
+  
+      await axios.post('http://${baseURL}/api/gameSession/add', {
+        textUsed: testText,
+        score: newScore,
+        wpm: wordsPerMinute,
+        accuracy: accuracyPercentage,
+        sessionTime: testDuration,
+        userId: userId,
+        email: email
+
+      });
+  
+      setShowScoreCard(true);
+    } catch (error) {
+      console.error('Error saving game session:', error);
+    }
+  };
+  
+
 
   const onInput = (e) => {
     if (!testStarted) return;
 
     const value = e.target.value;
+
     const newCharClasses = [...charClasses];
 
     if (value.length < userInput.length && currentIndex > 0) {
@@ -90,107 +160,68 @@ const SinglePlayer = () => {
 
     setUserInput(value);
     setCharClasses(newCharClasses);
-
-    // Calculate WPM and accuracy
-    const typedChars = value.length;
-    const correctChars = newCharClasses.filter(c => c === 'correct').length;
-    setWpm(calculateWPM(typedChars, testDuration));
-    setAccuracy(calculateAccuracy(correctChars, typedChars));
-  };
-
-  const endTest = async () => {
-    setTestStarted(false);
-    const typedChars = userInput.length;
-    const correctChars = charClasses.filter(c => c === 'correct').length;
-
-    // Calculating WPM and accuracy
-    const newWPM = calculateWPM(typedChars, testDuration);
-    const newAccuracy = calculateAccuracy(correctChars, typedChars);
-
-    // Computing Score
-    const newScore = Math.round((newWPM * 0.4) + (newAccuracy * 0.6));
-    setScore(newScore);
-
-    setShowScoreCard(true);
-    setTimeRemaining(60);
-
-
-    try {
-      const token = localStorage.getItem('token');
-      const { userId } = decodeToken(token);
-      const { email } = decodeToken(token);
-
-      await axios.post(`http://${baseURL}/api/gameSession/add`, {
-        textUsed: testText,
-        score: newScore,
-        wpm: newWPM,
-        accuracy: newAccuracy,
-        sessionTime: testDuration,
-        userId: userId,
-        email: email
-      });
-
-      setShowScoreCard(true);
-      
-    } catch (error) {
-      console.error('Error saving game session:', error);
-    }
   };
 
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
   };
-
+  
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
+    handleResize(); 
+    window.addEventListener('resize', handleResize); 
 
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
+
+
+
+
   return (
     <div className="singlePlayer">
-      <div className="keyBoardContainer"><Keyboard /></div>
+      <div className="keyBoardContainer"><Keyboard/></div>
+
       <div className="mainGameContainer">
-        <NavigationBar
-          isMobile={isMobile}
-          handleDurationChange={handleDurationChange}
-          testDuration={testDuration}
-          testStarted={testStarted}
-          startTest={startTest}
-          endTest={endTest}
-          mode="SinglePlayer"
-        />
-        <ExternalMonitor
-          testText={testText}
-          charClasses={charClasses}
-          onInput={onInput}
-          userInput={userInput}
-          inputRef={inputRef}
-          testStarted={testStarted}
-        />
-        <StatsDisplay
+      <NavigationBar
+        isMobile={isMobile}
+        handleDurationChange={handleDurationChange}
+        testDuration={testDuration}
+        testStarted={testStarted}
+        startTest={startTest}
+        endTest={endTest}
+        mode = "SinglePlayer"
+      />
+      <ExternalMonitor
+        testText={testText}
+        charClasses={charClasses}
+        onInput={onInput}
+        userInput={userInput}
+        inputRef={inputRef}
+        testStarted={testStarted}
+      />
+      <StatsDisplay
+        wpm={wpm}
+        accuracy={accuracy}
+        timeRemaining={timeRemaining}
+      />
+      {showScoreCard && (
+        <ScoreCard
           wpm={wpm}
+          time={testDuration}
           accuracy={accuracy}
-          timeRemaining={timeRemaining}
+          score={score}
+          onClose={() => setShowScoreCard(false)}
         />
-        {showScoreCard && (
-          <ScoreCard
-            wpm={wpm}
-            time={testDuration}
-            accuracy={accuracy}
-            score={score}
-            onClose={() => setShowScoreCard(false)}
-          />
-        )}
-      </div>
+      )}
+        </div>
     </div>
+
   );
 }
 

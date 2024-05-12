@@ -156,7 +156,7 @@
   
   .screen {
     margin-top: 5%;
-    width: 35rem;
+    width: 50rem;
     height: 55%;
     max-width: 69%;
     background-color: #202020;
@@ -354,9 +354,10 @@
   }
   .screen {
     position: absolute;
-    min-height: 20vh;
+    min-height: 50vh;
     height: auto;
     width: 100%; 
+    
     margin-top: 10%; 
   }
   .display {

@@ -9,10 +9,12 @@ import ScoreCard from './../Cards/scoreCard';
 import MultiPlayerForm from "./multiPlayerForm";
 import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
+import baseURL from '../../../config';
+import { useLocation } from 'react-router-dom';
+
 
 // const socket = io('http://localhost:8080'); 
-const socket = io('http://192.168.100.7:8080'); 
-
+const socket = io(`http://${baseURL}`);
 
 const MultiPlayer = () => {
   const [roomCode, setRoomCode] = useState('');
@@ -33,40 +35,75 @@ const MultiPlayer = () => {
   const [showResults, setShowResults] = useState(false);
   const [scores, setScores] = useState([]);
 
+  const location = useLocation(); // Get the current location
+
+  useEffect(() => {
+    const handleUnload = () => {
+      socket.emit('disconnect');
+    };
+
+    window.addEventListener('beforeunload', handleUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleUnload);
+    };
+  }, [location.pathname]);
+
+
   useEffect(() => {
     if (roomCode) {
-      socket.on('connect', () => {
-        console.log('Connected to server');
-      });
+      const connectSocket = () => {
+        socket.on('countdown', (number) => {
+          setTestDuration(number);
+          if (number === 1) {
+            setTimeout(() => {
+              setTestStarted(true);
+              setTimeRemaining(30);
+              setTestDuration(null);
+            }, 1000);
+          }
+        });
   
-      socket.on('countdown', (number) => {
-        setTestDuration(number); 
-        if (number === 1) {
-          setTimeout(() => {
-            setTestStarted(true);
-            setTimeRemaining(30);
-            setTestDuration(null); 
-          }, 1000); 
-        }
-      });
+        socket.on("score", (scoreData) => {
+          console.log("Received score data:", scoreData);
+          setScores(prevScores => [...prevScores, scoreData]);
+        });
+      };
   
-      socket.on('score', (scoreData) => {
-        setScores(prevScores => [...prevScores, scoreData]);
-        setShowResults(true); // Set showResults to true when score is received
-      });
+      connectSocket(); 
   
       return () => {
         socket.off('countdown');
         socket.off('score');
       };
     }
-  }, [roomCode]);
+  }, [roomCode]); 
+  
+  useEffect(() => {
+    const handleUnload = () => {
+      socket.emit('disconnect');
+    };
+  
+    window.addEventListener('beforeunload', handleUnload);
+  
+    return () => {
+      window.removeEventListener('beforeunload', handleUnload);
+    };
+  }, []);
+
+
+
 
   useEffect(() => {
     if (roomCode) {
       socket.emit('joinRoom', roomCode);
     }
+    return () => {
+      socket.off('connect');
+    };
   }, [roomCode]);
+
+
 
   useEffect(() => {
     if (testStarted) {
@@ -86,11 +123,6 @@ const MultiPlayer = () => {
     return () => clearInterval(timer);
   }, [testStarted, timeRemaining]);
 
-  useEffect(() => {
-    if (userInput.length === testText.length || timeRemaining === 0 || !testStarted) {
-      endTest();
-    }
-  }, [userInput, testText, timeRemaining, testStarted]);
 
   const startTest = () => {
     setTimeRemaining("");
@@ -117,13 +149,13 @@ const MultiPlayer = () => {
     setTestStarted(false);
     const typedChars = userInput.length;
     const correctChars = charClasses.filter(c => c === 'correct').length;
-    const wordsPerMinute = (correctChars / 5) / (0.5); 
-    const accuracyPercentage = (correctChars / typedChars) * 100; 
+    const wordsPerMinute = (correctChars / 5);
+    const accuracyPercentage = (correctChars / typedChars) * 100;
     const score = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
-    
+
     const token = localStorage.getItem('token');
     const { userId, email } = decodeToken(token);
-  
+
     const userInfo = {
       wpm: wordsPerMinute.toFixed(2),
       accuracy: accuracyPercentage.toFixed(2),
@@ -131,10 +163,8 @@ const MultiPlayer = () => {
       email: email,
       userId: userId
     };
-  
+
     socket.emit('submitScore', { roomCode, score: userInfo });
-    setTestDuration("");
-    setTimeRemaining("");
     setShowResults(true);
   };
 
@@ -158,27 +188,11 @@ const MultiPlayer = () => {
 
     setUserInput(value);
     setCharClasses(newCharClasses);
-        // Calculate WPM and accuracy
-        const typedChars = value.length;
-        const correctChars = newCharClasses.filter(c => c === 'correct').length;
-        setWpm(calculateWPM(typedChars, 30));
-        setAccuracy(calculateAccuracy(correctChars, typedChars));
   };
 
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
   };
-
-  const calculateWPM = (typedChars, duration) => {
-    const wordsTyped = typedChars / 5;
-    const minutes = duration / 60;
-    return (wordsTyped / minutes).toFixed(2);
-  };
-
-  const calculateAccuracy = (correctChars, typedChars) => {
-    return ((correctChars / typedChars) * 100).toFixed(2);
-  };
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -192,6 +206,8 @@ const MultiPlayer = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+
 
   return (
     <div className="multiplayer-page">

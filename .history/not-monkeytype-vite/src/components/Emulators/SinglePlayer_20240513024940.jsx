@@ -131,7 +131,6 @@ const SinglePlayer = () => {
       });
 
       setShowScoreCard(true);
-      
     } catch (error) {
       console.error('Error saving game session:', error);
     }
