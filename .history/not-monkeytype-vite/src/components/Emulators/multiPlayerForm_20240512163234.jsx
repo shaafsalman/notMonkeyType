@@ -1,0 +1,249 @@
+import React, { useState } from 'react';
+import Spline from '@splinetool/react-spline';
+
+const MultiPlayerForm = ({ joinRoom, createRoom, roomCode }) => {
+  const [showInput, setShowInput] = useState(false);
+  const [generatedCode, setGeneratedCode] = useState('');
+  const [timeRemaining, setTimeRemaining] = useState(10);
+  const [testDuration, setTestDuration] = useState(10);
+  const [wpm, setWpm] = useState('-');
+  const [accuracy, setAccuracy] = useState('-');
+  const [testText] = useState("Betty decided to write a short story Betty decided to write a short story Betty decided to write a short story Betty decided to write a short story");
+  const [userInput, setUserInput] = useState("");
+  const [testStarted, setTestStarted] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [charClasses, setCharClasses] = useState(Array(testText.length).fill("default"));
+  const [showScoreCard, setShowScoreCard] = useState(false);
+  const [score, setScore] = useState(0);
+  const inputRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+
+  const startTest = () => {
+    setTestStarted(true);
+    setTimeRemaining(testDuration);
+    setUserInput("");
+    setWpm("-");
+    setAccuracy("-");
+    setCurrentIndex(0);
+    setCharClasses(Array(testText.length).fill("default"));
+    setShowScoreCard(false);
+  };
+
+  useEffect(() => {
+    if (testStarted) {
+      inputRef.current.focus();
+    }
+  }, [testStarted]);
+
+
+  useEffect(() => {
+    let timer;
+    if (testStarted && timeRemaining > 0) {
+      timer = setInterval(() => {
+        setTimeRemaining((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [testStarted, timeRemaining]);
+  
+
+
+  useEffect(() => {
+    if (userInput.length === testText.length || timeRemaining === 0 || !testStarted) {
+      endTest();
+    }
+  }, [userInput, testText, timeRemaining, testStarted]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const { userId, email } = decodeToken(token);
+        setEmail(email);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+  
+    fetchUserData();
+  }, []);
+
+  const decodeToken = (token) => {
+    const decoded = jwtDecode(token);
+    const userId = decoded._id;
+    const email = decoded.email;
+    
+    // console.log("User Here");
+    // console.log(userId, email);
+    return { userId, email };
+  };
+
+  
+  const endTest = async () => { 
+    setTestStarted(false);
+    const typedChars = userInput.length;
+    const correctChars = charClasses.filter(c => c === 'correct').length;
+  
+    // Calculating WPM
+    const wordsTyped = typedChars / 5;
+    const minutes = testDuration / 60;
+    const wordsPerMinute = (wordsTyped / minutes).toFixed(2);
+  
+    // Calculating Accuracy
+    const accuracyPercentage = ((correctChars / typedChars) * 100).toFixed(2);
+  
+    // Computing Score
+    const newScore = Math.round((wordsPerMinute * 0.4) + (accuracyPercentage * 0.6));
+    setScore(newScore);
+  
+    setWpm(wordsPerMinute);
+    setAccuracy(accuracyPercentage);
+    setShowScoreCard(true);
+    setTimeRemaining(60);
+
+  
+    try {
+      const token = localStorage.getItem('token');
+      const { userId } = decodeToken(token);
+      const { email } = decodeToken(token);
+
+  
+      await axios.post('http://localhost:8080/api/gameSession/add', {
+        textUsed: testText,
+        score: newScore,
+        wpm: wordsPerMinute,
+        accuracy: accuracyPercentage,
+        sessionTime: testDuration,
+        userId: userId,
+        email: email
+
+      });
+  
+      setShowScoreCard(true);
+    } catch (error) {
+      console.error('Error saving game session:', error);
+    }
+  };
+  
+
+
+  const onInput = (e) => {
+    if (!testStarted) return;
+
+    const value = e.target.value;
+
+    const newCharClasses = [...charClasses];
+
+    if (value.length < userInput.length && currentIndex > 0) {
+      setCurrentIndex(prevIndex => prevIndex - 1);
+      newCharClasses[currentIndex - 1] = 'default';
+    } else if (currentIndex < testText.length) {
+      if (value[currentIndex] === testText[currentIndex]) {
+        newCharClasses[currentIndex] = 'correct';
+      } else {
+        newCharClasses[currentIndex] = 'wrong';
+      }
+      setCurrentIndex(prevIndex => prevIndex + 1);
+    }
+
+    setUserInput(value);
+    setCharClasses(newCharClasses);
+  };
+
+  const handleDurationChange = (e) => {
+    setTestDuration(parseInt(e.target.value));
+  };
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize(); 
+    window.addEventListener('resize', handleResize); 
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
+
+
+  const handleCreateClick = () => {
+    const newCode = generateRandomCode();
+    setGeneratedCode(newCode);
+    createRoom();
+    setShowInput(false);
+  };
+
+  const handleJoinClick = () => {
+    setShowInput(!showInput);
+  };
+
+  const handleEnterRoom = () => {
+    setShowInput(false);
+    joinRoom();
+  };
+
+  const handleRegenerateCode = () => {
+    const newCode = generateRandomCode();
+    setGeneratedCode(newCode);
+  };
+
+  const generateRandomCode = () => {
+    return Math.floor(100 + Math.random() * 900).toString();
+  };
+
+  return (
+    <div className="multiplayerForm">
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center">
+      <div className="w-3/5 flex rounded-lg overflow-hidden shadow-lg bg-transparent backdrop-filter backdrop-blur-md backdrop-saturate-150 bg-opacity-20 transition duration-500 transform hover:scale-105 h-60vh min-h-60vh">
+        <div className="pr-10m x-10">
+          <div className="w-1/2 px-11 py-40 mr-30">
+            <h1 className="text-4xl font-bold text-white mb-4">MultiPlayer</h1>
+            <div className="flex w-max ">
+              <button onClick={handleCreateClick} className="w-max px-4 py-2 mr-10 mb-10  bg-indigo-800 hover:bg-indigo-900 text-white rounded ">
+                Create Room
+              </button>
+              <button onClick={handleJoinClick} className="w-max px-4 py-2 mb-10  bg-indigo-800 hover:bg-indigo-900 text-white rounded ">
+                Join Room
+              </button>
+            </div>
+            {generatedCode && !showInput && (
+              <div >
+                <p className="text-white text-3xl font-bold mb-10 w-max ">Room Code: {generatedCode}</p>
+                <button onClick={handleRegenerateCode} className="w-max px-4 py-2  bg-indigo-800 hover:bg-indigo-900 text-white rounded ">
+                  Regenerate Code
+                </button>
+              </div>
+            )}
+            {showInput && (
+              <div>
+                <input
+                  type="number"
+                  placeholder="Enter Room ID"
+                  className="w-max px-2 py-2 mb-10 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                />
+                <button onClick={handleEnterRoom} className="w-max px-4 py-2  bg-indigo-800 hover:bg-indigo-900  text-white rounded ">
+                  Submit
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="w-80 relative ml-40">
+          <Spline
+            className="absolute top-0 right-0 bottom-0 left-0"
+            scene="https://prod.spline.design/wbGSEgtIeXYtBDkR/scene.splinecode"
+          />
+        </div>
+      </div>
+    </div>
+    </div>
+  
+  );
+};
+
+export default MultiPlayerForm;
