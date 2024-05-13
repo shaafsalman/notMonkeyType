@@ -66,14 +66,16 @@ const Friends = () => {
     <div className="px-6 py-4">
       <div className="font-bold text-4xl text-white mb-6">Friends Battles</div>
       <div className="font-bold text-2xl text-white mb-6">Battle no {index}</div>
-      <div className="col-span-3 bg-transparent  border border-gray-800 rounded-lg py-3 px-4">
+      <div className="col-span-3 bg-transparent  rounded-lg py-3 px-4">
       
       <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-3 bg-transparent   rounded-lg py-3 px-4">
-          <p className="text-2xl font-bold text-white">{friendBattles.player1.email}</p>
+        <div className="col-span-3 bg-transparent  rounded-lg py-3 px-4">
+          <p className="text-gray-300 font-bold">Player</p>
+          <p className="text-white">{friendBattles.player1.email}</p>
         </div>
         <div className="col-span-3 bg-transparent  rounded-lg py-3 px-4">
-          <p className="text-2xl font-bold text-white">{friendBattles.player2.email} {determineWinner() === friendBattles.player1.email ? <FaTrophy className="inline text-yellow-500" /> : null}</p>
+          <p className="text-gray-300 font-bold">Player</p>
+          <p className="text-white">{friendBattles.player2.email} {determineWinner() === friendBattles.player1.email ? <FaTrophy className="inline text-yellow-500" /> : null}</p>
         </div>
         <div className="bg-transparent  rounded-lg py-3 px-4">
           <p className="text-gray-300 font-bold">WPM</p>
