@@ -43,41 +43,27 @@ const Leaderboards = () => {
     setUserGameSessions(sortedSessions);
   };
 
-  if (loading) 
-    {
-      return <div>
-      <div className="max-w-screen-xl rounded-lg mx-auto mt-20 mb-40 overflow-hidden shadow-lg bg-transparent backdrop-filter backdrop-blur-md backdrop-saturate-150 bg-opacity-20 transition duration-500 transform hover:scale-105">
-    <div className="px-6 py-4">
-      <div className="font-bold text-4xl text-white mb-6">Leaderboards</div>
-      <div className="text-white text-lg">Loading...</div>
-    </div>
-  </div>
-    </div>;
-   
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>
-      <div className="max-w-screen-xl rounded-lg mx-auto mt-20 mb-40 overflow-hidden shadow-lg bg-transparent backdrop-filter backdrop-blur-md backdrop-saturate-150 bg-opacity-20 transition duration-500 transform hover:scale-105">
+    return 
+    <div className="max-w-screen-xl rounded-lg mx-auto mt-20 mb-40 overflow-hidden shadow-lg bg-transparent backdrop-filter backdrop-blur-md backdrop-saturate-150 bg-opacity-20 transition duration-500 transform hover:scale-105">
     <div className="px-6 py-4">
       <div className="font-bold text-4xl text-white mb-6">Leaderboards</div>
       <div className="text-white text-lg">Error: {error}</div>
     </div>
-  </div>
-    </div>;
-    
+  </div>;
   }
 
   if (userGameSessions.length === 0) {
-    return <div>
-      <div className="max-w-screen-xl rounded-lg mx-auto mt-20 mb-40 overflow-hidden shadow-lg bg-transparent backdrop-filter backdrop-blur-md backdrop-saturate-150 bg-opacity-20 transition duration-500 transform hover:scale-105">
+    <div className="max-w-screen-xl rounded-lg mx-auto mt-20 mb-40 overflow-hidden shadow-lg bg-transparent backdrop-filter backdrop-blur-md backdrop-saturate-150 bg-opacity-20 transition duration-500 transform hover:scale-105">
     <div className="px-6 py-4">
       <div className="font-bold text-4xl text-white mb-6">Leaderboards</div>
       <div className="text-white text-lg">No records found</div>
     </div>
-  </div>
-    </div>;
-   
+  </div>;
   }
 
   return (
