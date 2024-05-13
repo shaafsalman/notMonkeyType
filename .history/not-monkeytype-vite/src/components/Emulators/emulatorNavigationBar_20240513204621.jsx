@@ -37,7 +37,7 @@ const NavigationBar = ({ isMobile, handleDurationChange, testDuration, testStart
              </div>
             }
             {mode == "MultiPlayer" &&
-            <div className="flex items-center px-auto ">
+            <div className="flex items-center px-1">
             {roomCode&&  
             <div className="room-code mr-4">
               Room Code: {roomCode}

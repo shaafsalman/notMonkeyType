@@ -27,9 +27,9 @@ const NavigationBar = ({ isMobile, handleDurationChange, testDuration, testStart
 
             {mode == "SinglePlayer" &&
              <div className="div">
-                <div className="flex items-center  px-auto lg:px-10">
+                <div className="flex items-center px-10">
             
-               <div className="mode mr-20 text-md">
+               <div className="mode mr-4">
                   Mode: {mode}
                 </div>
               </div>
@@ -37,7 +37,7 @@ const NavigationBar = ({ isMobile, handleDurationChange, testDuration, testStart
              </div>
             }
             {mode == "MultiPlayer" &&
-            <div className="flex items-center px-auto ">
+            <div className="flex items-center px-1">
             {roomCode&&  
             <div className="room-code mr-4">
               Room Code: {roomCode}
@@ -60,7 +60,7 @@ const NavigationBar = ({ isMobile, handleDurationChange, testDuration, testStart
             {testStarted ? (
               <button className="mx-2 my-2 px-4 py-2 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center" onClick={endTest}>Stop</button>
             ) : (
-              <button className="mx-2 my-2 px-4 py-2 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300 text-center" onClick={startTest}>Start</button>
+              <button className="mx-2 px-6 py-3 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300" onClick={startTest}>Start</button>
             )}
           </div>
           
