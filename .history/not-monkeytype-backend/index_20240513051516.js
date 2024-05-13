@@ -12,9 +12,6 @@ const verifyEmailRoutes = require("./routes/verifyEmail");
 const deleteUserRoutes = require("./routes/deleteUser");
 const profileRoutes = require("./routes/profileController");
 const gameSessionController = require("./routes/gameSessionController");
-const multiGameSessionController = require("./Controllers/multiGameSessionController");
-const multiGameSessionRoutes = require("./routes/multiGameSessionRoutes");
-
 
 
 const app = express();
@@ -41,8 +38,6 @@ app.use("/api/verifyEmail", verifyEmailRoutes);
 app.use("/api/deleteUser", deleteUserRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/gameSession", gameSessionController);
-app.use("/api/multiGameSession", multiGameSessionRoutes);
-
 
 
 

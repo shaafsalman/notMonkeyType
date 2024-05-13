@@ -89,10 +89,7 @@ const Friends = () => {
       </div>
     </div>
   </div>
-
   );
-  
-  
 };
 
 export default Friends;

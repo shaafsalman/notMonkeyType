@@ -5,17 +5,14 @@ const http = require("http");
 const { Server } = require("socket.io");
 const connection = require("./db");
 const { User } = require("./models/user");
-const { gameSession } = require("./models/gameSession");
+const { MultiGameSession } = require("./models/multiGameSession");
 const userRoutes = require("./routes/registerUsers");
 const authRoutes = require("./routes/authenticate");
 const verifyEmailRoutes = require("./routes/verifyEmail");
 const deleteUserRoutes = require("./routes/deleteUser");
 const profileRoutes = require("./routes/profileController");
-const gameSessionController = require("./routes/gameSessionController");
-const multiGameSessionController = require("./Controllers/multiGameSessionController");
-const multiGameSessionRoutes = require("./routes/multiGameSessionRoutes");
-
-
+const gameSessionController = require("./Controllers/gameSessionController");
+const multiGameSessionController = require("./Controllers/multiGameSessionController"); // Import the multiGameSessionController
 
 const app = express();
 const server = http.createServer(app); // Create an HTTP server
@@ -41,12 +38,7 @@ app.use("/api/verifyEmail", verifyEmailRoutes);
 app.use("/api/deleteUser", deleteUserRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/gameSession", gameSessionController);
-app.use("/api/multiGameSession", multiGameSessionRoutes);
-
-
-
-
-
+app.use("/api/multiGameSession", multiGameSessionController); // Use multiGameSessionController for multiplayer sessions
 
 // Socket.io events
 io.on("connection", (socket) => {
@@ -69,37 +61,34 @@ io.on("connection", (socket) => {
     }, 1000);
   });
 
+  socket.on("submitScore", async (data) => {
+    const { wpm, accuracy, score, email, userId } = data.score;
 
-socket.on('score', (scoreData) => {
-  console.log("Received score data:", scoreData);
-  setScores(prevScores => [...prevScores, scoreData]);
-});
- 
-   socket.on("submitScore", async (data) => {
-  try {
-      const { wpm, accuracy, score, email, userId } = data.score;
+    console.log(`Score received from ${userId}: WPM: ${wpm}, Accuracy: ${accuracy}, Score: ${score}, Email: ${email}, User ID: ${userId}`);
 
-      console.log(`Score received from ${userId}: WPM: ${wpm}, Accuracy: ${accuracy}, Score: ${score}, Email: ${email}, User ID: ${userId}`);
-
-      // Save the score data to the database using multiGameSessionController
-      await multiGameSessionController.saveScore(data.roomCode, data.score);
+    try {
+      // Save the score to the database
+      const multiGameSession = await MultiGameSession.findOneAndUpdate(
+        { roomCode: data.roomCode },
+        { $push: { scores: data.score } },
+        { new: true }
+      );
 
       // Emit the score to all clients in the room
       io.in(data.roomCode).emit('score', {
-          socketId: socket.id,
-          userId: data.score.userId,
-          wpm: data.score.wpm,
-          accuracy: data.score.accuracy,
-          score: data.score.score,
-          email: data.score.email,
+        socketId: socket.id,
+        userId: data.score.userId,
+        wpm: data.score.wpm,
+        accuracy: data.score.accuracy,
+        score: data.score.score,
+        email: data.score.email,
       });
 
       console.log(`Score saved for multiplayer session in room ${data.roomCode}:`, data.score);
-  } catch (error) {
+    } catch (error) {
       console.error(`Error saving score for multiplayer session in room ${data.roomCode}:`, error);
-  }
-});
-  
+    }
+  });
 
   socket.on("disconnect", () => {
     console.log("user disconnected");

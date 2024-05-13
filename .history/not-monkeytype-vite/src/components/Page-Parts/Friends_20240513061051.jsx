@@ -52,47 +52,40 @@ const Friends = () => {
     <div className="px-6 py-4">
       <div className="font-bold text-4xl text-white mb-6">Friends Battles</div>
       <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-3 bg-transparent border border-gray-800 rounded-lg py-3 px-4">
-          <p className="text-gray-300 font-bold">Player</p>
+        <div className="col-span-2 bg-transparent border border-gray-800 rounded-lg py-3 px-4">
+          <p className="text-gray-300 font-bold">Player 1</p>
           <p className="text-white">{friendBattles.player1.email}</p>
         </div>
-        <div className="col-span-3 bg-transparent border border-gray-800 rounded-lg py-3 px-4">
-          <p className="text-gray-300 font-bold">Player</p>
-          <p className="text-white">{friendBattles.player2.email} {determineWinner() === friendBattles.player1.email ? <FaTrophy className="inline text-yellow-500" /> : null}</p>
+        <div className="col-span-2 bg-transparent border border-gray-800 rounded-lg py-3 px-4">
+          <p className="text-gray-300 font-bold">Player 2</p>
+          <p className="text-white">{friendBattles.player2.email}</p>
         </div>
         <div className="bg-transparent border border-gray-800 rounded-lg py-3 px-4">
           <p className="text-gray-300 font-bold">WPM</p>
-          <p className="text-white text-center">{Math.round(friendBattles.player1.wpm)}</p>
+          <p className="text-white text-center">{friendBattles.player1.wpm}</p>
         </div>
         <div className="bg-transparent border border-gray-800 rounded-lg py-3 px-4">
           <p className="text-gray-300 font-bold">Accuracy</p>
-          <p className="text-white text-center">{Math.round(friendBattles.player1.accuracy)}</p>
+          <p className="text-white text-center">{friendBattles.player1.accuracy}</p>
         </div>
-      
         <div className="bg-transparent border border-gray-800 rounded-lg py-3 px-4">
           <p className="text-gray-300 font-bold">Overall Score</p>
-          <p className="text-white text-center">{Math.round(computeOverallScore(friendBattles.player1))}</p>
+          <p className="text-white text-center">{computeOverallScore(friendBattles.player1)}</p>
         </div>
-        <div className="bg-transparent border border-gray-800 rounded-lg py-3 px-4">
-          <p className="text-gray-300 font-bold">WPM</p>
-          <p className="text-white text-center">{Math.round(friendBattles.player2.wpm)}</p>
-        </div>
-        <div className="bg-transparent border border-gray-800 rounded-lg py-3 px-4">
-          <p className="text-gray-300 font-bold">Accuracy</p>
-          <p className="text-white text-center">{Math.round(friendBattles.player2.accuracy)}</p>
-        </div>
-      
-        <div className="bg-transparent border border-gray-800 rounded-lg py-3 px-4">
-          <p className="text-gray-300 font-bold">Overall Score</p>
-          <p className="text-white text-center">{Math.round(computeOverallScore(friendBattles.player2))} {determineWinner() === friendBattles.player2.email ? <FaTrophy className="inline text-yellow-500" /> : null}</p>
-        </div>
+      </div>
+      <div className="mt-6 text-center">
+        <span className="font-bold text-lg">
+          Winner: 
+        </span>
+        {determineWinner() === 'Tie' ? (
+          <span className="ml-2 text-yellow-500">Tie</span>
+        ) : (
+          <span className="ml-2 text-green-500">{determineWinner()} <FaTrophy /></span>
+        )}
       </div>
     </div>
   </div>
-
   );
-  
-  
 };
 
 export default Friends;

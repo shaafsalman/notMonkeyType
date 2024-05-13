@@ -41,7 +41,6 @@ app.use("/api/verifyEmail", verifyEmailRoutes);
 app.use("/api/deleteUser", deleteUserRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/gameSession", gameSessionController);
-app.use("/api/multiGameSession", multiGameSessionRoutes);
 
 
 

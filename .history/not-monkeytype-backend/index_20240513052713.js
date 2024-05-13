@@ -13,9 +13,6 @@ const deleteUserRoutes = require("./routes/deleteUser");
 const profileRoutes = require("./routes/profileController");
 const gameSessionController = require("./routes/gameSessionController");
 const multiGameSessionController = require("./Controllers/multiGameSessionController");
-const multiGameSessionRoutes = require("./routes/multiGameSessionRoutes");
-
-
 
 const app = express();
 const server = http.createServer(app); // Create an HTTP server
@@ -41,7 +38,7 @@ app.use("/api/verifyEmail", verifyEmailRoutes);
 app.use("/api/deleteUser", deleteUserRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/gameSession", gameSessionController);
-app.use("/api/multiGameSession", multiGameSessionRoutes);
+app.use("/api/multiGameSession", multiGameSessionController);
 
 
 
