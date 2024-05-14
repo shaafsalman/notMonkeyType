@@ -93,8 +93,8 @@ const LoginForm = () => {
           onChange={handleChange}
           required
         />
-      </div>
-      {/* <div className="pass-link">
+      {/* </div>
+      <div className="pass-link">
         <a href="#">Forgot password?</a>
       </div> */}
       <div className="field btn">

@@ -94,9 +94,9 @@ const LoginForm = () => {
           required
         />
       </div>
-      {/* <div className="pass-link">
+      <div className="pass-link">
         <a href="#">Forgot password?</a>
-      </div> */}
+      </div>
       <div className="field btn">
         <div className="btn-layer"></div>
         <input type="submit" value="Login" />
