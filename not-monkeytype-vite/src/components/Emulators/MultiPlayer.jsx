@@ -11,7 +11,7 @@ import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
 
 // const socket = io('http://localhost:8080'); 
-const socket = io('http://192.168.204.237:8080'); 
+const socket = io('http://192.168.116.237:8080'); 
 
 
 const MultiPlayer = () => {
