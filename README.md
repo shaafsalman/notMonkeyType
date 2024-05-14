@@ -112,13 +112,12 @@ To install notMonkeyType, follow these steps:
 ![Single Player Emulator](<Shots/Screenshot 2024-05-14 172101.png>)
 
 ### Multiplayer Emulator
-![Multiplayer Emulator](<Shots/Screenshot 2024-05-14 172138.png>)
 ![Multiplayer Emulator](<Shots/Screenshot 2024-05-14 172131.png>)
+![Multiplayer Emulator](<Shots/Screenshot 2024-05-14 172138.png>)
 
 ### About
 ![About](<Shots/Screenshot 2024-05-14 172024.png>)
 
 
 
-### Footer
  ![alt text](<Shots/Screenshot 2024-05-14 172031.png>)
