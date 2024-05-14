@@ -34,20 +34,11 @@ const SinglePlayer = () => {
   const calculateWPM = (typedChars, duration) => {
     const wordsTyped = typedChars / 5;
     const minutes = duration / 60;
-    return (wordsTyped / minutes).toFixed(2)* 3;
+    return (wordsTyped / minutes).toFixed(2)* 5;
   };
 
   const calculateAccuracy = (correctChars, typedChars) => {
     return ((correctChars / typedChars) * 100).toFixed(2);
-  };
-  const decodeToken = (token) => {
-    const decoded = jwtDecode(token);
-    const userId = decoded._id;
-    const email = decoded.email;
-    
-    // console.log("User Here");
-    // console.log(userId, email);
-    return { userId, email };
   };
 
   useEffect(() => {
@@ -79,6 +70,74 @@ const SinglePlayer = () => {
     setCharClasses(Array(testText.length).fill("default"));
     setShowScoreCard(false);
   };
+///////////////////////////////////////////
+  useEffect(() => {
+    if (testStarted) {
+      inputRef.current.focus();
+    }
+  }, [testStarted]);
+///////////////////////////////////////////
+  useEffect(() => {
+    let timer;
+    if (testStarted && timeRemaining > 0) {
+      timer = setInterval(() => {
+        setTimeRemaining(prev => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [testStarted, timeRemaining]);
+///////////////////////////////////////////
+  useEffect(() => {
+    if (userInput.length === testText.length || timeRemaining === 0) {
+      endTest();
+    }
+  }, [userInput, testText, timeRemaining, testStarted]);
+///////////////////////////////////////////
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  handleResize();
+  window.addEventListener('resize', handleResize);
+
+  return () => {
+    window.removeEventListener('resize', handleResize);
+  };
+}, []);
+////////////////////////////////////////////
+
+
+
+
+  const onInput = (e) => {
+    if (!testStarted) return;
+
+    const value = e.target.value;
+    const newCharClasses = [...charClasses];
+
+    if (value.length < userInput.length && currentIndex > 0) {
+      setCurrentIndex(prevIndex => prevIndex - 1);
+      newCharClasses[currentIndex - 1] = 'default';
+    } else if (currentIndex < testText.length) {
+      if (value[currentIndex] === testText[currentIndex]) {
+        newCharClasses[currentIndex] = 'correct';
+      } else {
+        newCharClasses[currentIndex] = 'wrong';
+      }
+      setCurrentIndex(prevIndex => prevIndex + 1);
+    }
+
+    setUserInput(value);
+    setCharClasses(newCharClasses);
+
+    // Calculate WPM and accuracy
+    const typedChars = value.length;
+    const correctChars = newCharClasses.filter(c => c === 'correct').length;
+    setWpm(calculateWPM(typedChars, testDuration));
+    setAccuracy(calculateAccuracy(correctChars, typedChars));
+  };
+
   const endTest = async () => {
     setTestStarted(false);
     const typedChars = userInput.length;
@@ -122,75 +181,6 @@ const SinglePlayer = () => {
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
   };
-  const onInput = (e) => {
-    if (!testStarted) return;
-
-    const value = e.target.value;
-    const newCharClasses = [...charClasses];
-
-    if (value.length < userInput.length && currentIndex > 0) {
-      setCurrentIndex(prevIndex => prevIndex - 1);
-      newCharClasses[currentIndex - 1] = 'default';
-    } else if (currentIndex < testText.length) {
-      if (value[currentIndex] === testText[currentIndex]) {
-        newCharClasses[currentIndex] = 'correct';
-      } else {
-        newCharClasses[currentIndex] = 'wrong';
-      }
-      setCurrentIndex(prevIndex => prevIndex + 1);
-    }
-
-    setUserInput(value);
-    setCharClasses(newCharClasses);
-
-    // Calculate WPM and accuracy
-    const typedChars = value.length;
-    const correctChars = newCharClasses.filter(c => c === 'correct').length;
-    setWpm(calculateWPM(typedChars, testDuration));
-    setAccuracy(calculateAccuracy(correctChars, typedChars));
-  };
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-useEffect(() => {
-    if (testStarted) {
-      inputRef.current.focus();
-    }
-  }, [testStarted]);
-///////////////////////////////////////////
-  useEffect(() => {
-    let timer;
-    if (testStarted && timeRemaining > 0) {
-      timer = setInterval(() => {
-        setTimeRemaining(prev => prev - 1);
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [testStarted, timeRemaining]);
-///////////////////////////////////////////
-  useEffect(() => {
-    if (userInput.length === testText.length || timeRemaining === 0) {
-      endTest();
-    }
-  }, [userInput, testText, timeRemaining, testStarted]);
-///////////////////////////////////////////
-useEffect(() => {
-  const handleResize = () => {
-    setIsMobile(window.innerWidth < 768);
-  };
-
-  handleResize();
-  window.addEventListener('resize', handleResize);
-
-  return () => {
-    window.removeEventListener('resize', handleResize);
-  };
-}, []);
-////////////////////////////////////////////
-
-
-
-
 
   
 

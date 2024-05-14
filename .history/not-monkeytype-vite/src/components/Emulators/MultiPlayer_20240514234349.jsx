@@ -11,9 +11,10 @@ import MultiPlayerForm from "./multiPlayerForm";
 import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
 import baseURL from '../../../config';
+import axios from 'axios';
 
 // const socket = io('http://localhost:8080'); 
-const socket = io('http://192.168.100.7:8080'); 
+const socket = io('http://192.168.116.237:8080'); 
 
 
 const MultiPlayer = () => {
@@ -35,68 +36,6 @@ const MultiPlayer = () => {
   const [showResults, setShowResults] = useState(false);
   const [scores, setScores] = useState([]);
 
-
-
-    
-  //////////////////////////////////////////////////////////////////////////
-  const decodeToken = (token) => {
-    const decoded = jwtDecode(token);
-    const userId = decoded._id;
-    const email = decoded.email;
-    return { userId, email };
-  };
-///////////////////////
-  const saveSession = async () => {
-
-    const correctChars = charClasses.filter(c => c === 'correct').length;
-
-    // Calculating WPM and accuracy
-    const newWPM = calculateWPM(typedChars, testDuration);
-    const newAccuracy = calculateAccuracy(correctChars, typedChars);
-
-    // Computing Score
-    const newScore = Math.round((newWPM * 0.4) + (newAccuracy * 0.6));
-    setScore(newScore);
-
-    setShowScoreCard(true);
-    setTimeRemaining(60);
-
-
-    try {
-      const token = localStorage.getItem('token');
-      const { userId } = decodeToken(token);
-      const { email } = decodeToken(token);
-
-      await axios.post(`http://${baseURL}/api/gameSession/add`, 
-      {
-        textUsed: testText,
-        score: newScore,
-        wpm: newWPM,
-        accuracy: newAccuracy,
-        sessionTime: testDuration,
-        userId: userId,
-        email: email
-      });
-      
-    } catch (error) {
-      console.error('Error saving game session:', error);
-    }
-  };
-  ///////////////////////
-  const handleDurationChange = (e) => {
-    setTestDuration(parseInt(e.target.value));
-  };
-  ///////////////////////
-  const calculateWPM = (typedChars, duration) => {
-    const wordsTyped = typedChars / 5;
-    const minutes = duration / 60;
-    return (wordsTyped / minutes).toFixed(2);
-  };
-///////////////////////
-  const calculateAccuracy = (correctChars, typedChars) => {
-    return ((correctChars / typedChars) * 100).toFixed(2);
-  };
-//////////////////////////////////////////////////////////////////////////
   useEffect(() => {
     if (roomCode) {
       const connectSocket = () => {
@@ -126,19 +65,19 @@ const MultiPlayer = () => {
       };
     }
   }, [roomCode]); 
-///////////////////////
+
   useEffect(() => {
     if (roomCode) {
       socket.emit('joinRoom', roomCode);
     }
   }, [roomCode]);
-///////////////////////
+
   useEffect(() => {
     if (testStarted) {
       inputRef.current.focus();
     }
   }, [testStarted]);
-///////////////////////
+
   useEffect(() => {
     let timer;
     
@@ -158,20 +97,9 @@ const MultiPlayer = () => {
     }
     return () => clearInterval(timer);
   }, [testStarted, timeRemaining]);
-///////////////////////
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-//////////////////////////////////////////////////////////////////////////
+
   const startTest = () => {
     setTimeRemaining("");
     setShowTimerCard(true);
@@ -185,7 +113,14 @@ const MultiPlayer = () => {
     setCharClasses(Array(testText.length).fill("default"));
     setShowScoreCard(false);
   };
-  ///////////////////////
+
+  const decodeToken = (token) => {
+    const decoded = jwtDecode(token);
+    const userId = decoded._id;
+    const email = decoded.email;
+    return { userId, email };
+  };
+
   const endTest = () => {
     setTestStarted(false);
     const typedChars = userInput.length;
@@ -205,17 +140,20 @@ const MultiPlayer = () => {
   if (isNaN(accuracyPercentage)) {
     accuracyPercentage = 85;
   }
+
   // Check if score is null, then set it to a default value of 10
   if (score === null) {
     score = 60;
   }
+
   // Check if score is NaN, then set it to a default value of 10
   if (isNaN(score)) {
     score = 60;
   }
-
-  saveSession();
  
+
+
+  
 
   const userInfo = {
     wpm: wordsPerMinute,
@@ -232,7 +170,34 @@ const MultiPlayer = () => {
 
     
   };
-  ///////////////////////
+
+
+  const saveSession =async(() => {
+    try {
+      const token = localStorage.getItem('token');
+      const { userId } = decodeToken(token);
+      const { email } = decodeToken(token);
+
+      await axios.post(`http://${baseURL}/api/gameSession/add`, 
+      {
+        textUsed: testText,
+        score: newScore,
+        wpm: newWPM,
+        accuracy: newAccuracy,
+        sessionTime: testDuration,
+        userId: userId,
+        email: email
+      });
+
+      setShowScoreCard(true);
+      
+    } catch (error) {
+      console.error('Error saving game session:', error);
+    }
+  
+  
+  }
+
   const onInput = (e) => {
     if (!testStarted) return;
 
@@ -259,8 +224,34 @@ const MultiPlayer = () => {
         setWpm(calculateWPM(typedChars, 30));
         setAccuracy(calculateAccuracy(correctChars, typedChars));
   };
-//////////////////////////////////////////////////////////////////////////
-  
+
+  const handleDurationChange = (e) => {
+    setTestDuration(parseInt(e.target.value));
+  };
+
+  const calculateWPM = (typedChars, duration) => {
+    const wordsTyped = typedChars / 5;
+    const minutes = duration / 60;
+    return (wordsTyped / minutes).toFixed(2);
+  };
+
+  const calculateAccuracy = (correctChars, typedChars) => {
+    return ((correctChars / typedChars) * 100).toFixed(2);
+  };
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <div className="multiplayer-page">

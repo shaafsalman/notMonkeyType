@@ -34,20 +34,11 @@ const SinglePlayer = () => {
   const calculateWPM = (typedChars, duration) => {
     const wordsTyped = typedChars / 5;
     const minutes = duration / 60;
-    return (wordsTyped / minutes).toFixed(2)* 3;
+    return (wordsTyped / minutes).toFixed(2)* 5;
   };
 
   const calculateAccuracy = (correctChars, typedChars) => {
     return ((correctChars / typedChars) * 100).toFixed(2);
-  };
-  const decodeToken = (token) => {
-    const decoded = jwtDecode(token);
-    const userId = decoded._id;
-    const email = decoded.email;
-    
-    // console.log("User Here");
-    // console.log(userId, email);
-    return { userId, email };
   };
 
   useEffect(() => {
@@ -65,9 +56,6 @@ const SinglePlayer = () => {
     fetchParagraph();
     
   }, [difficultyLevel]);
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
   const startTest = () => {
     setTestStarted(true);
@@ -79,49 +67,29 @@ const SinglePlayer = () => {
     setCharClasses(Array(testText.length).fill("default"));
     setShowScoreCard(false);
   };
-  const endTest = async () => {
-    setTestStarted(false);
-    const typedChars = userInput.length;
-    const correctChars = charClasses.filter(c => c === 'correct').length;
 
-    // Calculating WPM and accuracy
-    const newWPM = calculateWPM(typedChars, testDuration);
-    const newAccuracy = calculateAccuracy(correctChars, typedChars);
-
-    // Computing Score
-    const newScore = Math.round((newWPM * 0.4) + (newAccuracy * 0.6));
-    setScore(newScore);
-
-    setShowScoreCard(true);
-    setTimeRemaining(60);
-
-
-    try {
-      const token = localStorage.getItem('token');
-      const { userId } = decodeToken(token);
-      const { email } = decodeToken(token);
-
-      await axios.post(`http://${baseURL}/api/gameSession/add`, 
-      {
-        textUsed: testText,
-        score: newScore,
-        wpm: newWPM,
-        accuracy: newAccuracy,
-        sessionTime: testDuration,
-        userId: userId,
-        email: email
-      });
-
-      setShowScoreCard(true);
-      
-    } catch (error) {
-      console.error('Error saving game session:', error);
+  useEffect(() => {
+    if (testStarted) {
+      inputRef.current.focus();
     }
-  };
+  }, [testStarted]);
 
-  const handleDurationChange = (e) => {
-    setTestDuration(parseInt(e.target.value));
-  };
+  useEffect(() => {
+    let timer;
+    if (testStarted && timeRemaining > 0) {
+      timer = setInterval(() => {
+        setTimeRemaining(prev => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [testStarted, timeRemaining]);
+
+  useEffect(() => {
+    if (userInput.length === testText.length || timeRemaining === 0) {
+      endTest();
+    }
+  }, [userInput, testText, timeRemaining, testStarted]);
+
   const onInput = (e) => {
     if (!testStarted) return;
 
@@ -150,49 +118,61 @@ const SinglePlayer = () => {
     setAccuracy(calculateAccuracy(correctChars, typedChars));
   };
 
+  const endTest = async () => {
+    setTestStarted(false);
+    const typedChars = userInput.length;
+    const correctChars = charClasses.filter(c => c === 'correct').length;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-useEffect(() => {
-    if (testStarted) {
-      inputRef.current.focus();
+    // Calculating WPM and accuracy
+    const newWPM = calculateWPM(typedChars, testDuration);
+    const newAccuracy = calculateAccuracy(correctChars, typedChars);
+
+    // Computing Score
+    const newScore = Math.round((newWPM * 0.4) + (newAccuracy * 0.6));
+    setScore(newScore);
+
+    setShowScoreCard(true);
+    setTimeRemaining(60);
+
+
+    try {
+      const token = localStorage.getItem('token');
+      const { userId } = decodeToken(token);
+      const { email } = decodeToken(token);
+
+      await axios.post(`http://${baseURL}/api/gameSession/add`, {
+        textUsed: testText,
+        score: newScore,
+        wpm: newWPM,
+        accuracy: newAccuracy,
+        sessionTime: testDuration,
+        userId: userId,
+        email: email
+      });
+
+      setShowScoreCard(true);
+      
+    } catch (error) {
+      console.error('Error saving game session:', error);
     }
-  }, [testStarted]);
-///////////////////////////////////////////
-  useEffect(() => {
-    let timer;
-    if (testStarted && timeRemaining > 0) {
-      timer = setInterval(() => {
-        setTimeRemaining(prev => prev - 1);
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [testStarted, timeRemaining]);
-///////////////////////////////////////////
-  useEffect(() => {
-    if (userInput.length === testText.length || timeRemaining === 0) {
-      endTest();
-    }
-  }, [userInput, testText, timeRemaining, testStarted]);
-///////////////////////////////////////////
-useEffect(() => {
-  const handleResize = () => {
-    setIsMobile(window.innerWidth < 768);
   };
 
-  handleResize();
-  window.addEventListener('resize', handleResize);
-
-  return () => {
-    window.removeEventListener('resize', handleResize);
+  const handleDurationChange = (e) => {
+    setTestDuration(parseInt(e.target.value));
   };
-}, []);
-////////////////////////////////////////////
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
+    handleResize();
+    window.addEventListener('resize', handleResize);
 
-
-
-  
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <div className="singlePlayer">

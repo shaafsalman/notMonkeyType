@@ -11,9 +11,10 @@ import MultiPlayerForm from "./multiPlayerForm";
 import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
 import baseURL from '../../../config';
+import axios from 'axios';
 
 // const socket = io('http://localhost:8080'); 
-const socket = io('http://192.168.100.7:8080'); 
+const socket = io('http://192.168.116.237:8080'); 
 
 
 const MultiPlayer = () => {
