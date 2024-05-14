@@ -91,7 +91,7 @@ const MultiPlayer = () => {
       timer = setInterval(() => {
         setTimeRemaining(prev => prev - 1);
       }, 1000);
-    } else if (timeRemaining === 0 && testStarted) {
+    } else if (userInput.length === testText.length ||(timeRemaining === 0 && testStarted)) {
       endTest();
     }
     return () => clearInterval(timer);

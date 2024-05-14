@@ -9,11 +9,9 @@ import ScoreCard from './../Cards/scoreCard';
 import MultiPlayerForm from "./multiPlayerForm";
 import TimerCard from '../Cards/timerCard';
 import Results from './../Cards/multiPlayerResult';
-import baseURL from '../../../config';
 
-
-
-const socket = io('http://192.168.204.237:8080'); 
+// const socket = io('http://localhost:8080'); 
+const socket = io(`http://${baseURL}`); 
 
 
 const MultiPlayer = () => {
@@ -22,7 +20,7 @@ const MultiPlayer = () => {
   const [testDuration, setTestDuration] = useState(30);
   const [wpm, setWpm] = useState('-');
   const [accuracy, setAccuracy] = useState('-');
-  const [testText] = useState("the marvel cinematic universe is an american media franchise and shared universe centered on a series of superhero films produced by marvel studios. The mcu has revolutionized modern cinema becoming a cultural phenomenona");
+  const [testText] = useState("Betty decided to write a short story...");
   const [userInput, setUserInput] = useState("");
   const [testStarted, setTestStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -198,7 +196,7 @@ const MultiPlayer = () => {
   const calculateWPM = (typedChars, duration) => {
     const wordsTyped = typedChars / 5;
     const minutes = duration / 60;
-    return (wordsTyped / minutes).toFixed(2) * 5;
+    return (wordsTyped / minutes).toFixed(2);
   };
 
   const calculateAccuracy = (correctChars, typedChars) => {

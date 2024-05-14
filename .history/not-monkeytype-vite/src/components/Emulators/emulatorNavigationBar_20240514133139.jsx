@@ -39,11 +39,11 @@ const NavigationBar = ({ isMobile, handleDurationChange, testDuration, testStart
             {mode == "MultiPlayer" &&
             <div className="flex items-center px-auto ">
             {roomCode&&  
-            <div className="room-code mx-10">
+            <div className="room-code mr-4">
               Room Code: {roomCode}
             </div>}
            
-            <div className="mode mx-10">
+            <div className="mode mr-4">
               Mode: {mode}
             </div>
              </div>
@@ -92,15 +92,13 @@ const NavigationBar = ({ isMobile, handleDurationChange, testDuration, testStart
           </div>
            }
           <div className="flex items-center">
-          {mode == "SinglePlayer" &&
-              <select className="duration bg-white border border-gray-300 rounded-md px-3 py-2 outline-none focus:border-indigo-500 transition duration-300 mr-4" onChange={handleDurationChange} value={testDuration}>
-              <option value={10}>10 seconds</option>
-              <option value={30}>30 seconds</option>
-              <option value={60}>60 seconds</option>
-              <option value={90}>90 seconds</option>
-              <option value={120}>120 seconds</option>
+            <select className="duration bg-white border border-gray-300 rounded-md px-2 py-1 outline-none focus:border-indigo-500 transition duration-300 mr-4" onChange={handleDurationChange} value={testDuration}>
+              <option value={10}>10s</option>
+              <option value={30}>30s</option>
+              <option value={60}>60s</option>
+              <option value={90}>90s</option>
+              <option value={120}>120s</option>
             </select>
-            }
             {testStarted ? (
               <button className="my-2 px-4 py-2 bg-indigo-800 hover:bg-indigo-900 text-white rounded-lg transition duration-300" onClick={endTest}>Stop</button>
             ) : (

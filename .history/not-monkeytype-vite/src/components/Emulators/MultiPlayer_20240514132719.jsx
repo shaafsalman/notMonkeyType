@@ -97,6 +97,11 @@ const MultiPlayer = () => {
     return () => clearInterval(timer);
   }, [testStarted, timeRemaining]);
 
+  useEffect(() => {
+    if (userInput.length === testText.length ) {
+      endTest();
+    }
+  }, [userInput, testText, timeRemaining, testStarted]);
 
 
   const startTest = () => {

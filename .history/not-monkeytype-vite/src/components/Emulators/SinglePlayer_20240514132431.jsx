@@ -34,7 +34,7 @@ const SinglePlayer = () => {
   const calculateWPM = (typedChars, duration) => {
     const wordsTyped = typedChars / 5;
     const minutes = duration / 60;
-    return (wordsTyped / minutes).toFixed(2)* 5;
+    return (wordsTyped / minutes).toFixed(2)*5;
   };
 
   const calculateAccuracy = (correctChars, typedChars) => {
