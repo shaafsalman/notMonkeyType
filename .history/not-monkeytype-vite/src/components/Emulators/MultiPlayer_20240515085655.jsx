@@ -46,42 +46,42 @@ const MultiPlayer = () => {
     return { userId, email };
   };
 ///////////////////////
-  // const saveSession = async () => {
+  const saveSession = async () => {
 
-  //   const correctChars = charClasses.filter(c => c === 'correct').length;
+    const correctChars = charClasses.filter(c => c === 'correct').length;
 
-  //   // Calculating WPM and accuracy
-  //   const newWPM = calculateWPM(typedChars, testDuration);
-  //   const newAccuracy = calculateAccuracy(correctChars, typedChars);
+    // Calculating WPM and accuracy
+    const newWPM = calculateWPM(typedChars, testDuration);
+    const newAccuracy = calculateAccuracy(correctChars, typedChars);
 
-  //   // Computing Score
-  //   const newScore = Math.round((newWPM * 0.4) + (newAccuracy * 0.6));
-  //   setScore(newScore);
+    // Computing Score
+    const newScore = Math.round((newWPM * 0.4) + (newAccuracy * 0.6));
+    setScore(newScore);
 
-  //   setShowScoreCard(true);
-  //   setTimeRemaining(60);
+    setShowScoreCard(true);
+    setTimeRemaining(60);
 
 
-  //   try {
-  //     const token = localStorage.getItem('token');
-  //     const { userId } = decodeToken(token);
-  //     const { email } = decodeToken(token);
+    try {
+      const token = localStorage.getItem('token');
+      const { userId } = decodeToken(token);
+      const { email } = decodeToken(token);
 
-  //     await axios.post(`http://${baseURL}/api/gameSession/add`, 
-  //     {
-  //       textUsed: testText,
-  //       score: newScore,
-  //       wpm: newWPM,
-  //       accuracy: newAccuracy,
-  //       sessionTime: testDuration,
-  //       userId: userId,
-  //       email: email
-  //     });
+      await axios.post(`http://${baseURL}/api/gameSession/add`, 
+      {
+        textUsed: testText,
+        score: newScore,
+        wpm: newWPM,
+        accuracy: newAccuracy,
+        sessionTime: testDuration,
+        userId: userId,
+        email: email
+      });
       
-  //   } catch (error) {
-  //     console.error('Error saving game session:', error);
-  //   }
-  // };
+    } catch (error) {
+      console.error('Error saving game session:', error);
+    }
+  };
   ///////////////////////
   const handleDurationChange = (e) => {
     setTestDuration(parseInt(e.target.value));
@@ -214,7 +214,7 @@ const MultiPlayer = () => {
     score = 60;
   }
 
-  // saveSession();
+  saveSession();
  
 
   const userInfo = {
